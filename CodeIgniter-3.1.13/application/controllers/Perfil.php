@@ -9,15 +9,15 @@ atendimento
 class Perfil extends CI_Controller {
     public function index()
     {
-        $this->load->view('index');
+        $this->load->view('perfil/index');
     }
     public function tela_adicionar()    {
         
-        $this->load->view('tela_adicionar', $data);
+        $this->load->view('perfil/tela_adicionar', $data);
     }
     public function tela_editar()    {
         
-        $this->load->view('tela_editar', $data);
+        $this->load->view('perfil/tela_editar', $data);
     }
     public function editar()    {
     }
