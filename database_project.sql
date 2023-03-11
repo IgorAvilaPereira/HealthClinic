@@ -52,6 +52,8 @@ CREATE TABLE pessoa (
     foto text
 );
 
+INSERT INTO pessoa (nome) VALUES ('João');
+
 CREATE TABLE pessoa_arquivo (
     id serial primary key,
     nome text,
