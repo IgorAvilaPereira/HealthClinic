@@ -55,7 +55,7 @@ CREATE TABLE pessoa (
 CREATE TABLE pessoa_arquivo (
     id serial primary key,
     nome text,
-    arquivo text,
+    arquivo text NOT NULL,
     pessoa_id integer references pessoa (id)
 );
 
@@ -70,6 +70,6 @@ CREATE TABLE atendimento (
 CREATE TABLE atendimento_arquivo (
     id serial primary key,
     nome text,
-    arquivo text,
+    arquivo text NOT NULL,
     atendimento_id integer references atendimento (id)
 );
