@@ -1,5 +1,11 @@
 <?php
-
+/*
+setor
+usuario
+perfil
+pessoa
+atendimento
+*/
 class Pages extends CI_Controller {
 
     // index.php/pages/view
