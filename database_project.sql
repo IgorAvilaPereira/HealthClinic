@@ -28,7 +28,7 @@ CREATE TABLE perfil (
     adicionar boolean DEFAULT FALSE,
     visualizar boolean DEFAULT FALSE,
     editar boolean DEFAULT FALSE,
-    remover boolean DEFAULT FALSE,
+    remover boolean DEFAULT FALSE
 );
 
 CREATE TABLE usuario_perfil (
