@@ -31,6 +31,7 @@ class Pessoa extends CI_Controller {
         $form_data = $this->input->post();        
         $nome = $this->input->post("nome");
         $query = $this->db->query("INSERT INTO pessoa (nome) VALUES ('".$nome."')");        
+        // erro
         redirect('./pessoa/index'); 
 
     }
