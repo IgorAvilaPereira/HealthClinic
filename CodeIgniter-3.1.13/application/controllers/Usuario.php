@@ -15,8 +15,8 @@ class Usuario extends CI_Controller {
         $this->load->view('usuario/index', $data);        
     }
     public function tela_adicionar()    {
-        
-        $this->load->view('usuario/tela_adicionar', $data);
+        $this->load->view('usuario/tela_adicionar');
+        // $this->load->view('usuario/tela_adicionar', $data);
     }
     public function tela_editar()    {
         
@@ -27,6 +27,10 @@ class Usuario extends CI_Controller {
     public function remover()    {
     }
     public function adicionar()    {        
-        // $this->load->view('tela_adicionar', $data);
+        $this->load->database();
+        $form_data = $this->input->post();        
+        $nome = $this->input->post("nome");
+        $query = $this->db->query("INSERT INTO usuario (nome) VALUES ('".$nome."')");
+        // redirect('/perfil/index');   
     }
 }

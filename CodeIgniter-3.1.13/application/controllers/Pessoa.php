@@ -10,18 +10,28 @@ class Pessoa extends CI_Controller {
         $this->load->view('pessoa/index', $data);
     }
     public function tela_adicionar()    {
-        
-        $this->load->view('pessoa/tela_adicionar', $data);
+        $this->load->view('pessoa/tela_adicionar');        
+        // $this->load->view('pessoa/tela_adicionar', $data);
     }
-    public function tela_editar()    {
-        
+    public function tela_editar()   
+    {        
         $this->load->view('pessoa/tela_editar', $data);
     }
-    public function editar()    {
+    public function editar()    
+    {
     }
-    public function remover()    {
+    public function remover()    
+    {
     }
-    public function adicionar()    {        
-       
+    public function adicionar()    
+    {      
+        $this->load->database();
+        $this->load->helper('url'); 
+
+        $form_data = $this->input->post();        
+        $nome = $this->input->post("nome");
+        $query = $this->db->query("INSERT INTO pessoa (nome) VALUES ('".$nome."')");        
+        redirect('./pessoa/index'); 
+
     }
 }
