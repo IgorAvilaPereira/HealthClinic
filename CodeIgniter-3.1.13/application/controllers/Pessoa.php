@@ -1,16 +1,13 @@
 <?php
-/*
-setor
-usuario
-perfil
-pessoa
-atendimento
-*/
+
 class Pessoa extends CI_Controller {
 
     public function index()
-    {
-        $this->load->view('pessoa/index');
+    {          
+        $this->load->database();
+        $query = $this->db->query('SELECT * FROM pessoa');
+        $data['vetPessoa'] = $query->result();
+        $this->load->view('pessoa/index', $data);
     }
     public function tela_adicionar()    {
         
