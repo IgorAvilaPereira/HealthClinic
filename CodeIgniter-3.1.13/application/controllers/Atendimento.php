@@ -3,7 +3,10 @@ class Atendimento extends CI_Controller {
 
     public function index()
     {
-        $this->load->view('atendimento/index');
+        $this->load->database();
+        $query = $this->db->query('SELECT * FROM atendimento');
+        $data['vetAtendimento'] = $query->result();
+        $this->load->view('atendimento/index', $data);
     }
     public function tela_adicionar()    {
         

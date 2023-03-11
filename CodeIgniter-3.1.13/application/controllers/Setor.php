@@ -9,7 +9,10 @@ atendimento
 class Setor extends CI_Controller {
     public function index()
     {
-        $this->load->view('setor/index');
+        $this->load->database();
+        $query = $this->db->query('SELECT * FROM setor');
+        $data['vetSetor'] = $query->result();
+        $this->load->view('setor/index', $data);        
     }
     public function tela_adicionar()    {
         

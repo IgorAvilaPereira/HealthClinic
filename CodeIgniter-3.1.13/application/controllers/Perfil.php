@@ -9,7 +9,11 @@ atendimento
 class Perfil extends CI_Controller {
     public function index()
     {
-        $this->load->view('perfil/index');
+        $this->load->database();
+        $query = $this->db->query('SELECT * FROM perfil');
+        $data['vetPerfil'] = $query->result();
+        $this->load->view('perfil/index', $data);
+        
     }
     public function tela_adicionar()    {
         

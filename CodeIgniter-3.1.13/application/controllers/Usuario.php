@@ -9,7 +9,10 @@ atendimento
 class Usuario extends CI_Controller {
     public function index()
     {
-        $this->load->view('usuario/index');
+        $this->load->database();
+        $query = $this->db->query('SELECT * FROM usuario');
+        $data['vetUsuario'] = $query->result();
+        $this->load->view('usuario/index', $data);        
     }
     public function tela_adicionar()    {
         
