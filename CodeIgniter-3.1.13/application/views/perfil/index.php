@@ -9,4 +9,6 @@
     </li>
     <?php } ?>
 </ul>
+<?=$pagination?> <br>
+
 <a class="btn btn-primary" href="tela_adicionar">Adicionar </a>

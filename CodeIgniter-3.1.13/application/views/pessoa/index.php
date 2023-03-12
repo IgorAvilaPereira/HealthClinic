@@ -2,7 +2,7 @@
 <ul>
     <?php foreach($vetPessoa as $pessoa) { ?>
     <li>
-    <td>
+        <td>
             <a class="btn btn-secondary" href="/documento/index/<?=$pessoa->id?>">Documentos</a>
         </td>
         <a class="btn btn-secondary" href="/pessoa/remover/<?=$pessoa->id?>">Remover</a>
@@ -11,4 +11,6 @@
     </li>
     <?php } ?>
 </ul>
+<?=$pagination?> <br>
+
 <a class="btn btn-primary" href="tela_adicionar">Adicionar </a>

@@ -2,7 +2,7 @@
 class Atendimento extends CI_Controller {
 
 
-    public function index()
+    public function index($offset = 0)
     {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
@@ -11,8 +11,21 @@ class Atendimento extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT atendimento.observacao, atendimento.id as id,  to_char(data_hora, 'DD/MM/YYYY HH24:MI:SS') as data_hora, usuario.nome as usuario_nome, usuario.id as usuario_id, pessoa.nome as pessoa_nome, pessoa.id as pessoa_id FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id);");
+
+
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = '/atendimento/index/';
+        $query = $this->db->query('SELECT count(*) as qtde FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id)');        
+        $config['total_rows'] = $query->result()[0]->qtde;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);                
+        
+        $query = $this->db->query("SELECT atendimento.observacao, atendimento.id as id,  to_char(data_hora, 'DD/MM/YYYY HH24:MI:SS') as data_hora, usuario.nome as usuario_nome, usuario.id as usuario_id, pessoa.nome as pessoa_nome, pessoa.id as pessoa_id FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id) order by data_hora desc LIMIT ? OFFSET ?", array($limit, $offset*$limit));
+        // $query = $this->db->query("SELECT atendimento.observacao, atendimento.id as id,  to_char(data_hora, 'DD/MM/YYYY HH24:MI:SS') as data_hora, usuario.nome as usuario_nome, usuario.id as usuario_id, pessoa.nome as pessoa_nome, pessoa.id as pessoa_id FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id);");
+        
         $data['vetAtendimento'] = $query->result();
+        $data['pagination'] = $this->pagination->create_links();
         $this->load->view('innerpages/header');
         $this->load->view('atendimento/index', $data);
         $this->load->view('innerpages/footer');

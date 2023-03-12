@@ -11,10 +11,12 @@ class Arquivo extends CI_Controller {
         }
 
         $this->load->database();
-        $this->load->helper('url');         
-        // $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ? ".$atendimento_id.";");             
+        $this->load->helper('url');               
+
+
+
         
-        // https://w3.med.cmu.ac.th/ci/user_guide/database/queries.html
+        // $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ? ".$atendimento_id.";");                     
         $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ?;", array($atendimento_id));             
         
         $data['vetArquivo'] = $query->result();

@@ -2,7 +2,7 @@
 
 class Usuario extends CI_Controller {           
 
-    public function index()
+    public function index($offset = 0)
     {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
@@ -11,9 +11,22 @@ class Usuario extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM usuario');
+
+        
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = '/usuario/index/';
+        $query = $this->db->query('SELECT count(*) as qtde FROM usuario');        
+        $config['total_rows'] = $query->result()[0]->qtde;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);                
+        $query = $this->db->query('SELECT * FROM usuario order by nome LIMIT ? OFFSET ?', array($limit, $offset*$limit));
+
+        $data['pagination'] = $this->pagination->create_links();
+                
         $data['usuario_id'] = $this->session->userdata('usuario')->id;
         $data['vetUsuario'] = $query->result();
+
         $this->load->view('innerpages/header');
         $this->load->view('usuario/index', $data);        
         $this->load->view('innerpages/footer');

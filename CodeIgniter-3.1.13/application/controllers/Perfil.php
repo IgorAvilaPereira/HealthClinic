@@ -9,7 +9,7 @@ atendimento
 class Perfil extends CI_Controller {
 
 
-    public function index()
+    public function index($offset = 0)
     {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
@@ -18,7 +18,18 @@ class Perfil extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM perfil');
+
+
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = '/perfil/index/';
+        $query = $this->db->query('SELECT count(*) as qtde FROM perfil');        
+        $config['total_rows'] = $query->result()[0]->qtde;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);                
+        $query = $this->db->query('SELECT * FROM perfil order by nome LIMIT ? OFFSET ?', array($limit, $offset*$limit));
+        $data['pagination'] = $this->pagination->create_links();
+        // $query = $this->db->query('SELECT * FROM perfil');
         // $query = $this->db->query("SELECT * FROM perfil WHERE id = ?;", array($id));       
         $data['vetPerfil'] = $query->result();
         $this->load->view('innerpages/header');

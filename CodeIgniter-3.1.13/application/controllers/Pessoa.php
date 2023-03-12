@@ -4,7 +4,7 @@ class Pessoa extends CI_Controller {
 
 
 
-    public function index()
+    public function index($offset = 0)
     {          
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
@@ -13,16 +13,19 @@ class Pessoa extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        // $this->load->library('pagination');
-        // $config['base_url'] = '/pessoa/index/';
-        // $config['total_rows'] = 200;
-        // $config['per_page'] = 1;
-        // $this->pagination->initialize($config);
-        // echo $this->pagination->create_links();
+        
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = '/pessoa/index/';
+        $query = $this->db->query('SELECT count(*) as qtde FROM pessoa');        
+        $config['total_rows'] = $query->result()[0]->qtde;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);                
+        $query = $this->db->query('SELECT * FROM pessoa order by nome LIMIT ? OFFSET ?', array($limit, $offset*$limit));
+        $data['pagination'] = $this->pagination->create_links();
 
-        $query = $this->db->query('SELECT * FROM pessoa order by nome');
+        // $query = $this->db->query('SELECT * FROM pessoa order by nome');
         $data['vetPessoa'] = $query->result();       
-
         $this->load->view('innerpages/header');
         $this->load->view('pessoa/index', $data);
         $this->load->view('innerpages/footer');

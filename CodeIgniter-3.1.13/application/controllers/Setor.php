@@ -2,7 +2,7 @@
 
 class Setor extends CI_Controller {
 
-    public function index()
+    public function index($offset = 0)
     {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
@@ -10,7 +10,18 @@ class Setor extends CI_Controller {
             header("Location: /usuario/tela_login");
         }
         $this->load->database();
-        $query = $this->db->query('SELECT * FROM setor');
+
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = '/setor/index/';
+        $query = $this->db->query('SELECT count(*) as qtde FROM setor');        
+        $config['total_rows'] = $query->result()[0]->qtde;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);                
+        $query = $this->db->query('SELECT * FROM setor order by nome LIMIT ? OFFSET ?', array($limit, $offset*$limit));
+        $data['pagination'] = $this->pagination->create_links();
+
+        // $query = $this->db->query('SELECT * FROM setor');
         $data['vetSetor'] = $query->result();
         $this->load->view('innerpages/header');
         $this->load->view('setor/index', $data);        

@@ -21,6 +21,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/atendimento/index">Atendimento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/pessoa/index">Pessoas</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/setor/index">Setores</a>
                     </li>
                     <li class="nav-item">
@@ -28,12 +34,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/perfil/index">Perfis</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/pessoa/index">Pessoas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/atendimento/index">Atendimento</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/relatorio/index">Relatórios</a>
