@@ -21,12 +21,33 @@ class Setor extends CI_Controller {
         $this->load->view('setor/tela_editar', $data);
     }
     public function editar()    {
+
+        $this->load->database();
+        $form_data = $this->input->post();        
+        $id = $this->input->post("id");
+        $nome = $this->input->post("nome");
+        $email = $this->input->post("email");
+        $endereco = $this->input->post("endereco");
+        $telefone = $this->input->post("telefone");
+        $query = $this->db->query("UPDATE setor SET nome='".$nome."',  email='".$email."', endereco='".$endereco."', telefone='".$telefone."' WHERE id = ".$id.";");
+        // redirect('/perfil/index');   
+        // return redirect()->to('setor/index');
+        // redirect('setor/index');
+        header("Location: /setor/index");
+        
     }
     public function remover($id)    {
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("DELETE FROM setor WHERE id = ".$id.";");        
-        header("Location: /setor/index");
+        $query = $this->db->query("select * from setor inner join usuario on (setor.id = usuario.setor_id) WHERE setor.id = ".$id.";");        
+        $total = count($query->result());
+        if ($total == 0) {
+            $query = $this->db->query("DELETE FROM setor WHERE id = ".$id.";");        
+            header("Location: /setor/index");
+        } else {
+            $data['mensagem'] = "nao pode excluir setor antes de excluir os usuarios do setor";
+            $this->load->view('erro', $data);            
+        }        
 
     }
     public function adicionar()    {        
@@ -37,9 +58,7 @@ class Setor extends CI_Controller {
         $endereco = $this->input->post("endereco");
         $telefone = $this->input->post("telefone");
         $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");
-        // redirect('/perfil/index');   
-        // return redirect()->to('setor/index');
-        // redirect('setor/index');
+     
         header("Location: /setor/index");
 
 
