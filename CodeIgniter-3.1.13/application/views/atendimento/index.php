@@ -1,12 +1,32 @@
 <h1>Atendimentos</h1>
-<ul>
-    <?php foreach($vetAtendimento as $atendimento) { ?>
-    <li>
-        <a class="btn btn-secondary" href="/atendimento/remover/<?=$atendimento->id?>">Remover</a>
-        <a class="btn btn-secondary" href="/atendimento/tela_editar/<?=$atendimento->id?>">Editar</a>
-        <?php echo $atendimento->data_hora; ?> <?php echo $atendimento->pessoa_nome; ?>
-        <?php echo $atendimento->usuario_nome; ?>
-    </li>
+
+<table border=1>
+    <tr>
+        <td> Remover </td>
+        <td> Editar </td>
+        <td> Data/hora </td>
+        <td> Pessoa </td>
+        <td> Usuário Atendente </td>
+</tr>
+        <?php foreach($vetAtendimento as $atendimento) { ?>
+    <tr>
+        <td>
+            <a class="btn btn-secondary" href="/atendimento/remover/<?=$atendimento->id?>">Remover</a>
+        </td>
+        <td>
+            <a class="btn btn-secondary" href="/atendimento/tela_editar/<?=$atendimento->id?>">Editar</a>
+        </td>
+        <td>
+            <?php echo $atendimento->data_hora; ?> 
+            
+        </td>
+        <td>
+        <?php echo $atendimento->pessoa_nome; ?>
+        </td>
+        <td>
+            <?php echo $atendimento->usuario_nome; ?>
+        </td>
+    </tr>
     <?php } ?>
-</ul>
+</table>
 <a class="btn btn-primary" href="tela_adicionar">Adicionar </a>
