@@ -38,7 +38,7 @@ CREATE TABLE perfil (
 
 
 INSERT INTO perfil (nome, adicionar, visualizar, editar, remover) VALUES 
-('Administrador', TRUE, TRUE, TRUE, TRUE);
+('Administrador', TRUE, TRUE, TRUE, TRUE),
 ('Servidor', TRUE, TRUE, TRUE, TRUE);
 
 CREATE TABLE usuario_perfil (
