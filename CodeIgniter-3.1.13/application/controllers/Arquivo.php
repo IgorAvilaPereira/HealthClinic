@@ -1,4 +1,5 @@
 <?php
+// atendimento_arquivo
 class Arquivo extends CI_Controller {
 
     public function index($atendimento_id)
