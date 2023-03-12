@@ -47,7 +47,8 @@ class Pessoa extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM pessoa WHERE id = '.$id);
+        // $query = $this->db->query('SELECT * FROM pessoa WHERE id = '.$id);
+        $query = $this->db->query("SELECT * FROM pessoa WHERE id = ?;", array($id));       
         $data['pessoa'] = $query->result()[0]; 
         $this->load->view('innerpages/header');
         $this->load->view('pessoa/tela_editar', $data);
@@ -75,7 +76,8 @@ class Pessoa extends CI_Controller {
         $cep =  $this->input->post("cep");
         $sexo =  $this->input->post("sexo");
     // Foto: <input type="file" name="foto">  <br>
-        $query = $this->db->query("UPDATE pessoa SET nome = '".$nome."',  data_nascimento = '".$data_nascimento."', cpf = '".$cpf."', rg='".$rg."', rua ='".$rua."', bairro = '".$bairro."', complemento = '".$complemento."', cep = '".$cep."', sexo = '".$sexo."' where id = ".$id.";");        
+        // $query = $this->db->query("UPDATE pessoa SET nome = '".$nome."',  data_nascimento = '".$data_nascimento."', cpf = '".$cpf."', rg='".$rg."', rua ='".$rua."', bairro = '".$bairro."', complemento = '".$complemento."', cep = '".$cep."', sexo = '".$sexo."' where id = ".$id.";");        
+        $query = $this->db->query("UPDATE pessoa SET nome = ?,  data_nascimento = ?, cpf = '".$cpf."', rg=?, rua = ?, bairro = ?, complemento = ?, cep = ?, sexo = ? where id = ?;", array($nome, $data_nascimento, $rg, $rua, $bairro, $complemento, $cep, $sexo, $id));       
         header("Location: /pessoa/index");   
     }
     public function remover($id)    {
@@ -86,13 +88,17 @@ class Pessoa extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT * FROM pessoa WHERE id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM pessoa WHERE id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM pessoa WHERE id = ?;", array($id));       
+
         $pessoa = $query->result()[0];    
         $foto = $pessoa->foto;
         if (!empty($foto)) {
             unlink("./fotos/".$foto);            
         }
-        $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ?;", array($id));       
+
         $vetDocumento = $query->result();               
         $query = ""; 
         if (count($vetDocumento) > 0) {

@@ -11,7 +11,8 @@ class Documento extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$pessoa_id.";");        
+        // $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$pessoa_id.";");        
+        $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ?", array($pessoa_id));       
         $data['vetDocumento'] = $query->result();
         $data['pessoa_id'] = $pessoa_id;
         $this->load->view('innerpages/header');
@@ -42,7 +43,8 @@ class Documento extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
-        $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM documento WHERE id = ?", array($id));       
         $data['documento'] = $query->result()[0];
         $data['pessoa_id'] = $pessoa_id;
         $this->load->view('documento/tela_editar', $data);        
@@ -60,7 +62,8 @@ class Documento extends CI_Controller {
         $nome = $this->input->post("nome");
         $id = $this->input->post("id");
         $pessoa_id = $this->input->post("pessoa_id");
-        $query = $this->db->query("UPDATE documento SET nome = '".$nome."' WHERE id = ".$id.";");
+        // $query = $this->db->query("UPDATE documento SET nome = '".$nome."' WHERE id = ".$id.";");
+        $query = $this->db->query("UPDATE documento SET nome = ? WHERE id = ?", array($nome, $id));       
         header("Location: /documento/index/".$pessoa_id);
     }
 
@@ -72,7 +75,8 @@ class Documento extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM documento WHERE id = ?", array($id));       
         $documento = $query->result()[0];        
         if (unlink("./documentos/".$documento->arquivo)) {
             $query = $this->db->query("DELETE FROM documento WHERE id = ".$id.";");        
@@ -113,7 +117,8 @@ class Documento extends CI_Controller {
         else
         {
                 $file_name = $this->upload->data()["file_name"];      
-                $query = $this->db->query("INSERT INTO documento (nome, arquivo, pessoa_id) VALUES('".$nome."', '".$file_name."', ".$pessoa_id.");");          
+                $query = $this->db->query("INSERT INTO documento (nome, arquivo, pessoa_id) VALUES(?, ?, ?);", array($nome, $file_name, $pessoa_id));       
+                // $query = $this->db->query("INSERT INTO documento (nome, arquivo, pessoa_id) VALUES('".$nome."', '".$file_name."', ".$pessoa_id.");");          
                 header("Location: /documento/index/".$pessoa_id);
                 // $data = array('upload_data' => $this->upload->data());                               
                 // $data['pessoa_id'] = $pessoa_id;

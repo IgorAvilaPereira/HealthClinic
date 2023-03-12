@@ -19,6 +19,7 @@ class Perfil extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM perfil');
+        // $query = $this->db->query("SELECT * FROM perfil WHERE id = ?;", array($id));       
         $data['vetPerfil'] = $query->result();
         $this->load->view('innerpages/header');
         $this->load->view('perfil/index', $data);
@@ -44,7 +45,8 @@ class Perfil extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM perfil WHERE id = '.$id);
+        // $query = $this->db->query('SELECT * FROM perfil WHERE id = '.$id);        
+        $query = $this->db->query("SELECT * FROM perfil WHERE id = ?;", array($id));       
         $data['perfil'] = $query->result()[0];      
         $this->load->view('innerpages/header');
         $this->load->view('perfil/tela_editar', $data);
@@ -70,7 +72,8 @@ class Perfil extends CI_Controller {
         // if (empty($visualizar)) $visualizar = FALSE;
         // if (empty($editar)) $editar = FALSE;        
         // if (empty($remover)) $remover = FALSE;
-        $query = $this->db->query("UPDATE perfil SET nome = '".$nome."' WHERE id = ".$id.";");
+        // $query = $this->db->query("UPDATE perfil SET nome = '".$nome."' WHERE id = ".$id.";");
+        $query = $this->db->query("UPDATE perfil SET nome = ? WHERE id = ?;", array($nome, $id));       
         header("Location: /perfil/index");
     }
     public function remover($id)    {
@@ -84,7 +87,8 @@ class Perfil extends CI_Controller {
         $query = $this->db->query("select * from perfil inner join usuario_perfil on (perfil.id = usuario_perfil.perfil_id) WHERE perfil.id = ".$id.";");        
         $total = count($query->result());
         if ($total == 0) {
-            $query = $this->db->query("DELETE FROM perfil WHERE id = ".$id.";");        
+            // $query = $this->db->query("DELETE FROM perfil WHERE id = ".$id.";");        
+            $query = $this->db->query("DELETE FROM perfil WHERE id = ?;", array($id));       
             header("Location: /perfil/index");
         } else {
             $data['mensagem'] = "nao pode excluir perfis que possuem usuários atrelados";
@@ -114,7 +118,8 @@ class Perfil extends CI_Controller {
         // if (empty($editar)) $editar = FALSE;        
         // if (empty($remover)) $remover = FALSE;
         // $query = $this->db->query("INSERT INTO perfil (nome, adicionar, visualizar, editar, remover) VALUES ('".$nome."', ".$adicionar.", ".$visualizar.", ".$editar.", ".$remover.");");
-        $query = $this->db->query("INSERT INTO perfil (nome) VALUES ('".$nome."');");
+        // $query = $this->db->query("INSERT INTO perfil (nome) VALUES ('".$nome."');");
+        $query = $this->db->query("INSERT INTO perfil (nome) VALUES (?);", array($nome));       
         header("Location: /perfil/index");
 
     }

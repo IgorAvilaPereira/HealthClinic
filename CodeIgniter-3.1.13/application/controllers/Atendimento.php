@@ -54,7 +54,9 @@ class Atendimento extends CI_Controller {
         $data['vetPessoa'] = $query->result();
         $query = $this->db->query('SELECT * FROM usuario');
         $data['vetUsuario'] = $query->result();
-        $query = $this->db->query("SELECT *, to_char(data_hora, 'MM/DD/YYYY HH12:MI') as data_hora FROM atendimento WHERE id = ".$id);
+        // $query = $this->db->query("SELECT *, to_char(data_hora, 'MM/DD/YYYY HH12:MI') as data_hora FROM atendimento WHERE id = ".$id);
+        $query = $this->db->query("SELECT *, to_char(data_hora, 'MM/DD/YYYY HH12:MI') as data_hora FROM atendimento WHERE id = ?", array($id));       
+
         $data['atendimento'] = $query->result()[0]; 
         $this->load->view('innerpages/header');
         $this->load->view('atendimento/tela_editar', $data);
@@ -73,7 +75,8 @@ class Atendimento extends CI_Controller {
           $observacao = $this->input->post("observacao");
           $usuario_id = $this->input->post("usuario_id");
           $pessoa_id = $this->input->post("pessoa_id");
-          $query = $this->db->query("UPDATE atendimento SET observacao = '".$observacao."', usuario_id = ".$usuario_id.", pessoa_id = ".$pessoa_id." WHERE id = ".$id.";");        
+          $query = $this->db->query("UPDATE atendimento SET observacao = ?, usuario_id = ?, pessoa_id = ? WHERE id = ?;", array($observacao, $usuario_id, $pessoa_id, $id));       
+        //   $query = $this->db->query("UPDATE atendimento SET observacao = '".$observacao."', usuario_id = ".$usuario_id.", pessoa_id = ".$pessoa_id." WHERE id = ".$id.";");        
           header("Location: /atendimento/index");  
     }
     public function remover($id)    {
@@ -84,7 +87,9 @@ class Atendimento extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ?;", array($id));       
+
         $vetArquivo = $query->result();       
         $query = ""; 
         if (count($vetArquivo) > 0) {
@@ -110,7 +115,8 @@ class Atendimento extends CI_Controller {
         $observacao = $this->input->post("observacao");
         $usuario_id = $this->input->post("usuario_id");
         $pessoa_id = $this->input->post("pessoa_id");
-        $query = $this->db->query("INSERT INTO atendimento (observacao, usuario_id, pessoa_id) VALUES('".$observacao."', ".$usuario_id.", ".$pessoa_id.");");
+        $query = $this->db->query("INSERT INTO atendimento (observacao, usuario_id, pessoa_id) VALUES(?, ?, ?);", array($observacao, $usuario_id, $pessoa_id));       
+        // $query = $this->db->query("INSERT INTO atendimento (observacao, usuario_id, pessoa_id) VALUES('".$observacao."', ".$usuario_id.", ".$pessoa_id.");");
         header("Location: /atendimento/index");
     }
 }

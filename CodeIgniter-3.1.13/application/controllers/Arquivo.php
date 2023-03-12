@@ -11,9 +11,12 @@ class Arquivo extends CI_Controller {
         }
 
         $this->load->database();
-        $this->load->helper('url'); 
+        $this->load->helper('url');         
+        // $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ? ".$atendimento_id.";");             
+        
         // https://w3.med.cmu.ac.th/ci/user_guide/database/queries.html
-        $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ".$atendimento_id.";");        
+        $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ?;", array($atendimento_id));             
+        
         $data['vetArquivo'] = $query->result();
         $data['atendimento_id'] = $atendimento_id;
         $this->load->view('innerpages/header');
@@ -44,7 +47,8 @@ class Arquivo extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
-        $query = $this->db->query("SELECT * FROM arquivo WHERE id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM arquivo WHERE id = ".$id.";");   
+        $query = $this->db->query("SELECT * FROM arquivo WHERE id = ?;", array($id));         
         $data['arquivo'] = $query->result()[0];
         $data['atendimento_id'] = $atendimento_id;
         $this->load->view('arquivo/tela_editar', $data);        
@@ -62,7 +66,8 @@ class Arquivo extends CI_Controller {
         $nome = $this->input->post("nome");
         $id = $this->input->post("id");
         $atendimento_id = $this->input->post("atendimento_id");
-        $query = $this->db->query("UPDATE arquivo SET nome = '".$nome."' WHERE id = ".$id.";");
+        // $query = $this->db->query("UPDATE arquivo SET nome = '".$nome."' WHERE id = ".$id.";");
+        $query = $this->db->query("UPDATE arquivo SET nome = ? WHERE id = ?;", array($nome, $id));   
         header("Location: /arquivo/index/".$atendimento_id);
     }
 
@@ -74,10 +79,12 @@ class Arquivo extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT * FROM arquivo WHERE id = ".$id.";");        
+        // $query = $this->db->query("SELECT * FROM arquivo WHERE id = ".$id.";");    
+        $query = $this->db->query("SELECT * FROM arquivo WHERE id = ?;", array($id));       
         $arquivo = $query->result()[0];        
         if (unlink("./arquivos/".$arquivo->arquivo)) {
-            $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        
+            $query = $this->db->query("DELETE FROM arquivo WHERE id = ?;", array($id));       
+            // $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        
         }
         header("Location: /arquivo/index/".$atendimento_id);
     }
@@ -114,8 +121,10 @@ class Arquivo extends CI_Controller {
         }
         else
         {
-                $file_name = $this->upload->data()["file_name"];      
-                $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES('".$nome."', '".$file_name."', ".$atendimento_id.");");          
+                $file_name = $this->upload->data()["file_name"];  
+                // $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES('".$nome."', '".$file_name."', ".$atendimento_id.");");              
+                $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES(?, ?, ?);", array($nome, $file_name, $atendimento_id));       
+                
                 header("Location: /arquivo/index/".$atendimento_id);
                 // $data = array('upload_data' => $this->upload->data());                               
                 // $data['atendimento_id'] = $atendimento_id;
