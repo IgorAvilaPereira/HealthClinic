@@ -6,6 +6,11 @@ class Pessoa extends CI_Controller {
 
     public function index()
     {          
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         // $this->load->library('pagination');
@@ -23,6 +28,11 @@ class Pessoa extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_adicionar()    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $data['error'] = "";
         $data['upload_data'] = [];
         $this->load->view('innerpages/header');
@@ -30,6 +40,11 @@ class Pessoa extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_editar($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM pessoa WHERE id = '.$id);
@@ -40,6 +55,11 @@ class Pessoa extends CI_Controller {
     }
     public function editar()    
     {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
 
         $this->load->database();
         $this->load->helper('url'); 
@@ -59,6 +79,11 @@ class Pessoa extends CI_Controller {
         header("Location: /pessoa/index");   
     }
     public function remover($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("SELECT * FROM pessoa WHERE id = ".$id.";");        
@@ -82,6 +107,11 @@ class Pessoa extends CI_Controller {
     }
     public function adicionar()    
     {      
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        

@@ -20,8 +20,10 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-        $this->load->view('innerpages/header');
-		$this->load->view('home');
-        $this->load->view('innerpages/footer');
+        // $this->load->view('innerpages/header');
+		// $this->load->view('home');
+        // $this->load->view('innerpages/footer');
+		$data['error'] = "";
+		$this->load->view('usuario/tela_login', $data);
 	}
 }

@@ -4,6 +4,11 @@ class Documento extends CI_Controller {
 
     public function index($pessoa_id = 0)
     {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$pessoa_id.";");        
@@ -14,6 +19,11 @@ class Documento extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_adicionar($pessoa_id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
@@ -24,6 +34,11 @@ class Documento extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_editar($id, $pessoa_id)      {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
@@ -34,6 +49,11 @@ class Documento extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function editar()    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -45,6 +65,11 @@ class Documento extends CI_Controller {
     }
 
     public function remover($id, $pessoa_id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
@@ -55,7 +80,12 @@ class Documento extends CI_Controller {
         header("Location: /documento/index/".$pessoa_id);
     }
 
-    public function adicionar()    {        
+    public function adicionar()    {     
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }   
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        

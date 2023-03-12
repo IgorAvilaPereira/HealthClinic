@@ -4,6 +4,11 @@ class Setor extends CI_Controller {
 
     public function index()
     {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $query = $this->db->query('SELECT * FROM setor');
         $data['vetSetor'] = $query->result();
@@ -12,11 +17,26 @@ class Setor extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_adicionar()    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->view('innerpages/header');
         $this->load->view('setor/tela_adicionar');
         $this->load->view('innerpages/footer');
     }
     public function tela_editar($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor WHERE id = '.$id);
@@ -39,6 +59,11 @@ class Setor extends CI_Controller {
         
     }
     public function remover($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("select * from setor inner join usuario on (setor.id = usuario.setor_id) WHERE setor.id = ".$id.";");        
@@ -54,7 +79,12 @@ class Setor extends CI_Controller {
         }        
 
     }
-    public function adicionar()    {        
+    public function adicionar()    {      
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }  
         $this->load->database();
         $form_data = $this->input->post();        
         $nome = $this->input->post("nome");

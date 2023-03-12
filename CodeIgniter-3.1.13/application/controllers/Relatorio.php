@@ -8,6 +8,11 @@ class Relatorio extends CI_Controller {
 
     public function index()
     {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url');         
         // $this->load->library('jpgraph-4.4.1');

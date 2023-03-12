@@ -4,6 +4,11 @@ class Atendimento extends CI_Controller {
 
     public function index()
     {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("SELECT atendimento.observacao, atendimento.id as id,  to_char(data_hora, 'DD/MM/YYYY HH24:MI:SS') as data_hora, usuario.nome as usuario_nome, usuario.id as usuario_id, pessoa.nome as pessoa_nome, pessoa.id as pessoa_id FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id);");
@@ -13,6 +18,11 @@ class Atendimento extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_adicionar()    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            redirect('usuario/tela_login');
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $data = [];
@@ -33,6 +43,11 @@ class Atendimento extends CI_Controller {
         }
     }
     public function tela_editar($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM pessoa');
@@ -46,7 +61,11 @@ class Atendimento extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function editar()    {
-          // colocar quase tudo isso modelo
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
           $this->load->database();
           $this->load->helper('url'); 
           $form_data = $this->input->post();        
@@ -58,6 +77,11 @@ class Atendimento extends CI_Controller {
           header("Location: /atendimento/index");  
     }
     public function remover($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ".$id.";");        
@@ -75,7 +99,11 @@ class Atendimento extends CI_Controller {
 
     }
     public function adicionar()    {        
-        // colocar quase tudo isso modelo
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        

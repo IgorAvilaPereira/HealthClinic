@@ -4,6 +4,11 @@ class Usuario extends CI_Controller {
 
     public function index()
     {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM usuario');
@@ -13,6 +18,11 @@ class Usuario extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_adicionar()    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
@@ -24,6 +34,11 @@ class Usuario extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function tela_editar($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
@@ -43,6 +58,11 @@ class Usuario extends CI_Controller {
         $this->load->view('innerpages/footer');
     }
     public function editar()    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -71,12 +91,53 @@ class Usuario extends CI_Controller {
         header("Location: /usuario/index");    
     }
     public function remover($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("DELETE FROM usuario WHERE id = ".$id.";");        
         header("Location: /usuario/index");    
     }
-    public function adicionar()    {        
+    public function logout()    {        
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
+        $this->load->database();
+        $this->load->helper('url'); 
+        $this->load->library('session');
+        $this->session->sess_destroy();
+        $data['error'] = "";
+        $this->load->view('usuario/tela_login', $data);
+    }
+    public function login()    {        
+        $this->load->database();
+        $this->load->helper('url'); 
+        $form_data = $this->input->post(); 
+        $email = $this->input->post("email");
+        $senha = $this->input->post("senha");
+        $query = $this->db->query("SELECT * FROM usuario WHERE email = '".$email."' and senha = md5('".$senha."');");
+        if (count($query->result()) > 0){
+            $this->load->library('session');
+            $this->session->usuario = $query->result()[0];
+            $this->load->view('innerpages/header');
+		    $this->load->view('home');
+            $this->load->view('innerpages/footer');
+        } else {
+            $data['error'] = "Login incorreto";
+            $this->load->view('usuario/tela_login', $data);
+        }        
+    }
+    public function adicionar()    {   
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }     
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
