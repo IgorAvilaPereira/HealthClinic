@@ -23,7 +23,18 @@ class Welcome extends CI_Controller {
         // $this->load->view('innerpages/header');
 		// $this->load->view('home');
         // $this->load->view('innerpages/footer');
-		$data['error'] = "";
-		$this->load->view('usuario/tela_login', $data);
+
+		$this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            // header("Location: /usuario/tela_login");
+			$data['error'] = "";
+			$this->load->view('usuario/tela_login', $data);
+        }  else {
+			$this->load->view('innerpages/header');
+		    $this->load->view('home');
+            $this->load->view('innerpages/footer');
+		}
+		
 	}
 }
