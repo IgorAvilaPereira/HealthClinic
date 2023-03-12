@@ -21,7 +21,9 @@ class Perfil extends CI_Controller {
         
     }
     public function tela_adicionar()    {
+        $this->load->view('innerpages/header');
         $this->load->view('perfil/tela_adicionar');
+        $this->load->view('innerpages/footer');
     }
     public function tela_editar($id)    {
         $this->load->database();

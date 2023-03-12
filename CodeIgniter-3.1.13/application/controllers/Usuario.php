@@ -1,7 +1,6 @@
 <?php
 
-class Usuario extends CI_Controller {   
-        
+class Usuario extends CI_Controller {           
 
     public function index()
     {
@@ -33,15 +32,12 @@ class Usuario extends CI_Controller {
         $data['usuario'] = $query->result()[0];
         $query = $this->db->query('SELECT * FROM perfil');
         $data['vetPerfil'] = $query->result();  
-
         $query = $this->db->query('SELECT perfil_id as id FROM usuario_perfil where usuario_id='.$id);
         $vetUsuarioPerfil = $query->result();  
         $data['vetUsuarioPerfil'] = [];
         foreach($vetUsuarioPerfil as $perfil){
             $data['vetUsuarioPerfil'][] = (int) $perfil->id;
         }        
-        // die(var_dump($data['vetUsuarioPerfil']));
-
         $this->load->view('innerpages/header'); 
         $this->load->view('usuario/tela_editar', $data);
         $this->load->view('innerpages/footer');
