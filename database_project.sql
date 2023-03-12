@@ -68,7 +68,7 @@ CREATE TABLE pessoa (
 INSERT INTO pessoa (nome) VALUES 
 ('Pedro');
 
-CREATE TABLE pessoa_arquivo (
+CREATE TABLE documento (
     id serial primary key,
     nome text,
     arquivo text NOT NULL,
