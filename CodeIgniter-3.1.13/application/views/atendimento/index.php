@@ -8,6 +8,7 @@
         <td> Data/hora </td>
         <td> Pessoa </td>
         <td> Atendente </td>
+        <td> Observação </td>
     </tr>
     <?php foreach($vetAtendimento as $atendimento) { ?>
     <tr>
@@ -31,6 +32,9 @@
         </td>
         <td>
             <?php echo $atendimento->usuario_nome; ?>
+        </td>
+        <td>
+            <?php echo $atendimento->observacao; ?>
         </td>
     </tr>
     <?php } ?>

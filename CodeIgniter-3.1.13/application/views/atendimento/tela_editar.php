@@ -3,7 +3,7 @@
     <table>
         <tr>
             <td> Data/Hora: </td>
-            <td> <input type="datetime-local" value="<?=$atendimento->data_hora?>"> </td>
+            <td> <?=$atendimento->data_hora?></td>
         </tr>
         <tr>
             <td> Usuário: </td>

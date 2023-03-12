@@ -2,7 +2,7 @@
 // atendimento_arquivo
 class Arquivo extends CI_Controller {
 
-    public function index($atendimento_id)
+    public function index($atendimento_id = 0)
     {
         $this->load->database();
         $this->load->helper('url'); 

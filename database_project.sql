@@ -12,6 +12,9 @@ CREATE TABLE setor (
     telefone text
 );
 
+INSERT INTO setor (nome) VALUES 
+('SAÚDE'), 
+('COMIDA');
 
 CREATE TABLE usuario (
     id serial primary key,
@@ -21,6 +24,8 @@ CREATE TABLE usuario (
     setor_id integer references setor (id),
     unique (email)
 );
+INSERT INTO usuario (nome, email, senha, setor_id) VALUES 
+('JOÃO', 'joao@joao.com', md5('123'), 1);
 
 CREATE TABLE perfil (
     id serial primary key,
@@ -31,16 +36,19 @@ CREATE TABLE perfil (
     remover boolean DEFAULT FALSE
 );
 
-/*
+
 INSERT INTO perfil (nome, adicionar, visualizar, editar, remover) VALUES 
 ('Administrador', TRUE, TRUE, TRUE, TRUE);
-*/
+('Servidor', TRUE, TRUE, TRUE, TRUE);
 
 CREATE TABLE usuario_perfil (
     usuario_id integer references usuario (id) ON DELETE CASCADE,
     perfil_id integer references perfil (id),
     primary key (usuario_id, perfil_id)
 );
+
+INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES 
+(1,1);
 
 CREATE TABLE pessoa (
     id serial primary key,
@@ -57,7 +65,8 @@ CREATE TABLE pessoa (
     foto text
 );
 
-INSERT INTO pessoa (nome) VALUES ('João');
+INSERT INTO pessoa (nome) VALUES 
+('Pedro');
 
 CREATE TABLE pessoa_arquivo (
     id serial primary key,
