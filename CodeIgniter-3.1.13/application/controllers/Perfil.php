@@ -54,8 +54,18 @@ class Perfil extends CI_Controller {
     public function remover($id)    {
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("DELETE FROM perfil WHERE id = ".$id.";");        
-        header("Location: /perfil/index");
+        $query = $this->db->query("select * from perfil inner join usuario_perfil on (perfil.id = usuario_perfil.perfil_id) WHERE perfil.id = ".$id.";");        
+        $total = count($query->result());
+        if ($total == 0) {
+            $query = $this->db->query("DELETE FROM perfil WHERE id = ".$id.";");        
+            header("Location: /perfil/index");
+        } else {
+            $data['mensagem'] = "nao pode excluir perfis que possuem usuários atrelados";
+            $this->load->view('innerpages/header');
+            $this->load->view('erro', $data);          
+            $this->load->view('innerpages/footer');  
+        }          
+        // header("Location: /perfil/index");
     }
     public function adicionar()    {        
         $this->load->database();

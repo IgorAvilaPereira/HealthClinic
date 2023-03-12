@@ -29,13 +29,13 @@
                         <a class="nav-link" aria-current="page" href="/usuario/index">Usuários</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/perfil/index">Perfis</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/pessoa/index">Pessoas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/atendimento/index">Atendimento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/perfil/index">Perfis</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/relatorio/index">Relatórios</a>
