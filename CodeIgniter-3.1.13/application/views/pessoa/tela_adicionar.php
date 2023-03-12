@@ -8,7 +8,7 @@
     Bairro <input type="text" name="bairro"> <br>
     Complemento: <input type="text" name="complemento"> <br>
     Cep: <input type="text" name="cep"> <br>
-    sexo: <input type="radio" name="sexo" value="M"> Masculino  <input type="radio" name="sexo" value="F"> Feminino <br>
+    Sexo: <input type="radio" name="sexo" value="M"> Masculino  <input type="radio" name="sexo" value="F"> Feminino <br>
     Foto: <input type="file" name="foto"> <br>
     <input class="btn btn-primary" value="Adicionar" type="submit">
 </form>

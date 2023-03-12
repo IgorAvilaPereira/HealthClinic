@@ -1,4 +1,4 @@
-<h1>Adicionar - Pessoa</h1>
+<h1>Adicionar - Atendimento</h1>
 <form action="/atendimento/adicionar" method="post">
     Usuario: <select name="usuario_id">
         <?php foreach($vetUsuario as $usuario) { ?>
