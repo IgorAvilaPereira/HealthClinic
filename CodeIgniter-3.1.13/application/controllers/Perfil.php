@@ -84,7 +84,7 @@ class Perfil extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("select * from perfil inner join usuario_perfil on (perfil.id = usuario_perfil.perfil_id) WHERE perfil.id = ".$id.";");        
+        $query = $this->db->query("select * from perfil inner join usuario_perfil on (perfil.id = usuario_perfil.perfil_id) WHERE perfil.id = ?;", array($id));        
         $total = count($query->result());
         if ($total == 0) {
             // $query = $this->db->query("DELETE FROM perfil WHERE id = ".$id.";");        

@@ -39,7 +39,8 @@ class Setor extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM setor WHERE id = '.$id);
+        $query = $this->db->query("SELECT * FROM setor WHERE id = ?", array($id));
+        
         $data['setor'] = $query->result()[0]; 
         $this->load->view('innerpages/header');
         $this->load->view('setor/tela_editar', $data);
@@ -54,7 +55,8 @@ class Setor extends CI_Controller {
         $email = $this->input->post("email");
         $endereco = $this->input->post("endereco");
         $telefone = $this->input->post("telefone");
-        $query = $this->db->query("UPDATE setor SET nome='".$nome."',  email='".$email."', endereco='".$endereco."', telefone='".$telefone."' WHERE id = ".$id.";");
+        // $query = $this->db->query("UPDATE setor SET nome='".$nome."',  email='".$email."', endereco='".$endereco."', telefone='".$telefone."' WHERE id = ".$id.";");
+        $query = $this->db->query("UPDATE setor SET nome=?,  email=?, endereco=?, telefone=? WHERE id = ?;", array($nome, $email, $endereco, $telefone, $id));
         header("Location: /setor/index");
         
     }
@@ -69,7 +71,8 @@ class Setor extends CI_Controller {
         $query = $this->db->query("select * from setor inner join usuario on (setor.id = usuario.setor_id) WHERE setor.id = ".$id.";");        
         $total = count($query->result());
         if ($total == 0) {
-            $query = $this->db->query("DELETE FROM setor WHERE id = ".$id.";");        
+            // $query = $this->db->query("DELETE FROM setor WHERE id = ".$id.";");      
+            $query = $this->db->query("DELETE FROM setor WHERE id = ?", array($id));  
             header("Location: /setor/index");
         } else {
             $data['mensagem'] = "nao pode excluir setor antes de excluir os usuarios do setor";
@@ -91,7 +94,8 @@ class Setor extends CI_Controller {
         $email = $this->input->post("email");
         $endereco = $this->input->post("endereco");
         $telefone = $this->input->post("telefone");
-        $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");     
+        // $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");     
+        $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES (?,?,?,?);", array($nome, $email, $endereco, $telefone));  
         header("Location: /setor/index");
     }
 }

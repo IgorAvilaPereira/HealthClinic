@@ -125,6 +125,8 @@ class Arquivo extends CI_Controller {
                 // $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES('".$nome."', '".$file_name."', ".$atendimento_id.");");              
                 $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES(?, ?, ?);", array($nome, $file_name, $atendimento_id));       
                 
+                
+
                 header("Location: /arquivo/index/".$atendimento_id);
                 // $data = array('upload_data' => $this->upload->data());                               
                 // $data['atendimento_id'] = $atendimento_id;

@@ -12,6 +12,7 @@ class Usuario extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM usuario');
+        $data['usuario_id'] = $this->session->userdata('usuario')->id;
         $data['vetUsuario'] = $query->result();
         $this->load->view('innerpages/header');
         $this->load->view('usuario/index', $data);        
@@ -43,11 +44,13 @@ class Usuario extends CI_Controller {
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
         $data['vetSetor'] = $query->result();  
-        $query = $this->db->query('SELECT * FROM usuario /*inner join setor on (setor.id = usuario.setor_id)*/ WHERE usuario.id = '.$id);
+        // $query = $this->db->query('SELECT * FROM usuario WHERE usuario.id = '.$id);
+        $query = $this->db->query("SELECT * FROM usuario WHERE usuario.id = ?", array($id));    
         $data['usuario'] = $query->result()[0];
         $query = $this->db->query('SELECT * FROM perfil');
         $data['vetPerfil'] = $query->result();  
-        $query = $this->db->query('SELECT perfil_id as id FROM usuario_perfil where usuario_id='.$id);
+        // $query = $this->db->query('SELECT perfil_id as id FROM usuario_perfil where usuario_id='.$id);
+        $query = $this->db->query("SELECT perfil_id as id FROM usuario_perfil where usuario_id=?", array($id));    
         $vetUsuarioPerfil = $query->result();  
         $data['vetUsuarioPerfil'] = [];
         foreach($vetUsuarioPerfil as $perfil){
@@ -71,7 +74,8 @@ class Usuario extends CI_Controller {
         $email = $this->input->post("email");
         $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
-        $query = $this->db->query("UPDATE usuario SET nome='".$nome."',  email='".$email."', senha=Md5('".$senha."'), setor_id = ".$setor_id." WHERE id =".$id.";");        
+        // $query = $this->db->query("UPDATE usuario SET nome='".$nome."',  email='".$email."', senha=Md5('".$senha."'), setor_id = ".$setor_id." WHERE id =".$id.";");        
+        $query = $this->db->query("UPDATE usuario SET nome=?,  email=?, senha = md5('".$this->db->escape_str($senha)."'), setor_id = ? WHERE id =?;", array($nome, $email, $setor_id, $id));       
         $vetPerfil = $this->input->post("perfil_id"); 
         $usuario_id = $id;    
         if (is_array($vetPerfil)){
@@ -98,7 +102,8 @@ class Usuario extends CI_Controller {
         }
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("DELETE FROM usuario WHERE id = ".$id.";");        
+        // $query = $this->db->query("DELETE FROM usuario WHERE id = ".$id.";");        
+        $query = $this->db->query("DELETE FROM usuario WHERE id = ?", array($id));       
         header("Location: /usuario/index");    
     }
     public function logout()    {        
@@ -120,7 +125,8 @@ class Usuario extends CI_Controller {
         $form_data = $this->input->post(); 
         $email = $this->input->post("email");
         $senha = $this->input->post("senha");
-        $query = $this->db->query("SELECT * FROM usuario WHERE email = '".$email."' and senha = md5('".$senha."');");
+        // $query = $this->db->query("SELECT * FROM usuario WHERE email = '".$email."' and senha = md5('".$senha."');");
+        $query = $this->db->query("SELECT * FROM usuario WHERE email = ? and senha = md5('".$this->db->escape_str($senha)."');", array($email));       
         if (count($query->result()) > 0){
             $this->load->library('session');
             $this->session->usuario = $query->result()[0];
@@ -146,7 +152,8 @@ class Usuario extends CI_Controller {
         $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
         $vetPerfil = $this->input->post("perfil_id");        
-        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.") RETURNING id;");        
+        // $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.") RETURNING id;");        
+        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES (?, ?, senha = md5('".$this->db->escape_str($senha)."', ?) RETURNING id;", array($nome, $email, $setor_id));       
         if (count($vetPerfil)>0){
             $usuario_id = (int) $query->result()[0]->id;            
             $sql = "";

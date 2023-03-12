@@ -3,7 +3,7 @@
     <?php foreach($vetPessoa as $pessoa) { ?>
     <li>
     <td>
-            <a class="btn btn-secondary" href="/documento/index/<?=$pessoa->id?>">Adicionar Documento</a>
+            <a class="btn btn-secondary" href="/documento/index/<?=$pessoa->id?>">Documentos</a>
         </td>
         <a class="btn btn-secondary" href="/pessoa/remover/<?=$pessoa->id?>">Remover</a>
         <a class="btn btn-secondary" href="/pessoa/tela_editar/<?=$pessoa->id?>">Editar</a>

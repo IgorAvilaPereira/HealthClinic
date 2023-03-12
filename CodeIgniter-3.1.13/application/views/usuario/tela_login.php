@@ -27,11 +27,11 @@
     <table>
         <tr>
             <td>Email: </td>
-            <td> <input type="text" name="email" required> </td>
+            <td> <input type="text" name="email" required value="joao@joao.com"> </td>
         </tr>
         <tr>
             <td>Senha: </td>
-            <td> <input type="password" name="senha"> </td>
+            <td> <input type="password" name="senha" value="123"> </td>
         </tr>
     </table>
     <input class="btn btn-primary" value="Login" type="submit">
