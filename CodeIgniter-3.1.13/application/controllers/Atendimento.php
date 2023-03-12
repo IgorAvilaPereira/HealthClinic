@@ -47,7 +47,7 @@ class Atendimento extends CI_Controller {
           $usuario_id = $this->input->post("usuario_id");
           $pessoa_id = $this->input->post("pessoa_id");
           $query = $this->db->query("UPDATE atendimento SET observacao = '".$observacao."', usuario_id = ".$usuario_id.", pessoa_id = ".$pessoa_id." WHERE id = ".$id.";");        
-         
+          header("Location: /atendimento/index");  
     }
     public function remover($id)    {
         $this->load->database();
