@@ -12,7 +12,7 @@
         <?php foreach($vetAtendimento as $atendimento) { ?>
     <tr>
     <td>
-            <a class="btn btn-secondary" href="/atendimento_arquivo/index/<?=$atendimento->id?>">Adicionar Arquivos</a>
+            <a class="btn btn-secondary" href="/arquivo/index/<?=$atendimento->id?>">Adicionar Arquivos</a>
         </td>
         <td>
             <a class="btn btn-secondary" href="/atendimento/remover/<?=$atendimento->id?>">Remover</a>
