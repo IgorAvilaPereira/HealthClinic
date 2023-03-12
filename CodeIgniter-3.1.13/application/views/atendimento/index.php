@@ -6,7 +6,7 @@
         <td> Editar </td>
         <td> Data/hora </td>
         <td> Pessoa </td>
-        <td> Usuário Atendente </td>
+        <td> Atendente </td>
 </tr>
         <?php foreach($vetAtendimento as $atendimento) { ?>
     <tr>
