@@ -4,7 +4,7 @@
     
     <li> 
     <a href="/perfil/remover/<?=$perfil->id?>">Remover</a>
-         <a href="/perfil/remover/<?=$perfil->id?>">Editar</a>
+         <a href="/perfil/tela_editar/<?=$perfil->id?>">Editar</a>
     <?php echo $perfil->id; ?>  <?php echo $perfil->nome; ?>  </li>
 <?php } ?>
 </ul>    

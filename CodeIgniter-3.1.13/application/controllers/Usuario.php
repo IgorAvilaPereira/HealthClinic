@@ -20,9 +20,11 @@ class Usuario extends CI_Controller {
         $data['vetSetor'] = $query->result();     
         $this->load->view('usuario/tela_adicionar', $data);
     }
-    public function tela_editar()    {
+    public function tela_editar($id)    {
         $this->load->database();
         $this->load->helper('url'); 
+        $query = $this->db->query('SELECT * FROM usuario WHERE id = '.$id);
+        $data['usuario'] = $query->result();
         $this->load->view('usuario/tela_editar', $data);
     }
     public function editar()    {
@@ -33,7 +35,7 @@ class Usuario extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("DELETE FROM usuario WHERE id = ".$id.";");        
-        // header("Location: index");
+        header("Location: /usuario/index");    
     }
     public function adicionar()    {        
         $this->load->database();
@@ -44,7 +46,6 @@ class Usuario extends CI_Controller {
         $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
         $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.");");        
-        // $this->index();
-        // header("Location: index");
+        header("Location: /usuario/index");    
     }
 }

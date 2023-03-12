@@ -13,8 +13,11 @@ class Setor extends CI_Controller {
         $this->load->view('setor/tela_adicionar');
         // $this->load->view('setor/tela_adicionar', $data);
     }
-    public function tela_editar()    {
-        
+    public function tela_editar($id)    {
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query('SELECT * FROM setor WHERE id = '.$id);
+        $data['setor'] = $query->result();
         $this->load->view('setor/tela_editar', $data);
     }
     public function editar()    {
@@ -23,7 +26,8 @@ class Setor extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("DELETE FROM setor WHERE id = ".$id.";");        
-        // header("Location: index");
+        header("Location: /setor/index");
+
     }
     public function adicionar()    {        
         $this->load->database();
@@ -34,5 +38,11 @@ class Setor extends CI_Controller {
         $telefone = $this->input->post("telefone");
         $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");
         // redirect('/perfil/index');   
+        // return redirect()->to('setor/index');
+        // redirect('setor/index');
+        header("Location: /setor/index");
+
+
+
     }
 }

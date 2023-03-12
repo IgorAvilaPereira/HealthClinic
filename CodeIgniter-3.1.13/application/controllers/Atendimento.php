@@ -20,17 +20,31 @@ class Atendimento extends CI_Controller {
         $data['vetUsuario'] = $query->result();
         $this->load->view('atendimento/tela_adicionar', $data);
     }
-    public function tela_editar()    
-    {        
+    public function tela_editar($id)    {
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query('SELECT * FROM atendimento WHERE id = '.$id);
+        $data['atendimento'] = $query->result(); 
         $this->load->view('atendimento/tela_editar', $data);
     }
     public function editar()    {
+          // colocar quase tudo isso modelo
+          $this->load->database();
+          $this->load->helper('url'); 
+          $form_data = $this->input->post();        
+          $id = $this->input->post("id");
+          $observacao = $this->input->post("observacao");
+          $usuario_id = $this->input->post("usuario_id");
+          $pessoa_id = $this->input->post("pessoa_id");
+          $query = $this->db->query("UPDATE atendimento SET observacao = '".$observacao."', usuario_id = ".$usuario_id.", pessoa_id = ".$pessoa_id." WHERE id = ".$id.";");        
+         
     }
     public function remover($id)    {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("DELETE FROM atendimento WHERE id = ".$id.";");        
-        // header("Location: index");
+        header("Location: /atendimento/index");
+
     }
     public function adicionar()    {        
         // colocar quase tudo isso modelo
@@ -41,8 +55,6 @@ class Atendimento extends CI_Controller {
         $usuario_id = $this->input->post("usuario_id");
         $pessoa_id = $this->input->post("pessoa_id");
         $query = $this->db->query("INSERT INTO atendimento (observacao, usuario_id, pessoa_id) VALUES('".$observacao."', ".$usuario_id.", ".$pessoa_id.");");
-        // errado
-        // $this->index();
-        // header("Location: index");
+        header("Location: /atendimento/index");
     }
 }

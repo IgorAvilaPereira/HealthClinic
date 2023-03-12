@@ -16,8 +16,11 @@ class Pessoa extends CI_Controller {
         $this->load->view('pessoa/tela_adicionar');        
         // $this->load->view('pessoa/tela_adicionar', $data);
     }
-    public function tela_editar()   
-    {        
+    public function tela_editar($id)    {
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query('SELECT * FROM pessoa WHERE id = '.$id);
+        $data['pessoa'] = $query->result();
         $this->load->view('pessoa/tela_editar', $data);
     }
     public function editar()    
@@ -27,8 +30,7 @@ class Pessoa extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("DELETE FROM pessoa WHERE id = ".$id.";");        
-        // header("Location: index");
-    }
+        header("Location: /pessoa/index");        }
     public function adicionar()    
     {      
         $this->load->database();
@@ -44,6 +46,6 @@ class Pessoa extends CI_Controller {
         $cep =  $this->input->post("cep");
     // Foto: <input type="file" name="foto">  <br>
         $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep) VALUES ('".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."')");        
-        // header("Location: index");
+        header("Location: /pessoa/index");    
     }
 }

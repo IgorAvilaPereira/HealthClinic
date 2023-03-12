@@ -21,8 +21,11 @@ class Perfil extends CI_Controller {
     public function tela_adicionar()    {
         $this->load->view('perfil/tela_adicionar');
     }
-    public function tela_editar()    {
-        
+    public function tela_editar($id)    {
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query('SELECT * FROM perfil WHERE id = '.$id);
+        $data['perfil'] = $query->result();        
         $this->load->view('perfil/tela_editar', $data);
     }
     public function editar()    {
@@ -31,7 +34,7 @@ class Perfil extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("DELETE FROM perfil WHERE id = ".$id.";");        
-        // header("Location: index");
+        header("Location: /perfil/index");
     }
     public function adicionar()    {        
         $this->load->database();
@@ -47,7 +50,7 @@ class Perfil extends CI_Controller {
         // if (empty($editar)) $editar = FALSE;        
         // if (empty($remover)) $remover = FALSE;
         $query = $this->db->query("INSERT INTO perfil (nome, adicionar, visualizar, editar, remover) VALUES ('".$nome."', ".$adicionar.", ".$visualizar.", ".$editar.", ".$remover.");");
-        // header("Location: index");
+        header("Location: /perfil/index");
 
     }
 }
