@@ -1,4 +1,4 @@
-<h1>pessoa - documentos </h1>
+<h1>Documentos </h1>
 
 <table border=1>
     <tr>

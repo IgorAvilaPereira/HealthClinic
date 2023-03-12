@@ -53,8 +53,14 @@ class Pessoa extends CI_Controller {
     public function remover($id)    {
         $this->load->database();
         $this->load->helper('url'); 
+        $query = $this->db->query("SELECT * FROM pessoa WHERE id = ".$id.";");        
+        $pessoa = $query->result()[0];    
+        $foto = $pessoa->foto;
+        if (!empty($foto)) {
+            unlink("./fotos/".$foto);            
+        }
         $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$id.";");        
-        $vetDocumento = $query->result();       
+        $vetDocumento = $query->result();               
         $query = ""; 
         if (count($vetDocumento) > 0) {
             foreach($vetDocumento as $documento){
@@ -62,7 +68,7 @@ class Pessoa extends CI_Controller {
                     $query.="DELETE FROM documento WHERE id = ".$id.";";
                 }
             }
-        }
+        }        
         $query = $this->db->query("BEGIN;".$query."DELETE FROM pessoa WHERE id = ".$id."; COMMIT;");                
         header("Location: /pessoa/index");        
     }
@@ -72,7 +78,7 @@ class Pessoa extends CI_Controller {
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
         $nome = $this->input->post("nome");
-        $data_nascimento = $this->input->post("data_nascimento");
+        $data_nascimento = $this->input->post("data_nascimento");        
         $cpf = $this->input->post("cpf");
         $rg = $this->input->post("rg");
         $rua = $this->input->post("rua");
@@ -83,7 +89,7 @@ class Pessoa extends CI_Controller {
 
         $config['upload_path']          = './fotos/';
         $config['allowed_types']        = 'gif|jpg|png';
-        $config['max_size']             = 200;
+        $config['max_size']             = 10000;
         $config['max_width']            = 3000;
         $config['max_height']           = 3000;    
         $config['encrypt_name'] = TRUE;
@@ -92,12 +98,13 @@ class Pessoa extends CI_Controller {
 
         if ( ! $this->upload->do_upload('foto'))
         {
-                $data = array('error' => $this->upload->display_errors());
-                // $data['pessoa_id'] = $pessoa_id;
-                $data['upload_data'] = [];
-                $this->load->view('innerpages/header');        
-                $this->load->view('documento/tela_adicionar', $data);
-                $this->load->view('innerpages/footer');
+                // $data = array('error' => $this->upload->display_errors());
+                // $data['upload_data'] = [];
+                // $this->load->view('innerpages/header');        
+                // $this->load->view('documento/tela_adicionar', $data);
+                // $this->load->view('innerpages/footer');
+                $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ( '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
+                header("Location: /pessoa/index");   
         }
         else
         {

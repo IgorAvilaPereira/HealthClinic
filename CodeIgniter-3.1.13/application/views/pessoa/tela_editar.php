@@ -9,7 +9,7 @@
     Complemento: <input type="text" name="complemento" value="<?=$pessoa->complemento?>"> <br>
     Cep: <input type="text" name="cep" value="<?=$pessoa->cep?>"> <br>
     Sexo: <input type="radio" name="sexo" value="M" <?=(($pessoa->sexo == 'M') ?  "checked" : "")?>> Masculino  <input type="radio" name="sexo" value="F" <?=(($pessoa->sexo == 'F') ?  "checked" : "")?>> Feminino <br>
-    Foto: <input type="file" name="foto"> <br>
+    <!-- Foto: <input type="file" name="foto"> <br> -->
     <input type="hidden" name="id" value="<?=$pessoa->id?>">
     <input class="btn btn-primary" value="Editar" type="submit">
 </form>

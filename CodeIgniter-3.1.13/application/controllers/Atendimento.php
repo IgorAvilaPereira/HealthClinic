@@ -15,13 +15,22 @@ class Atendimento extends CI_Controller {
     public function tela_adicionar()    {
         $this->load->database();
         $this->load->helper('url'); 
+        $data = [];
         $query = $this->db->query('SELECT * FROM pessoa');
-        $data['vetPessoa'] = $query->result();
-        $query = $this->db->query('SELECT * FROM usuario');
-        $data['vetUsuario'] = $query->result();
-        $this->load->view('innerpages/header');
-        $this->load->view('atendimento/tela_adicionar', $data);
-        $this->load->view('innerpages/footer');
+        $vetPessoa = $query->result();
+        if (count($vetPessoa) > 0) {
+            $data['vetPessoa'] = $query->result();
+            $query = $this->db->query('SELECT * FROM usuario');
+            $data['vetUsuario'] = $query->result();
+            $this->load->view('innerpages/header');
+            $this->load->view('atendimento/tela_adicionar', $data);
+            $this->load->view('innerpages/footer');
+        } else  {
+            $data["mensagem"] = "nenhuma pessoa cadastrada";
+            $this->load->view('innerpages/header');
+            $this->load->view('erro', $data);
+            $this->load->view('innerpages/footer');
+        }
     }
     public function tela_editar($id)    {
         $this->load->database();
