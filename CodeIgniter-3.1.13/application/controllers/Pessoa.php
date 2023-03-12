@@ -43,8 +43,9 @@ class Pessoa extends CI_Controller {
         $bairro = $this->input->post("bairro");
         $complemento = $this->input->post("complemento");
         $cep =  $this->input->post("cep");
+        $sexo =  $this->input->post("sexo");
     // Foto: <input type="file" name="foto">  <br>
-        $query = $this->db->query("UPDATE pessoa SET nome = '".$nome."',  data_nascimento = '".$data_nascimento."', cpf = '".$cpf."', rg='".$rg."', rua ='".$rua."', bairro = '".$bairro."', complemento = '".$complemento."', cep = '".$cep."' where id = ".$id.";");        
+        $query = $this->db->query("UPDATE pessoa SET nome = '".$nome."',  data_nascimento = '".$data_nascimento."', cpf = '".$cpf."', rg='".$rg."', rua ='".$rua."', bairro = '".$bairro."', complemento = '".$complemento."', cep = '".$cep."', sexo = '".$sexo."' where id = ".$id.";");        
         header("Location: /pessoa/index");   
     }
     public function remover($id)    {
@@ -65,8 +66,12 @@ class Pessoa extends CI_Controller {
         $bairro = $this->input->post("bairro");
         $complemento = $this->input->post("complemento");
         $cep =  $this->input->post("cep");
+        $sexo =  $this->input->post("sexo");
+
+    
     // Foto: <input type="file" name="foto">  <br>
-        $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep) VALUES ('".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."')");        
+    
+        $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ('".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
         header("Location: /pessoa/index");    
     }
 }
