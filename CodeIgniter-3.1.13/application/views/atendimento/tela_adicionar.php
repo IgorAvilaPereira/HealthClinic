@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td> Observação: </td>
-            <td> <textarea name="observacao" required></textarea> </td>
+            <td> <textarea name="observacao" required></textarea></td>
         </tr>
     </table>
     <input class="btn btn-primary" value="Adicionar" type="submit">
