@@ -18,6 +18,8 @@ class Usuario extends CI_Controller {
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
         $data['vetSetor'] = $query->result();  
+        $query = $this->db->query('SELECT * FROM perfil');
+        $data['vetPerfil'] = $query->result();  
         $this->load->view('innerpages/header');   
         $this->load->view('usuario/tela_adicionar', $data);
         $this->load->view('innerpages/footer');
@@ -59,7 +61,16 @@ class Usuario extends CI_Controller {
         $email = $this->input->post("email");
         $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
-        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.");");        
+        $vetPerfil = $this->input->post("perfil_id");        
+        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.") RETURNING id;");        
+        if (count($vetPerfil)>0){
+            $usuario_id = (int) $query->result()[0]->id;            
+            $sql = "";
+            foreach($vetPerfil as $perfil_id){
+                $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
+            }
+            $query = $this->db->query("BEGIN;".$sql."COMMIT;");        
+        }
         header("Location: /usuario/index");    
     }
 }

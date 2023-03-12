@@ -10,6 +10,11 @@
         <option value=<?php echo $setor->id; ?>><?php echo $setor->nome; ?> </option>
         <?php } ?>
     </select> </td></tr>
+    <tr> <td>Perfil: </td> <td> <select name="perfil_id[]" multiple>
+        <?php foreach($vetPerfil as $perfil) { ?>
+        <option value=<?php echo $perfil->id; ?>><?php echo $perfil->nome; ?> </option>
+        <?php } ?>
+    </select> </td></tr>
         </table>
     <input class="btn btn-primary" value="Adicionar" type="submit">
 </form>
