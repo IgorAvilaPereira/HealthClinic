@@ -7,7 +7,7 @@ class Atendimento extends CI_Controller {
     {
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("SELECT atendimento.id as id,  to_char(data_hora, 'DD/MM/YYYY HH24:MI:SS') as data_hora, usuario.nome as usuario_nome, pessoa.nome as pessoa_nome FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id);");
+        $query = $this->db->query("SELECT atendimento.id as id,  to_char(data_hora, 'DD/MM/YYYY HH24:MI:SS') as data_hora, usuario.nome as usuario_nome, usuario.id as usuario_id, pessoa.nome as pessoa_nome, pessoa.id as pessoa_id FROM usuario inner join atendimento on (usuario.id = atendimento.usuario_id) inner join pessoa on (pessoa.id = atendimento.pessoa_id);");
         $data['vetAtendimento'] = $query->result();
         $this->load->view('innerpages/header');
         $this->load->view('atendimento/index', $data);

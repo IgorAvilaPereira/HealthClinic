@@ -8,10 +8,10 @@
         <td> Data/hora </td>
         <td> Pessoa </td>
         <td> Atendente </td>
-</tr>
-        <?php foreach($vetAtendimento as $atendimento) { ?>
+    </tr>
+    <?php foreach($vetAtendimento as $atendimento) { ?>
     <tr>
-    <td>
+        <td>
             <a class="btn btn-secondary" href="/arquivo/index/<?=$atendimento->id?>">Adicionar Arquivos</a>
         </td>
         <td>
@@ -21,11 +21,13 @@
             <a class="btn btn-secondary" href="/atendimento/tela_editar/<?=$atendimento->id?>">Editar</a>
         </td>
         <td>
-            <?php echo $atendimento->data_hora; ?> 
-            
+            <?php echo $atendimento->data_hora; ?>
+
         </td>
         <td>
-        <?php echo $atendimento->pessoa_nome; ?>
+            <!-- <a class="btn btn-secondary" href="/pessoa/tela_editar/<?=$atendimento->id?>"> -->
+            <?php echo $atendimento->pessoa_nome; ?>
+            </a>
         </td>
         <td>
             <?php echo $atendimento->usuario_nome; ?>
