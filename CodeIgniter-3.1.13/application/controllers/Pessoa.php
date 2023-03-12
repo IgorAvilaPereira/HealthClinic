@@ -8,8 +8,16 @@ class Pessoa extends CI_Controller {
     {          
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM pessoa order by id');
-        $data['vetPessoa'] = $query->result();
+        // $this->load->library('pagination');
+        // $config['base_url'] = '/pessoa/index/';
+        // $config['total_rows'] = 200;
+        // $config['per_page'] = 1;
+        // $this->pagination->initialize($config);
+        // echo $this->pagination->create_links();
+
+        $query = $this->db->query('SELECT * FROM pessoa order by nome');
+        $data['vetPessoa'] = $query->result();       
+
         $this->load->view('innerpages/header');
         $this->load->view('pessoa/index', $data);
         $this->load->view('innerpages/footer');
