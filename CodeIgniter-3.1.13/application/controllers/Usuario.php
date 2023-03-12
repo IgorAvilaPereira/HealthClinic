@@ -31,6 +31,17 @@ class Usuario extends CI_Controller {
         $data['vetSetor'] = $query->result();  
         $query = $this->db->query('SELECT * FROM usuario /*inner join setor on (setor.id = usuario.setor_id)*/ WHERE usuario.id = '.$id);
         $data['usuario'] = $query->result()[0];
+        $query = $this->db->query('SELECT * FROM perfil');
+        $data['vetPerfil'] = $query->result();  
+
+        $query = $this->db->query('SELECT perfil_id as id FROM usuario_perfil where usuario_id='.$id);
+        $vetUsuarioPerfil = $query->result();  
+        $data['vetUsuarioPerfil'] = [];
+        foreach($vetUsuarioPerfil as $perfil){
+            $data['vetUsuarioPerfil'][] = (int) $perfil->id;
+        }        
+        // die(var_dump($data['vetUsuarioPerfil']));
+
         $this->load->view('innerpages/header'); 
         $this->load->view('usuario/tela_editar', $data);
         $this->load->view('innerpages/footer');
@@ -45,6 +56,22 @@ class Usuario extends CI_Controller {
         $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
         $query = $this->db->query("UPDATE usuario SET nome='".$nome."',  email='".$email."', senha=Md5('".$senha."'), setor_id = ".$setor_id." WHERE id =".$id.";");        
+        $vetPerfil = $this->input->post("perfil_id"); 
+        $usuario_id = $id;    
+        if (is_array($vetPerfil)){
+            if (count($vetPerfil)>0){                                   
+                $sql = "";
+                foreach($vetPerfil as $perfil_id){
+                    $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
+                }
+                $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";".$sql."COMMIT;");        
+            } else {
+                $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
+            }
+        }
+        else {
+            $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
+        }
         header("Location: /usuario/index");    
     }
     public function remover($id)    {
