@@ -2,9 +2,9 @@
 <ul>
 <?php foreach($vetSetor as $setor) { ?>
     <li> 
-    <a href="/setor/remover/<?=$setor->id?>">Remover</a>
-         <a href="/setor/tela_editar/<?=$setor->id?>">Editar</a>    
+    <a class="btn btn-secondary" href="/setor/remover/<?=$setor->id?>">Remover</a>
+         <a class="btn btn-secondary" href="/setor/tela_editar/<?=$setor->id?>">Editar</a>    
     <?php echo $setor->id; ?>  <?php echo $setor->nome; ?>  </li>
 <?php } ?>
 </ul>    
-<a href="tela_adicionar">Adicionar </a>
+<a class="btn btn-primary"href="tela_adicionar">Adicionar </a>

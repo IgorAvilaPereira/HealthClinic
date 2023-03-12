@@ -15,7 +15,9 @@ class Perfil extends CI_Controller {
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM perfil');
         $data['vetPerfil'] = $query->result();
+        $this->load->view('innerpages/header');
         $this->load->view('perfil/index', $data);
+        $this->load->view('innerpages/footer');
         
     }
     public function tela_adicionar()    {
@@ -26,7 +28,9 @@ class Perfil extends CI_Controller {
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM perfil WHERE id = '.$id);
         $data['perfil'] = $query->result()[0];      
+        $this->load->view('innerpages/header');
         $this->load->view('perfil/tela_editar', $data);
+        $this->load->view('innerpages/footer');
     }
     public function editar()    {
         $this->load->database();

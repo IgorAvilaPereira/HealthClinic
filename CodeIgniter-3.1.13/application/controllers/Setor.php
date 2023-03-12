@@ -7,18 +7,23 @@ class Setor extends CI_Controller {
         $this->load->database();
         $query = $this->db->query('SELECT * FROM setor');
         $data['vetSetor'] = $query->result();
+        $this->load->view('innerpages/header');
         $this->load->view('setor/index', $data);        
+        $this->load->view('innerpages/footer');
     }
     public function tela_adicionar()    {
+        $this->load->view('innerpages/header');
         $this->load->view('setor/tela_adicionar');
-        // $this->load->view('setor/tela_adicionar', $data);
+        $this->load->view('innerpages/footer');
     }
     public function tela_editar($id)    {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor WHERE id = '.$id);
         $data['setor'] = $query->result()[0]; 
+        $this->load->view('innerpages/header');
         $this->load->view('setor/tela_editar', $data);
+        $this->load->view('innerpages/footer');
     }
     public function editar()    {
 
@@ -30,9 +35,6 @@ class Setor extends CI_Controller {
         $endereco = $this->input->post("endereco");
         $telefone = $this->input->post("telefone");
         $query = $this->db->query("UPDATE setor SET nome='".$nome."',  email='".$email."', endereco='".$endereco."', telefone='".$telefone."' WHERE id = ".$id.";");
-        // redirect('/perfil/index');   
-        // return redirect()->to('setor/index');
-        // redirect('setor/index');
         header("Location: /setor/index");
         
     }
@@ -46,7 +48,9 @@ class Setor extends CI_Controller {
             header("Location: /setor/index");
         } else {
             $data['mensagem'] = "nao pode excluir setor antes de excluir os usuarios do setor";
-            $this->load->view('erro', $data);            
+            $this->load->view('innerpages/header');
+            $this->load->view('erro', $data);          
+            $this->load->view('innerpages/footer');  
         }        
 
     }
@@ -57,11 +61,7 @@ class Setor extends CI_Controller {
         $email = $this->input->post("email");
         $endereco = $this->input->post("endereco");
         $telefone = $this->input->post("telefone");
-        $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");
-     
+        $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");     
         header("Location: /setor/index");
-
-
-
     }
 }

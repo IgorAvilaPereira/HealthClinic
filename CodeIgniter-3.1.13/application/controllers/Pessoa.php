@@ -10,18 +10,23 @@ class Pessoa extends CI_Controller {
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM pessoa');
         $data['vetPessoa'] = $query->result();
+        $this->load->view('innerpages/header');
         $this->load->view('pessoa/index', $data);
+        $this->load->view('innerpages/footer');
     }
     public function tela_adicionar()    {
+        $this->load->view('innerpages/header');
         $this->load->view('pessoa/tela_adicionar');        
-        // $this->load->view('pessoa/tela_adicionar', $data);
+        $this->load->view('innerpages/footer');
     }
     public function tela_editar($id)    {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM pessoa WHERE id = '.$id);
         $data['pessoa'] = $query->result()[0]; 
+        $this->load->view('innerpages/header');
         $this->load->view('pessoa/tela_editar', $data);
+        $this->load->view('innerpages/footer');
     }
     public function editar()    
     {
