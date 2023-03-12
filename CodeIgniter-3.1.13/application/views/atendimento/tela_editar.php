@@ -1,5 +1,5 @@
 <form action="/atendimento/editar" method="post">
-observacao: <tetextarea name="observacao">  </textarea>
-<input type="hidden" name="id" value=<?php echo $id ?>>
+observacao: <textarea name="observacao"><?=$atendimento->observacao?></textarea>
+<input type="hidden" name="id" value="<?=$atendimento->id?>">
 <input value="Editar" type="submit">
 </form>
