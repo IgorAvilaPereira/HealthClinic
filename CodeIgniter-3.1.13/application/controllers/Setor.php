@@ -1,12 +1,7 @@
-<?php
-/*
-setor
-usuario
-perfil
-pessoa
-atendimento
-*/
+<?php 
+
 class Setor extends CI_Controller {
+
     public function index()
     {
         $this->load->database();
@@ -24,13 +19,20 @@ class Setor extends CI_Controller {
     }
     public function editar()    {
     }
-    public function remover()    {
+    public function remover($id)    {
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query("DELETE FROM setor WHERE id = ".$id.";");        
+        // header("Location: index");
     }
     public function adicionar()    {        
         $this->load->database();
         $form_data = $this->input->post();        
         $nome = $this->input->post("nome");
-        $query = $this->db->query("INSERT INTO setor (nome) VALUES ('".$nome."')");
+        $email = $this->input->post("email");
+        $endereco = $this->input->post("endereco");
+        $telefone = $this->input->post("telefone");
+        $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");
         // redirect('/perfil/index');   
     }
 }

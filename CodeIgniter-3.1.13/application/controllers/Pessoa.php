@@ -2,9 +2,12 @@
 
 class Pessoa extends CI_Controller {
 
+
+
     public function index()
     {          
         $this->load->database();
+        $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM pessoa');
         $data['vetPessoa'] = $query->result();
         $this->load->view('pessoa/index', $data);
@@ -20,19 +23,27 @@ class Pessoa extends CI_Controller {
     public function editar()    
     {
     }
-    public function remover()    
-    {
+    public function remover($id)    {
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query("DELETE FROM pessoa WHERE id = ".$id.";");        
+        // header("Location: index");
     }
     public function adicionar()    
     {      
         $this->load->database();
         $this->load->helper('url'); 
-
         $form_data = $this->input->post();        
         $nome = $this->input->post("nome");
-        $query = $this->db->query("INSERT INTO pessoa (nome) VALUES ('".$nome."')");        
-        // erro
-        redirect('./pessoa/index'); 
-
+        $data_nascimento = $this->input->post("data_nascimento");
+        $cpf = $this->input->post("cpf");
+        $rg = $this->input->post("rg");
+        $rua = $this->input->post("rua");
+        $bairro = $this->input->post("bairro");
+        $complemento = $this->input->post("complemento");
+        $cep =  $this->input->post("cep");
+    // Foto: <input type="file" name="foto">  <br>
+        $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep) VALUES ('".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."')");        
+        // header("Location: index");
     }
 }
