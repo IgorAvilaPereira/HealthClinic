@@ -2,6 +2,7 @@
 
 <table border=1>
     <tr>
+        <td> Adicionar Arquivos </td>
         <td> Remover </td>
         <td> Editar </td>
         <td> Data/hora </td>
@@ -10,6 +11,9 @@
 </tr>
         <?php foreach($vetAtendimento as $atendimento) { ?>
     <tr>
+    <td>
+            <a class="btn btn-secondary" href="/atendimento_arquivo/index/<?=$atendimento->id?>">Adicionar Arquivos</a>
+        </td>
         <td>
             <a class="btn btn-secondary" href="/atendimento/remover/<?=$atendimento->id?>">Remover</a>
         </td>
