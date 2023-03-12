@@ -11,15 +11,17 @@
 <?php } ?>
 
 <form enctype='multipart/form-data' action="/pessoa/adicionar" method="post">
-    Nome: <input type="text" name="nome"> <br>
-    Data Nascimento: <input type="date" name="data_nascimento"> <br>
-    Cpf: <input type="text" name="cpf"> <br>
-    RG: <input type="text" name="rg"> <br>
-    Rua: <input type="text" name="rua"> <br>
-    Bairro <input type="text" name="bairro"> <br>
-    Complemento: <input type="text" name="complemento"> <br>
-    Cep: <input type="text" name="cep"> <br>
-    Sexo: <input type="radio" name="sexo" value="M"> Masculino  <input type="radio" name="sexo" value="F"> Feminino <br>
-    Foto: <input type="file" name="foto"> <br>
+    <table>
+    <tr><td> Nome: </td> <td> <input type="text" name="nome"> </td></tr>
+    <tr><td> Data Nascimento: </td> <td> <input type="date" name="data_nascimento"> </td></tr>
+    <tr><td> Cpf: </td> <td> <input type="text" name="cpf"> </td></tr>
+    <tr><td> RG: </td> <td> <input type="text" name="rg"> </td></tr>
+    <tr><td> Rua: </td> <td> <input type="text" name="rua"> </td></tr>
+    <tr><td> Bairro: </td> <td> <input type="text" name="bairro"> </td></tr>
+    <tr><td> Complemento:</td> <td> <input type="text" name="complemento"> </td></tr>
+    <tr><td> Cep:</td> <td> <input type="text" name="cep"> </td></tr>
+    <tr><td> Sexo: </td> <td> <input type="radio" name="sexo" value="M"> Masculino  <input type="radio" name="sexo" value="F"> Feminino </td></tr>
+    <tr><td> Foto:</td> <td>  <input type="file" name="foto"> </td></tr>
+    </table>
     <input class="btn btn-primary" value="Adicionar" type="submit">
 </form>
