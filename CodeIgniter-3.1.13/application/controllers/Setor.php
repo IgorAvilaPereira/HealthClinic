@@ -17,7 +17,7 @@ class Setor extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor WHERE id = '.$id);
-        $data['setor'] = $query->result();
+        $data['setor'] = $query->result()[0]; 
         $this->load->view('setor/tela_editar', $data);
     }
     public function editar()    {

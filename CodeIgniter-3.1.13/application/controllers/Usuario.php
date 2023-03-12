@@ -24,7 +24,7 @@ class Usuario extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM usuario WHERE id = '.$id);
-        $data['usuario'] = $query->result();
+        $data['usuario'] = $query->result()[0]; 
         $this->load->view('usuario/tela_editar', $data);
     }
     public function editar()    {

@@ -24,7 +24,7 @@ class Atendimento extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM atendimento WHERE id = '.$id);
-        $data['atendimento'] = $query->result(); 
+        $data['atendimento'] = $query->result()[0]; 
         $this->load->view('atendimento/tela_editar', $data);
     }
     public function editar()    {
