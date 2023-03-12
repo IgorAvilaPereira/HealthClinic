@@ -2,10 +2,10 @@
 
 <form action="/usuario/adicionar" method="post">
     <table>
-    <tr> <td> Nome: </td> <td> <input type="text" name="nome"> </td></tr>
+    <tr> <td> Nome: </td> <td> <input type="text" name="nome" required> </td></tr>
     <tr> <td>Email: </td> <td> <input type="text" name="email" required> </td></tr>
-    <tr> <td>Senha: </td> <td> <input type="password" name="senha"> </td></tr>
-    <tr> <td>Setor: </td> <td> <select name="setor_id">
+    <tr> <td>Senha: </td> <td> <input type="password" name="senha" required> </td></tr>
+    <tr> <td>Setor: </td> <td> <select required name="setor_id">
         <?php foreach($vetSetor as $setor) { ?>
         <option value=<?php echo $setor->id; ?>><?php echo $setor->nome; ?> </option>
         <?php } ?>

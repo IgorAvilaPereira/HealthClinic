@@ -18,14 +18,14 @@
         <td> Pessoa: </td>
         <td> <select name="pessoa_id">
                 <?php foreach ($vetPessoa as $pessoa) {?>
-                <option value=<?php echo $pessoa->id; ?>><?php echo $pessoa->nome; ?> </option>
+                <option value=<?php echo $pessoa->id; ?>><?=((empty($pessoa->nome)) ? $pessoa->id : $pessoa->nome)?> </option>
                 <?php }?>
             </select> </td>
         </tr>
         <tr>
             <td>
                 Observação: </td>
-            <td> <textarea name="observacao"><?=$atendimento->observacao?></textarea></td>
+            <td> <textarea name="observacao" required><?=$atendimento->observacao?></textarea></td>
         </tr>
     </table>
     <input type="hidden" name="id" value="<?=$atendimento->id?>">

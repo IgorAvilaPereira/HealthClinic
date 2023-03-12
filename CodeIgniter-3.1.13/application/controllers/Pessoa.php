@@ -121,15 +121,15 @@ class Pessoa extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
-        $nome = $this->input->post("nome");
-        $data_nascimento = $this->input->post("data_nascimento");        
-        $cpf = $this->input->post("cpf");
-        $rg = $this->input->post("rg");
-        $rua = $this->input->post("rua");
-        $bairro = $this->input->post("bairro");
-        $complemento = $this->input->post("complemento");
-        $cep =  $this->input->post("cep");
-        $sexo =  $this->input->post("sexo");
+        $nome = ((empty($this->input->post("nome"))) ? NULL : $this->input->post("nome"));
+        $data_nascimento = ((empty($this->input->post("data_nascimento"))) ? NULL : $this->input->post("data_nascimento"));       
+        $cpf =  ((empty($this->input->post("cpf"))) ? NULL : $this->input->post("cpf"));       
+        $rg =  ((empty($this->input->post("rg"))) ? NULL : $this->input->post("rg"));       
+        $rua =  ((empty($this->input->post("rua"))) ? NULL : $this->input->post("rua"));       
+        $bairro =  ((empty($this->input->post("bairro"))) ? NULL : $this->input->post("bairro"));       
+        $complemento = ((empty($this->input->post("complemento"))) ? NULL : $this->input->post("complemento"));       
+        $cep =  ((empty($this->input->post("cep"))) ? NULL : $this->input->post("cep"));       
+        $sexo = ((empty($this->input->post("sexo"))) ? NULL : $this->input->post("sexo"));       
 
         $config['upload_path']          = './fotos/';
         $config['allowed_types']        = 'gif|jpg|png';
@@ -147,13 +147,15 @@ class Pessoa extends CI_Controller {
                 // $this->load->view('innerpages/header');        
                 // $this->load->view('documento/tela_adicionar', $data);
                 // $this->load->view('innerpages/footer');
-                $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ( '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
+                // $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ( '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
+                $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES (?, ?, ?, ?,?,?,?, ?, ?)", array($nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo));      
                 header("Location: /pessoa/index");   
         }
         else
         {
                 $file_name = $this->upload->data()["file_name"];          
-                $query = $this->db->query("INSERT INTO pessoa (foto, nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ('".$file_name."', '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
+                // $query = $this->db->query("INSERT INTO pessoa (foto, nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ('".$file_name."', '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
+                $query = $this->db->query("INSERT INTO pessoa (foto, nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES (?, ?, ?, ?,?,?,?, ?, ?)", array($file_name, $nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo));      
                 header("Location: /pessoa/index");    
         }
     }

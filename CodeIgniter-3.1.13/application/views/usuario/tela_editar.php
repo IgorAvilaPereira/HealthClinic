@@ -1,9 +1,9 @@
 <h1>Editar - Usuário</h1>
 <form action="/usuario/editar" method="post">
-    Nome: <input type="text" name="nome" value="<?=$usuario->nome?>"> <br>
-    Email: <input type="text" name="email" required value="<?=$usuario->email?>"> <br>
+    Nome: <input type="text" name="nome" value="<?=$usuario->nome?>" required> <br>
+    Email: <input type="text" name="email" required value="<?=$usuario->email?>" required> <br>
     Senha: <input type="password" name="senha"> <br>
-    Setor: <select name="setor_id">
+    Setor: <select required name="setor_id">
         <?php foreach($vetSetor as $setor) { ?>
         <?php if ($usuario->setor_id == $setor->id) { ?>
         <option value=<?php echo $setor->id; ?> selected><?php echo $setor->nome; ?> </option>
@@ -13,7 +13,7 @@
         <?php } ?>
     </select> <br>
     Perfil: </td>
-    <td> <select name="perfil_id[]" multiple>
+    <td> <select required name="perfil_id[]" multiple>
             <?php foreach($vetPerfil as $perfil) { ?>
             <?php if (in_array($perfil->id, $vetUsuarioPerfil)) { ?>
             <option value=<?php echo $perfil->id; ?> selected><?php echo $perfil->nome; ?> </option>
