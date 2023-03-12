@@ -34,6 +34,7 @@ class Perfil extends CI_Controller {
         $this->load->view('perfil/tela_editar', $data);
         $this->load->view('innerpages/footer');
     }
+    // bug
     public function editar()    {
         $this->load->database();
         $this->load->helper('url'); 
@@ -65,8 +66,9 @@ class Perfil extends CI_Controller {
             $this->load->view('erro', $data);          
             $this->load->view('innerpages/footer');  
         }          
-        // header("Location: /perfil/index");
     }
+
+    // bug
     public function adicionar()    {        
         $this->load->database();
         $this->load->helper('url'); 
