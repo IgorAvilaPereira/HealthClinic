@@ -31,7 +31,7 @@ class Atendimento extends CI_Controller {
         $data['vetPessoa'] = $query->result();
         $query = $this->db->query('SELECT * FROM usuario');
         $data['vetUsuario'] = $query->result();
-        $query = $this->db->query('SELECT * FROM atendimento WHERE id = '.$id);
+        $query = $this->db->query("SELECT *, to_char(data_hora, 'MM/DD/YYYY,HH12:MI') as data_hora FROM atendimento WHERE id = ".$id);
         $data['atendimento'] = $query->result()[0]; 
         $this->load->view('innerpages/header');
         $this->load->view('atendimento/tela_editar', $data);

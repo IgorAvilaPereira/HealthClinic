@@ -8,7 +8,7 @@ class Pessoa extends CI_Controller {
     {          
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query('SELECT * FROM pessoa');
+        $query = $this->db->query('SELECT * FROM pessoa order by id');
         $data['vetPessoa'] = $query->result();
         $this->load->view('innerpages/header');
         $this->load->view('pessoa/index', $data);
