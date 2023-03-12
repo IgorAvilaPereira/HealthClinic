@@ -15,7 +15,7 @@ class Perfil extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
 
@@ -35,7 +35,7 @@ class Perfil extends CI_Controller {
         $this->load->view('innerpages/header');
         $this->load->view('perfil/index', $data);
         $this->load->view('innerpages/footer');
-        
+    }    
     }
 
     public function tela_adicionar()    {
@@ -43,17 +43,18 @@ class Perfil extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->view('innerpages/header');
         $this->load->view('perfil/tela_adicionar');
         $this->load->view('innerpages/footer');
+    }
     }
     public function tela_editar($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query('SELECT * FROM perfil WHERE id = '.$id);        
@@ -63,13 +64,14 @@ class Perfil extends CI_Controller {
         $this->load->view('perfil/tela_editar', $data);
         $this->load->view('innerpages/footer');
     }
+    }
     // bug
     public function editar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -87,12 +89,13 @@ class Perfil extends CI_Controller {
         $query = $this->db->query("UPDATE perfil SET nome = ? WHERE id = ?;", array($nome, $id));       
         header("Location: /perfil/index");
     }
+}
     public function remover($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("select * from perfil inner join usuario_perfil on (perfil.id = usuario_perfil.perfil_id) WHERE perfil.id = ?;", array($id));        
@@ -108,6 +111,7 @@ class Perfil extends CI_Controller {
             $this->load->view('innerpages/footer');  
         }          
     }
+}
 
     // bug
     public function adicionar()    {     
@@ -115,7 +119,7 @@ class Perfil extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }  
+        }  else {
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -134,4 +138,5 @@ class Perfil extends CI_Controller {
         header("Location: /perfil/index");
 
     }
+}
 }

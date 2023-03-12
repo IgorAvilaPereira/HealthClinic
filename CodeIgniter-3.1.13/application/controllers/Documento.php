@@ -8,7 +8,7 @@ class Documento extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$pessoa_id.";");        
@@ -19,12 +19,13 @@ class Documento extends CI_Controller {
         $this->load->view('documento/index', $data);
         $this->load->view('innerpages/footer');
     }
+    }
     public function tela_adicionar($pessoa_id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
@@ -34,12 +35,13 @@ class Documento extends CI_Controller {
         $this->load->view('documento/tela_adicionar', $data);
         $this->load->view('innerpages/footer');
     }
+    }
     public function tela_editar($id, $pessoa_id)      {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
@@ -50,12 +52,13 @@ class Documento extends CI_Controller {
         $this->load->view('documento/tela_editar', $data);        
         $this->load->view('innerpages/footer');
     }
+    }
     public function editar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -66,13 +69,14 @@ class Documento extends CI_Controller {
         $query = $this->db->query("UPDATE documento SET nome = ? WHERE id = ?", array($nome, $id));       
         header("Location: /documento/index/".$pessoa_id);
     }
+    }
 
     public function remover($id, $pessoa_id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
@@ -83,13 +87,14 @@ class Documento extends CI_Controller {
         }
         header("Location: /documento/index/".$pessoa_id);
     }
+    }
 
     public function adicionar()    {     
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }   
+        }   else {
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -130,6 +135,7 @@ class Documento extends CI_Controller {
         
         }
     }
+}
 
 }
         

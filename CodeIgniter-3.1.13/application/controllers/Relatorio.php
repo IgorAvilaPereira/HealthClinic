@@ -12,7 +12,7 @@ class Relatorio extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }
+        } else {
         $this->load->database();
         $this->load->helper('url');         
         // $this->load->library('jpgraph-4.4.1');
@@ -25,6 +25,7 @@ class Relatorio extends CI_Controller {
         $this->load->view('relatorio/index', $data);        
         $this->load->view('innerpages/footer');
     }
+}
 
 
     // public function sexo()
