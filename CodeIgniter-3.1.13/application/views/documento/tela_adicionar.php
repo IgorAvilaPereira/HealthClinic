@@ -1,8 +1,8 @@
-<h1>Adicionar - pessoa documentos </h1>
+<h1>Adicionar - Documento </h1>
 
-<form action="/documento/adicionar" method="post">
-Nome: <input type="text" name="nome"> <br>
-documento: <input type="file" name="documento"> <br>
+<form enctype='multipart/form-data' action="/documento/adicionar" method="post">
+Descrição: <input type="text" name="nome"> <br>
+Documento: <input type="file" name="documento"> <br>
 <input type="hidden" name="pessoa_id" value="<?=$pessoa_id?>"> <br>
-<input type="submit" value="Adicionar">
+<input class="btn btn-primary" type="submit" value="Adicionar">
 </form>
