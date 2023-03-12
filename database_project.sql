@@ -31,8 +31,13 @@ CREATE TABLE perfil (
     remover boolean DEFAULT FALSE
 );
 
+/*
+INSERT INTO perfil (nome, adicionar, visualizar, editar, remover) VALUES 
+('Administrador', TRUE, TRUE, TRUE, TRUE);
+*/
+
 CREATE TABLE usuario_perfil (
-    usuario_id integer references usuario (id),
+    usuario_id integer references usuario (id) ON DELETE CASCADE,
     perfil_id integer references perfil (id),
     primary key (usuario_id, perfil_id)
 );
@@ -58,7 +63,7 @@ CREATE TABLE pessoa_arquivo (
     id serial primary key,
     nome text,
     arquivo text NOT NULL,
-    pessoa_id integer references pessoa (id)
+    pessoa_id integer references pessoa (id) ON DELETE CASCADE
 );
 
 CREATE TABLE atendimento (
@@ -66,12 +71,12 @@ CREATE TABLE atendimento (
     data_hora timestamp default current_timestamp,
     observacao text,
     usuario_id integer references usuario (id),
-    pessoa_id integer references pessoa (id)
+    pessoa_id integer references pessoa (id) ON DELETE CASCADE
 );
 
-CREATE TABLE atendimento_arquivo (
+CREATE TABLE arquivo (
     id serial primary key,
     nome text,
     arquivo text NOT NULL,
-    atendimento_id integer references atendimento (id)
+    atendimento_id integer references atendimento (id) ON DELETE CASCADE
 );
