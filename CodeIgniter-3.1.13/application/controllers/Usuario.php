@@ -155,7 +155,7 @@ class Usuario extends CI_Controller {
         $setor_id = $this->input->post("setor_id");
         $vetPerfil = $this->input->post("perfil_id");        
         // $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.") RETURNING id;");        
-        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES (?, ?, senha = md5(?), ?) RETURNING id;", array($nome, $email, $senha, $setor_id));       
+        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES (?, ?, md5(?), ?) RETURNING id;", array($nome, $email, $senha, $setor_id));       
         if (count($vetPerfil)>0){
             $usuario_id = (int) $query->result()[0]->id;            
             $sql = "";

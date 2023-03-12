@@ -1,5 +1,5 @@
 
-<?=$this->session->usuario->nome?> <br>
+Olá, <?=$this->session->usuario->nome?> <br>
 
 <a href="/setor/index">Setores </a> <br>
 <a href="/perfil/index">Perfil </a> <br>
