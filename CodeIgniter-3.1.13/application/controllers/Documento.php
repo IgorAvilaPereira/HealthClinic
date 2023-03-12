@@ -1,6 +1,6 @@
 <?php
 // pessoa_documento
-class documento extends CI_Controller {
+class Documento extends CI_Controller {
 
     public function index($pessoa_id = 0)
     {
@@ -17,6 +17,8 @@ class documento extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->view('innerpages/header');
+        $data['error'] = "";
+        $data['upload_data'] = [];
         $data['pessoa_id'] = $pessoa_id;
         $this->load->view('documento/tela_adicionar', $data);
         $this->load->view('innerpages/footer');
@@ -45,20 +47,61 @@ class documento extends CI_Controller {
     public function remover($id, $pessoa_id)    {
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("DELETE FROM documento WHERE id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
+        $documento = $query->result()[0];        
+        if (unlink("./documentos/".$documento->arquivo)) {
+            $query = $this->db->query("DELETE FROM documento WHERE id = ".$id.";");        
+        }
         header("Location: /documento/index/".$pessoa_id);
     }
 
     public function adicionar()    {        
-        // colocar quase tudo isso modelo
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
         $nome = $this->input->post("nome");
-        // $usuario_id = $this->input->post("usuario_id");
         $pessoa_id = $this->input->post("pessoa_id");
-        $query = $this->db->query("INSERT INTO documento (nome, arquivo, pessoa_id) VALUES('".$nome."', '".uniqid(true)."', ".$pessoa_id.");");
-        header("Location: /documento/index/".$pessoa_id);
+
+        $config['upload_path']          = './documentos/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 200;
+        $config['max_width']            = 3000;
+        $config['max_height']           = 3000;    
+        $config['encrypt_name'] = TRUE;
+    
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('documento'))
+        {
+                $data = array('error' => $this->upload->display_errors());
+                $data['pessoa_id'] = $pessoa_id;
+                $data['upload_data'] = [];
+                $this->load->view('innerpages/header');        
+                $this->load->view('documento/tela_adicionar', $data);
+                $this->load->view('innerpages/footer');
+        }
+        else
+        {
+                $file_name = $this->upload->data()["file_name"];      
+                $query = $this->db->query("INSERT INTO documento (nome, arquivo, pessoa_id) VALUES('".$nome."', '".$file_name."', ".$pessoa_id.");");          
+                header("Location: /documento/index/".$pessoa_id);
+                // $data = array('upload_data' => $this->upload->data());                               
+                // $data['pessoa_id'] = $pessoa_id;
+                // $data['error'] = "";
+                // $this->load->view('innerpages/header');
+                // $this->load->view('documento/tela_adicionar', $data);
+                // $this->load->view('innerpages/footer');                
+                
+        
+        }
     }
 
 }
+        
+
+/*
+        $query = $this->db->query("INSERT INTO documento (nome, documento, pessoa_id) VALUES('".$nome."', '".uniqid(true)."', ".$pessoa_id.");");
+        header("Location: /documento/index/".$pessoa_id);
+    }
+
+}*/

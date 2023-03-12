@@ -2,7 +2,6 @@
 class Atendimento extends CI_Controller {
 
 
-
     public function index()
     {
         $this->load->database();
@@ -52,7 +51,17 @@ class Atendimento extends CI_Controller {
     public function remover($id)    {
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("DELETE FROM atendimento WHERE id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ".$id.";");        
+        $vetArquivo = $query->result();       
+        $query = ""; 
+        if (count($vetArquivo) > 0) {
+            foreach($vetArquivo as $arquivo){
+                if (unlink("./arquivos/".$arquivo->arquivo)) {
+                    $query.="DELETE FROM arquivo WHERE id = ".$id.";";
+                }
+            }
+        }
+        $query = $this->db->query("BEGIN;".$query."DELETE FROM atendimento WHERE id = ".$id."; COMMIT;");        
         header("Location: /atendimento/index");
 
     }

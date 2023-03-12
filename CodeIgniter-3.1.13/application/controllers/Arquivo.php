@@ -47,7 +47,11 @@ class Arquivo extends CI_Controller {
     public function remover($id, $atendimento_id)    {
         $this->load->database();
         $this->load->helper('url'); 
-        $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        
+        $query = $this->db->query("SELECT * FROM arquivo WHERE id = ".$id.";");        
+        $arquivo = $query->result()[0];        
+        if (unlink("./arquivos/".$arquivo->arquivo)) {
+            $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        
+        }
         header("Location: /arquivo/index/".$atendimento_id);
     }
 
@@ -62,7 +66,9 @@ class Arquivo extends CI_Controller {
         $config['allowed_types']        = 'gif|jpg|png';
         $config['max_size']             = 200;
         $config['max_width']            = 3000;
-        $config['max_height']           = 3000;        
+        $config['max_height']           = 3000;    
+        $config['encrypt_name'] = TRUE;
+    
         $this->load->library('upload', $config);
 
         if ( ! $this->upload->do_upload('arquivo'))
@@ -76,13 +82,16 @@ class Arquivo extends CI_Controller {
         }
         else
         {
-                $data = array('upload_data' => $this->upload->data());
-                $data['atendimento_id'] = $atendimento_id;
-                $data['error'] = "";
-                $this->load->view('innerpages/header');
-                $this->load->view('arquivo/tela_adicionar', $data);
-                $this->load->view('innerpages/footer');                
-                // $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES('".$nome."', '".uniqid(true)."', ".$atendimento_id.");");
+                $file_name = $this->upload->data()["file_name"];      
+                $query = $this->db->query("INSERT INTO arquivo (nome, arquivo, atendimento_id) VALUES('".$nome."', '".$file_name."', ".$atendimento_id.");");          
+                header("Location: /arquivo/index/".$atendimento_id);
+                // $data = array('upload_data' => $this->upload->data());                               
+                // $data['atendimento_id'] = $atendimento_id;
+                // $data['error'] = "";
+                // $this->load->view('innerpages/header');
+                // $this->load->view('arquivo/tela_adicionar', $data);
+                // $this->load->view('innerpages/footer');                
+                
         
         }
     }
