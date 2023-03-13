@@ -80,6 +80,7 @@ class Pessoa extends CI_Controller {
 
         $this->load->database();
         $this->load->helper('url'); 
+        
         $form_data = $this->input->post();        
         $id = $this->input->post("id");
         $nome = $this->input->post("nome");
@@ -91,10 +92,45 @@ class Pessoa extends CI_Controller {
         $complemento = $this->input->post("complemento");
         $cep =  $this->input->post("cep");
         $sexo =  $this->input->post("sexo");
-    // Foto: <input type="file" name="foto">  <br>
-        // $query = $this->db->query("UPDATE pessoa SET nome = '".$nome."',  data_nascimento = '".$data_nascimento."', cpf = '".$cpf."', rg='".$rg."', rua ='".$rua."', bairro = '".$bairro."', complemento = '".$complemento."', cep = '".$cep."', sexo = '".$sexo."' where id = ".$id.";");        
-        $query = $this->db->query("UPDATE pessoa SET nome = ?,  data_nascimento = ?, cpf = '".$cpf."', rg=?, rua = ?, bairro = ?, complemento = ?, cep = ?, sexo = ? where id = ?;", array($nome, $data_nascimento, $rg, $rua, $bairro, $complemento, $cep, $sexo, $id));       
+        
+        $query = $this->db->query("UPDATE pessoa SET nome = ?, data_nascimento = ?, cpf = ?, rg = ?, rua = ?, bairro = ?, complemento = ?, cep = ?, sexo = ? where id = ?;", array($nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo, $id));       
         header("Location: /pessoa/index");   
+
+        /*
+        $config['upload_path']          = './fotos/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 10000;
+        $config['max_width']            = 3000;
+        $config['max_height']           = 3000;    
+        $config['encrypt_name'] = TRUE;
+    
+      
+        $this->load->library('upload', $config);
+        if ( ! $this->upload->do_upload('foto'))
+        {
+                // $data = array('error' => $this->upload->display_errors());
+                // $data['upload_data'] = [];
+
+                // $this->load->view('innerpages/header');        
+                // $this->load->view('documento/tela_adicionar', $data);
+                // $this->load->view('innerpages/footer');
+
+                $query = $this->db->query("UPDATE pessoa SET nome = ?,  data_nascimento = ?, cpf = ?, rg=?, rua = ?, bairro = ?, complemento = ?, cep = ?, sexo = ? where id = ?;", array($nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo, $id));       
+                header("Location: /pessoa/index");   
+        }
+        else
+        {       
+                $query = $this->db->query("SELECT * FROM pessoa WHERE id = ?;", array($id));       
+                $pessoa = $query->result()[0];    
+                $foto = $pessoa->foto;
+                if (!empty($foto)) {
+                    unlink("./fotos/".$foto);            
+                } 
+
+                $file_name = $this->upload->data()["file_name"];                          
+                $query = $this->db->query("UPDATE pessoa SET foto = ?, nome = ?,  data_nascimento = ?, cpf = ?, rg=?, rua = ?, bairro = ?, complemento = ?, cep = ?, sexo = ? where id = ?;", array($file_name, $nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo, $id));       
+                header("Location: /pessoa/index");    
+        }*/
     }
     public function remover($id)    {
         $this->load->library('session');
