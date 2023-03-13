@@ -4,6 +4,7 @@
     <tr>
         <td> Remover </td>
         <td> Editar </td>
+        <td> Baixar </a>
     </tr>
     <?php foreach($vetArquivo as $arquivo) { ?>
     <tr>
@@ -15,7 +16,10 @@
         </td>
         <td>
             <?php echo $arquivo->nome; ?>
-        </td>
+        </td>        <td>
+
+        <?=((!empty($arquivo->arquivo)) ? "<a class=\"btn btn-secondary\" href=\"/arquivo/baixar/".$arquivo->id."\">Baixar</a>": "")?>
+        </td>  
     </tr>
     <?php } ?>
 </table>

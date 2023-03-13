@@ -2,7 +2,21 @@
 
 class Pessoa extends CI_Controller {
 
-
+    public function foto($pessoa_id){
+        $this->load->helper('download');
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
+        $this->load->database();
+        $this->load->helper('url'); 
+        $query = $this->db->query('SELECT * FROM pessoa where id = ?;', array($pessoa_id));
+        $pessoa = $query->result()[0];
+        if (!empty($pessoa->foto)){
+            force_download('./fotos/'.$pessoa->foto, NULL);
+        } 
+    }
 
     public function index($offset = 0)
     {          
@@ -10,7 +24,7 @@ class Pessoa extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         
@@ -23,33 +37,30 @@ class Pessoa extends CI_Controller {
         $this->pagination->initialize($config);                
         $query = $this->db->query('SELECT * FROM pessoa order by nome LIMIT ? OFFSET ?', array($limit, $offset*$limit));
         $data['pagination'] = $this->pagination->create_links();
-
         // $query = $this->db->query('SELECT * FROM pessoa order by nome');
         $data['vetPessoa'] = $query->result();       
         $this->load->view('innerpages/header');
         $this->load->view('pessoa/index', $data);
         $this->load->view('innerpages/footer');
     }
-}
     public function tela_adicionar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $data['error'] = "";
         $data['upload_data'] = [];
         $this->load->view('innerpages/header');
         $this->load->view('pessoa/tela_adicionar', $data);        
         $this->load->view('innerpages/footer');
     }
-    }
     public function tela_editar($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query('SELECT * FROM pessoa WHERE id = '.$id);
@@ -59,14 +70,13 @@ class Pessoa extends CI_Controller {
         $this->load->view('pessoa/tela_editar', $data);
         $this->load->view('innerpages/footer');
     }
-}
     public function editar()    
     {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
 
         $this->load->database();
         $this->load->helper('url'); 
@@ -86,13 +96,12 @@ class Pessoa extends CI_Controller {
         $query = $this->db->query("UPDATE pessoa SET nome = ?,  data_nascimento = ?, cpf = '".$cpf."', rg=?, rua = ?, bairro = ?, complemento = ?, cep = ?, sexo = ? where id = ?;", array($nome, $data_nascimento, $rg, $rua, $bairro, $complemento, $cep, $sexo, $id));       
         header("Location: /pessoa/index");   
     }
-}
     public function remover($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query("SELECT * FROM pessoa WHERE id = ".$id.";");        
@@ -118,14 +127,13 @@ class Pessoa extends CI_Controller {
         $query = $this->db->query("BEGIN;".$query."DELETE FROM pessoa WHERE id = ".$id."; COMMIT;");                
         header("Location: /pessoa/index");        
     }
-}
     public function adicionar()    
     {      
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -155,6 +163,7 @@ class Pessoa extends CI_Controller {
                 // $this->load->view('innerpages/header');        
                 // $this->load->view('documento/tela_adicionar', $data);
                 // $this->load->view('innerpages/footer');
+                // die("ok");
                 // $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ( '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
                 $query = $this->db->query("INSERT INTO pessoa (nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES (?, ?, ?, ?,?,?,?, ?, ?)", array($nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo));      
                 header("Location: /pessoa/index");   
@@ -163,9 +172,8 @@ class Pessoa extends CI_Controller {
         {
                 $file_name = $this->upload->data()["file_name"];          
                 // $query = $this->db->query("INSERT INTO pessoa (foto, nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES ('".$file_name."', '".$nome."', '".$data_nascimento."', '".$cpf."', '".$rg."','".$rua."','".$bairro."','".$complemento."', '".$cep."', '".$sexo."')");        
-                $query = $this->db->query("INSERT INTO pessoa (foto, nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES (?, ?, ?, ?,?,?,?, ?, ?)", array($file_name, $nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo));      
+                $query = $this->db->query("INSERT INTO pessoa (foto, nome, data_nascimento, cpf, rg, rua, bairro, complemento, cep, sexo) VALUES (?, ?, ?, ?, ?,?,?,?, ?, ?)", array($file_name, $nome, $data_nascimento, $cpf, $rg, $rua, $bairro, $complemento, $cep, $sexo));      
                 header("Location: /pessoa/index");    
         }
     }
-}
 }

@@ -8,7 +8,7 @@ class Setor extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
 
         $this->load->library('pagination');
@@ -26,26 +26,28 @@ class Setor extends CI_Controller {
         $this->load->view('innerpages/header');
         $this->load->view('setor/index', $data);        
         $this->load->view('innerpages/footer');
-    }    
     }
     public function tela_adicionar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->view('innerpages/header');
         $this->load->view('setor/tela_adicionar');
         $this->load->view('innerpages/footer');
-
-    }    
     }
     public function tela_editar($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }  else {
+        }
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query("SELECT * FROM setor WHERE id = ?", array($id));
@@ -54,14 +56,8 @@ class Setor extends CI_Controller {
         $this->load->view('innerpages/header');
         $this->load->view('setor/tela_editar', $data);
         $this->load->view('innerpages/footer');
-        }
     }
     public function editar()    {
-        $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
-            $this->session->sess_destroy();
-            header("Location: /usuario/tela_login");
-        } else {
 
         $this->load->database();
         $form_data = $this->input->post();        
@@ -73,7 +69,6 @@ class Setor extends CI_Controller {
         // $query = $this->db->query("UPDATE setor SET nome='".$nome."',  email='".$email."', endereco='".$endereco."', telefone='".$telefone."' WHERE id = ".$id.";");
         $query = $this->db->query("UPDATE setor SET nome=?,  email=?, endereco=?, telefone=? WHERE id = ?;", array($nome, $email, $endereco, $telefone, $id));
         header("Location: /setor/index");
-        }
         
     }
     public function remover($id)    {
@@ -103,16 +98,15 @@ class Setor extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {  
-            $this->load->database();
-            $form_data = $this->input->post();        
-            $nome = $this->input->post("nome");
-            $email = $this->input->post("email");
-            $endereco = $this->input->post("endereco");
-            $telefone = $this->input->post("telefone");
-            // $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");     
-            $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES (?,?,?,?);", array($nome, $email, $endereco, $telefone));  
-            header("Location: /setor/index");
-        }
+        }  
+        $this->load->database();
+        $form_data = $this->input->post();        
+        $nome = $this->input->post("nome");
+        $email = $this->input->post("email");
+        $endereco = $this->input->post("endereco");
+        $telefone = $this->input->post("telefone");
+        // $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES ('".$nome."','".$email."','".$endereco."','".$telefone."');");     
+        $query = $this->db->query("INSERT INTO setor (nome, email, endereco, telefone) VALUES (?,?,?,?);", array($nome, $email, $endereco, $telefone));  
+        header("Location: /setor/index");
     }
 }

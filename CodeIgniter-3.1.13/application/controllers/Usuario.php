@@ -8,7 +8,7 @@ class Usuario extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
 
@@ -31,13 +31,12 @@ class Usuario extends CI_Controller {
         $this->load->view('usuario/index', $data);        
         $this->load->view('innerpages/footer');
     }
-}
     public function tela_adicionar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
@@ -48,13 +47,12 @@ class Usuario extends CI_Controller {
         $this->load->view('usuario/tela_adicionar', $data);
         $this->load->view('innerpages/footer');
     }
-}
     public function tela_editar($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
@@ -75,13 +73,12 @@ class Usuario extends CI_Controller {
         $this->load->view('usuario/tela_editar', $data);
         $this->load->view('innerpages/footer');
     }
-}
     public function editar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -110,48 +107,30 @@ class Usuario extends CI_Controller {
         }
         header("Location: /usuario/index");    
     }
-}
     public function remover($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query("DELETE FROM usuario WHERE id = ".$id.";");        
         $query = $this->db->query("DELETE FROM usuario WHERE id = ?", array($id));       
         header("Location: /usuario/index");    
     }
-}
-
-public function tela_login()    {        
-    $this->load->library('session');/*
-    if(!$this->session->userdata('usuario')){
-        $this->session->sess_destroy();
-        header("Location: /usuario/tela_login");
-    } else {
-    $this->load->database();
-    $this->load->helper('url'); 
-    $this->load->library('session');*/
-    $this->session->sess_destroy();
-    $data['error'] = "";
-    $this->load->view('usuario/tela_login', $data);
-//}    
-}
     public function logout()    {        
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $this->load->library('session');
         $this->session->sess_destroy();
         $data['error'] = "";
         $this->load->view('usuario/tela_login', $data);
-    }    
     }
     public function login()    {        
         $this->load->database();
@@ -179,7 +158,7 @@ public function tela_login()    {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        }     else {
+        }     
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -200,5 +179,4 @@ public function tela_login()    {
         }
         header("Location: /usuario/index");    
     }
-}
 }

@@ -8,7 +8,7 @@ class Atendimento extends CI_Controller {
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
 
@@ -30,13 +30,12 @@ class Atendimento extends CI_Controller {
         $this->load->view('atendimento/index', $data);
         $this->load->view('innerpages/footer');
     }
-    }
     public function tela_adicionar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
-            header("Location: /usuario/tela_login");
-        } else {
+            redirect('usuario/tela_login');
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $data = [];
@@ -56,13 +55,12 @@ class Atendimento extends CI_Controller {
             $this->load->view('innerpages/footer');
         }
     }
-    }
     public function tela_editar($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM pessoa');
@@ -77,13 +75,12 @@ class Atendimento extends CI_Controller {
         $this->load->view('atendimento/tela_editar', $data);
         $this->load->view('innerpages/footer');
     }
-    }
     public function editar()    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
           $this->load->database();
           $this->load->helper('url'); 
           $form_data = $this->input->post();        
@@ -94,14 +91,13 @@ class Atendimento extends CI_Controller {
           $query = $this->db->query("UPDATE atendimento SET observacao = ?, usuario_id = ?, pessoa_id = ? WHERE id = ?;", array($observacao, $usuario_id, $pessoa_id, $id));       
         //   $query = $this->db->query("UPDATE atendimento SET observacao = '".$observacao."', usuario_id = ".$usuario_id.", pessoa_id = ".$pessoa_id." WHERE id = ".$id.";");        
           header("Location: /atendimento/index");  
-        }
     }
     public function remover($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         // $query = $this->db->query("SELECT * FROM arquivo WHERE atendimento_id = ".$id.";");        
@@ -118,14 +114,14 @@ class Atendimento extends CI_Controller {
         }
         $query = $this->db->query("BEGIN;".$query."DELETE FROM atendimento WHERE id = ".$id."; COMMIT;");        
         header("Location: /atendimento/index");
-    }
+
     }
     public function adicionar()    {        
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
-        } else {
+        }
         $this->load->database();
         $this->load->helper('url'); 
         $form_data = $this->input->post();        
@@ -135,6 +131,5 @@ class Atendimento extends CI_Controller {
         $query = $this->db->query("INSERT INTO atendimento (observacao, usuario_id, pessoa_id) VALUES(?, ?, ?);", array($observacao, $usuario_id, $pessoa_id));       
         // $query = $this->db->query("INSERT INTO atendimento (observacao, usuario_id, pessoa_id) VALUES('".$observacao."', ".$usuario_id.", ".$pessoa_id.");");
         header("Location: /atendimento/index");
-    }
     }
 }
