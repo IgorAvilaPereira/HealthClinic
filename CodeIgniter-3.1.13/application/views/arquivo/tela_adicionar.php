@@ -15,5 +15,5 @@
     Descrição: <input type="text" name="nome"> <br>
     Arquivo: <input type="file" name="arquivo"> <br>
     <input type="hidden" name="atendimento_id" value="<?=$atendimento_id?>"> <br>
-    <input type="submit" value="Adicionar">
+    <input type="submit" class="btn btn-primary" value="Adicionar">
 </form>
