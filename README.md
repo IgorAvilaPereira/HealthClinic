@@ -6,6 +6,7 @@
 * Call Management
 * Clinic Staff Management
 * Document Management (of Patients and of each Consultation)
+* Reports
 
 ## Setup
 
