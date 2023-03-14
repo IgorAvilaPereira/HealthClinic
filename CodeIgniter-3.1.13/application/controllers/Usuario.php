@@ -56,6 +56,7 @@ class Usuario extends CI_Controller {
         $this->load->database();
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
+        $data['error'] = "";
         $data['vetSetor'] = $query->result();  
         // $query = $this->db->query('SELECT * FROM usuario WHERE usuario.id = '.$id);
         $query = $this->db->query("SELECT * FROM usuario WHERE usuario.id = ?", array($id));    
@@ -85,27 +86,52 @@ class Usuario extends CI_Controller {
         $id = $this->input->post("id");
         $nome = $this->input->post("nome");
         $email = $this->input->post("email");
-        $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
-        // $query = $this->db->query("UPDATE usuario SET nome='".$nome."',  email='".$email."', senha=Md5('".$senha."'), setor_id = ".$setor_id." WHERE id =".$id.";");        
-        $query = $this->db->query("UPDATE usuario SET nome=?,  email=?, senha = md5(?), setor_id = ? WHERE id =?;", array($nome, $email, $senha, $setor_id, $id));       
-        $vetPerfil = $this->input->post("perfil_id"); 
-        $usuario_id = $id;    
-        if (is_array($vetPerfil)){
-            if (count($vetPerfil)>0){                                   
-                $sql = "";
-                foreach($vetPerfil as $perfil_id){
-                    $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
+        // $senha_antiga = $this->input->post("senha_antiga");
+        $senha = $this->input->post("senha");        
+        // $senha_nova =  ((empty($this->input->post("senha_nova"))) ? $this->input->post("senha_antiga") : $this->input->post("senha_nova"));
+        
+        // $query = $this->db->query("SELECT * FROM usuario WHERE id = ? and senha = md5(?);", array($id, $senha_antiga));               
+        // if (count($query->result()) > 0){
+            $query = $this->db->query("UPDATE usuario SET nome = ?,  email = ?, senha = md5(?), setor_id = ? WHERE id = ?;", array($nome, $email, $senha, $setor_id, $id));       
+            $vetPerfil = $this->input->post("perfil_id"); 
+            $usuario_id = $id;    
+            if (is_array($vetPerfil)){
+                if (count($vetPerfil)>0){                                   
+                    $sql = "";
+                    foreach($vetPerfil as $perfil_id){
+                        $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
+                    }
+                    $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";".$sql."COMMIT;");        
+                } else {
+                    $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
                 }
-                $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";".$sql."COMMIT;");        
-            } else {
+            }
+            else {
                 $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
             }
-        }
-        else {
-            $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
-        }
-        header("Location: /usuario/index");    
+            header("Location: /usuario/index");               
+        /*} else {
+            $data['error'] = "senha antiga incorreta";
+            $query = $this->db->query('SELECT * FROM setor');
+            // $data['error'] = "";
+            $data['vetSetor'] = $query->result();  
+            // $query = $this->db->query('SELECT * FROM usuario WHERE usuario.id = '.$id);
+            $query = $this->db->query("SELECT * FROM usuario WHERE usuario.id = ?", array($id));    
+            $data['usuario'] = $query->result()[0];
+            $query = $this->db->query('SELECT * FROM perfil');
+            $data['vetPerfil'] = $query->result();  
+            // $query = $this->db->query('SELECT perfil_id as id FROM usuario_perfil where usuario_id='.$id);
+            $query = $this->db->query("SELECT perfil_id as id FROM usuario_perfil where usuario_id=?", array($id));    
+            $vetUsuarioPerfil = $query->result();  
+            $data['vetUsuarioPerfil'] = [];
+            foreach($vetUsuarioPerfil as $perfil){
+                $data['vetUsuarioPerfil'][] = (int) $perfil->id;
+            }        
+            $this->load->view('innerpages/header'); 
+            $this->load->view('usuario/tela_editar', $data);
+            $this->load->view('innerpages/footer');
+        }   */    
     }
     public function remover($id)    {
         $this->load->library('session');
@@ -114,9 +140,13 @@ class Usuario extends CI_Controller {
             header("Location: /usuario/tela_login");
         }
         $this->load->database();
-        $this->load->helper('url'); 
-        // $query = $this->db->query("DELETE FROM usuario WHERE id = ".$id.";");        
-        $query = $this->db->query("DELETE FROM usuario WHERE id = ?", array($id));       
+        $this->load->helper('url');         
+        // if ($this->session->usuario->id != $id) {            
+            $query = $this->db->query("DELETE FROM usuario WHERE id = ?", array($id));       
+        /*} else {
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }*/
         header("Location: /usuario/index");    
     }
     public function logout()    {        
@@ -145,8 +175,11 @@ class Usuario extends CI_Controller {
             $this->session->usuario = $query->result()[0];
             // pendente => colocar os perfis na sessao e permitir ou de acordo.
             // $query = $this->db->query("SELECT perfil.id, perfil.nome, perfil.adicionar, perfil.visualizar, perfil.remover, perfil.editar FROM usuario inner join usuario_perfil on (usuario.id = usuario_perfil.usuario_id) inner join perfil on (perfil.id = usuario_perfil.perfil_id) WHERE usuario.id = ?;", array($this->session->usuario->id));       
-            // echo var_dump($query->result());
-            // // die();
+            // $this->session->vetPerfil = $query->result();
+            // echo "<pre>";
+            //     print_r($this->session->vetPerfil);
+            // echo "</pre>";
+            // echo var_dump($query->result());            
             $this->load->view('innerpages/header');
 		    $this->load->view('home');
             $this->load->view('innerpages/footer');
