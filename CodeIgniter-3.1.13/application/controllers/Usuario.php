@@ -137,14 +137,16 @@ class Usuario extends CI_Controller {
         $this->load->helper('url'); 
         $form_data = $this->input->post(); 
         $email = $this->input->post("email");        
-        $senha = $this->input->post("senha");
-        // echo $email;
-        // echo $senha;
-        // $query = $this->db->query("SELECT * FROM usuario WHERE email = '".trim($email)."' and senha = md5('".$senha."');");
+        $senha = $this->input->post("senha");      
+        
         $query = $this->db->query("SELECT * FROM usuario WHERE email = ? and senha = md5(?);", array(trim($email), trim($senha)));       
         if (count($query->result()) > 0){
             $this->load->library('session');
             $this->session->usuario = $query->result()[0];
+
+            // $query = $this->db->query("SELECT perfil.id, perfil.nome, perfil.adicionar, perfil.visualizar, perfil.remover, perfil.editar FROM usuario inner join usuario_perfil on (usuario.id = usuario_perfil.usuario_id) inner join perfil on (perfil.id = usuario_perfil.perfil_id) WHERE usuario.id = ?;", array($this->session->usuario->id));       
+            // echo var_dump($query->result());
+            // // die();
             $this->load->view('innerpages/header');
 		    $this->load->view('home');
             $this->load->view('innerpages/footer');
