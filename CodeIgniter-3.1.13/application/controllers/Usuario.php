@@ -143,7 +143,7 @@ class Usuario extends CI_Controller {
         if (count($query->result()) > 0){
             $this->load->library('session');
             $this->session->usuario = $query->result()[0];
-
+            // pendente => colocar os perfis na sessao e permitir ou de acordo.
             // $query = $this->db->query("SELECT perfil.id, perfil.nome, perfil.adicionar, perfil.visualizar, perfil.remover, perfil.editar FROM usuario inner join usuario_perfil on (usuario.id = usuario_perfil.usuario_id) inner join perfil on (perfil.id = usuario_perfil.perfil_id) WHERE usuario.id = ?;", array($this->session->usuario->id));       
             // echo var_dump($query->result());
             // // die();
