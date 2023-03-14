@@ -3,23 +3,25 @@
 <table border=1>
     <tr>
         <td> Remover </td>
-        <td> Editar </td>
+        <!-- <td> Editar </td> -->
         <td> Baixar </a>
+        <td> Remover </a>
     </tr>
     <?php foreach($vetArquivo as $arquivo) { ?>
     <tr>
-        <td>
-            <a class="btn btn-secondary" href="/arquivo/remover/<?=$arquivo->id?>/<?=$arquivo->atendimento_id?>">Remover</a>
-        </td>
-        <td>
+        <!-- <td>
             <a class="btn btn-secondary" href="/arquivo/tela_editar/<?=$arquivo->id?>/<?=$arquivo->atendimento_id?>">Editar</a>
-        </td>
+        </td> -->
         <td>
             <?php echo $arquivo->nome; ?>
-        </td>        <td>
+        </td>
+        <?=((!empty($arquivo->arquivo)) ? "<td><a class=\"btn btn-secondary\" href=\"/arquivo/baixar/".$arquivo->id."\">Baixar</a> </td>": "")?>
+        <td>
+            <a class="btn btn-danger"
+                href="/arquivo/remover/<?=$arquivo->id?>/<?=$arquivo->atendimento_id?>">Remover</a>
+        </td>
+        <!-- <?=((!empty($arquivo->arquivo)) ? "<td><a class=\"btn btn-secondary\" href=\"/arquivo/remover_arquivo/".$arquivo->id."\">Remover</a> </td>": "")?> -->
 
-        <?=((!empty($arquivo->arquivo)) ? "<a class=\"btn btn-secondary\" href=\"/arquivo/baixar/".$arquivo->id."\">Baixar</a>": "")?>
-        </td>  
     </tr>
     <?php } ?>
 </table>

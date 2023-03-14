@@ -2,6 +2,26 @@
 // atendimento_arquivo
 class Arquivo extends CI_Controller {   
 
+    // public function remover_arquivo($id){
+    //     $this->load->helper('download');
+    //     $this->load->library('session');
+    //     if(!$this->session->userdata('usuario')){
+    //         $this->session->sess_destroy();
+    //         header("Location: /usuario/tela_login");
+    //     }
+    //     $this->load->database();
+    //     $query = $this->db->query('SELECT * FROM arquivo where id = ?;', array($id));
+    //     $arquivo = $query->result()[0];
+    //     $atendimento_id = $arquivo->atendimento_id;
+    //     if (!empty($arquivo->arquivo)){
+    //         if (unlink("./arquivos/".$arquivo->arquivo)) {                
+    //             $query = $this->db->query("UPDATE arquivo SET arquivo = NULL WHERE id = ?;", array($id));       
+    //         }
+    //     }
+    //     header("Location: /arquivo/index/".$atendimento_id);
+
+    // }
+
 
     public function baixar($id){
         $this->load->helper('download');
@@ -101,6 +121,7 @@ class Arquivo extends CI_Controller {
         // $query = $this->db->query("SELECT * FROM arquivo WHERE id = ".$id.";");    
         $query = $this->db->query("SELECT * FROM arquivo WHERE id = ?;", array($id));       
         $arquivo = $query->result()[0];        
+        // $query = $this->db->query("DELETE FROM arquivo WHERE id = ?;", array($id));       
         if (unlink("./arquivos/".$arquivo->arquivo)) {
             $query = $this->db->query("DELETE FROM arquivo WHERE id = ?;", array($id));       
             // $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        

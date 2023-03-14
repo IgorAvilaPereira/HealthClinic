@@ -2,6 +2,25 @@
 
 class Pessoa extends CI_Controller {
 
+    public function remover_foto($id){
+        $this->load->helper('download');
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
+        $this->load->database();
+        $query = $this->db->query("SELECT * FROM pessoa WHERE id = ?;", array($id));       
+        $pessoa = $query->result()[0];    
+        $foto = $pessoa->foto;
+        if (!empty($foto)) {
+            unlink("./fotos/".$foto);            
+            $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
+        }
+        header("Location: /pessoa/index");   
+
+    }
+
     public function foto($pessoa_id){
         $this->load->helper('download');
         $this->load->library('session');
@@ -55,6 +74,67 @@ class Pessoa extends CI_Controller {
         $this->load->view('pessoa/tela_adicionar', $data);        
         $this->load->view('innerpages/footer');
     }
+
+    public function tela_adicionar_foto($id)    {
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
+        $this->load->database();
+        $this->load->helper('url'); 
+        $data['error'] = "";
+        $data['upload_data'] = [];
+        $data['id'] = $id;
+        $this->load->view('innerpages/header');
+        $this->load->view('pessoa/tela_adicionar_foto', $data);
+        $this->load->view('innerpages/footer');
+    }
+
+    public function adicionar_foto(){
+        $this->load->library('session');
+        if(!$this->session->userdata('usuario')){
+            $this->session->sess_destroy();
+            header("Location: /usuario/tela_login");
+        }
+        $this->load->database();
+        $this->load->helper('url'); 
+
+        $form_data = $this->input->post();        
+        $id = $this->input->post("id");
+
+          
+        $config['upload_path']          = './fotos/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 10000;
+        $config['max_width']            = 3000;
+        $config['max_height']           = 3000;    
+        $config['encrypt_name'] = TRUE;
+    
+      
+        $this->load->library('upload', $config);
+        if ( ! $this->upload->do_upload('foto'))
+        {
+                $data = array('error' => $this->upload->display_errors());
+                $data['upload_data'] = [];
+                $data['id'] = $id;
+                $this->load->view('innerpages/header');        
+                $this->load->view('pessoa/tela_adicionar_foto', $data);
+                $this->load->view('innerpages/footer');                
+        }
+        else
+        {       $query = $this->db->query("SELECT * FROM pessoa WHERE id = ?;", array($id));       
+                $pessoa = $query->result()[0];    
+                $foto = $pessoa->foto;
+                if (!empty($foto)) {
+                    unlink("./fotos/".$foto);            
+                } 
+                $file_name = $this->upload->data()["file_name"];                          
+                $query = $this->db->query("UPDATE pessoa SET foto = ? where id = ?;", array($file_name, $id));       
+                header("Location: /pessoa/index");    
+        }
+    }
+
     public function tela_editar($id)    {
         $this->load->library('session');
         if(!$this->session->userdata('usuario')){

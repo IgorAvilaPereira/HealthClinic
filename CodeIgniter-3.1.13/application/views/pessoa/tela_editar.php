@@ -39,12 +39,12 @@
                 <input type="radio" name="sexo" value="F" <?=(($pessoa->sexo == 'F') ?  "checked" : "")?>> Feminino
             </td>
         </tr>
-        <tr>
+        <!-- <tr>
             <td> Foto: </td>
             <td> <input type="file" name="foto">
                 <?=((!empty($pessoa->foto)) ? "<a class=\"btn btn-secondary\" href=\"/pessoa/foto/".$pessoa->id."\">Foto</a>": "")?>
             </td>
-        </tr>
+        </tr> -->
     </table>
     <input type="hidden" name="id" value="<?=$pessoa->id?>">
     <input class="btn btn-primary" value="Editar" type="submit">
