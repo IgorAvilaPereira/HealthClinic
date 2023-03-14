@@ -2,18 +2,19 @@
 
 <table border=1>
     <tr>
-        <td> Remover </td>
-        <!-- <td> Editar </td> -->
+        <td> Descrição </td>
+        <td> Editar </td>
+        <!-- <td> Remover </td>         -->
         <td> Baixar </a>
         <td> Remover </a>
     </tr>
     <?php foreach($vetArquivo as $arquivo) { ?>
     <tr>
-        <!-- <td>
-            <a class="btn btn-secondary" href="/arquivo/tela_editar/<?=$arquivo->id?>/<?=$arquivo->atendimento_id?>">Editar</a>
-        </td> -->
         <td>
             <?php echo $arquivo->nome; ?>
+        </td>
+        <td>
+            <a class="btn btn-secondary" href="/arquivo/tela_editar/<?=$arquivo->id?>/<?=$arquivo->atendimento_id?>">Editar</a>
         </td>
         <?=((!empty($arquivo->arquivo)) ? "<td><a class=\"btn btn-secondary\" href=\"/arquivo/baixar/".$arquivo->id."\">Baixar</a> </td>": "")?>
         <td>

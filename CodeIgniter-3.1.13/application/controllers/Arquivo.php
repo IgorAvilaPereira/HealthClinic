@@ -105,7 +105,6 @@ class Arquivo extends CI_Controller {
         $nome = $this->input->post("nome");
         $id = $this->input->post("id");
         $atendimento_id = $this->input->post("atendimento_id");
-        // $query = $this->db->query("UPDATE arquivo SET nome = '".$nome."' WHERE id = ".$id.";");
         $query = $this->db->query("UPDATE arquivo SET nome = ? WHERE id = ?;", array($nome, $id));   
         header("Location: /arquivo/index/".$atendimento_id);
     }
