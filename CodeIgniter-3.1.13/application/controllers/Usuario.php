@@ -188,7 +188,7 @@ class Usuario extends CI_Controller {
         $data['error'] = "";
         $data['captcha'] = $cap['image'];	
         $this->session->captcha_filename = $cap['filename'];	
-        echo trim($word);
+        // // echo trim($word);
         $this->load->view('usuario/tela_login', $data);
     }
     public function tela_login(){          
@@ -228,7 +228,7 @@ class Usuario extends CI_Controller {
             $data['error'] = "";
             $data['captcha'] = $cap['image'];	            
             $this->session->captcha_filename = $cap['filename'];	
-            echo trim($word);
+            // echo trim($word);
             $this->load->view('usuario/tela_login', $data);
         
     }
@@ -270,10 +270,10 @@ class Usuario extends CI_Controller {
     //         // header("Location: /usuario/tela_login");
 	// 		$data['error'] = "";	
 	// 		$this->session->captcha = $word;
-	// 		// echo $this->session->captcha;
+	// 		// // echo $this->session->captcha;
 	// 		$data['captcha'] = $cap['image'];			
 	// 		$this->load->view('usuario/tela_login', $data);
-	// 		// echo var_dump($cap);
+	// 		// // echo var_dump($cap);
     //     }  else {
 	// 		$this->load->view('innerpages/header');
 	// 	    $this->load->view('home');
@@ -291,8 +291,8 @@ class Usuario extends CI_Controller {
         $email = $this->input->post("email");        
         $senha = $this->input->post("senha");      
         $captcha = $this->input->post("captcha");  
-        echo "preenchido".$captcha."<br>";
-        echo "sessao".	$this->session->captcha;
+        // echo "preenchido".$captcha."<br>";
+        // echo "sessao".	$this->session->captcha;
         // die();
 
         if ($this->session->userdata('captcha')){
@@ -303,10 +303,10 @@ class Usuario extends CI_Controller {
                     // pendente => colocar os perfis na sessao e permitir ou de acordo.
                     // $query = $this->db->query("SELECT perfil.id, perfil.nome, perfil.adicionar, perfil.visualizar, perfil.remover, perfil.editar FROM usuario inner join usuario_perfil on (usuario.id = usuario_perfil.usuario_id) inner join perfil on (perfil.id = usuario_perfil.perfil_id) WHERE usuario.id = ?;", array($this->session->usuario->id));       
                     // $this->session->vetPerfil = $query->result();
-                    // echo "<pre>";
+                    // // echo "<pre>";
                     //     print_r($this->session->vetPerfil);
-                    // echo "</pre>";
-                    // echo var_dump($query->result());            
+                    // // echo "</pre>";
+                    // // echo var_dump($query->result());            
                     // if (!empty($foto)) {
                     unlink("./captcha/".$this->session->captcha_filename);            
                         // $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
@@ -323,7 +323,7 @@ class Usuario extends CI_Controller {
                     session_start();
 
 
-                    // echo "login icorreto";
+                    // // echo "login icorreto";
                     $data['error'] = "Login incorreto e/ou captcha incorreta";
 
                     $word = array_merge(range('a', 'z'), range('A', 'Z'));
@@ -352,7 +352,7 @@ class Usuario extends CI_Controller {
                     );	
                     $cap = @create_captcha($vals);
                     $this->session->captcha = trim($word);
-                    echo trim($word);
+                    // echo trim($word);
 
                     $data['captcha'] = $cap['image'];	
                     $this->session->captcha_filename = $cap['filename'];	
@@ -362,7 +362,7 @@ class Usuario extends CI_Controller {
                 unlink("./captcha/".$this->session->captcha_filename);            
 
                 // return redirect()->to('/welcome/index'); 
-                // echo "captcha n bate";
+                // // echo "captcha n bate";
                 // $this->session->sess_destroy();
                 $this->session->sess_destroy();
                 session_start();
@@ -393,7 +393,7 @@ class Usuario extends CI_Controller {
                 );	
                 $cap = @create_captcha($vals);
                 $this->session->captcha = trim($word);
-                echo trim($word);
+                // echo trim($word);
 
                 $data['captcha'] = $cap['image'];	
                 $this->session->captcha_filename = $cap['filename'];	
@@ -404,7 +404,7 @@ class Usuario extends CI_Controller {
             unlink("./captcha/".$this->session->captcha_filename);            
 
             // return redirect()->to('/welcome/index'); 
-            // echo "captcha n esta na sessao";
+            // // echo "captcha n esta na sessao";
             // $this->session->sess_destroy();
             $this->session->sess_destroy();
 			session_start();
@@ -436,7 +436,7 @@ class Usuario extends CI_Controller {
             $this->session->captcha = trim($word);
             $data['captcha'] = $cap['image'];	
             $this->session->captcha_filename = $cap['filename'];	
-            echo trim($word);
+            // echo trim($word);
 
             $data['error'] = "Login incorreto e/ou captcha incorreta";
             $this->load->view('usuario/tela_login', $data);
