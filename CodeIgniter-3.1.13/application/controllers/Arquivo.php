@@ -143,7 +143,7 @@ class Arquivo extends CI_Controller {
         $atendimento_id = $this->input->post("atendimento_id");
 
         $config['upload_path']          = './arquivos/';
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|pdf';
         $config['max_size']             = 200;
         $config['max_width']            = 3000;
         $config['max_height']           = 3000;    
