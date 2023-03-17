@@ -160,38 +160,39 @@ class Usuario extends CI_Controller {
             unlink("./captcha/".$this->session->captcha_filename);            
         }
         $this->session->sess_destroy();
-        session_start();
-        $word = array_merge(range('a', 'z'), range('A', 'Z'));
-        shuffle($word);    	
-        $word = substr(implode($word), 0, 5);
-        $vals = array(
-            'word'          => trim($word),
-            'img_path'      => './captcha/',
-            'img_url'       => 'http://localhost:8081/captcha/',
-            'font_path'     => './path/to/fonts/texb.ttf',
-            'img_width'     => '150',
-            'img_height'    => 30,
-            'expiration'    => 7200,
-            'word_length'   => 5,
-            'font_size'     => 16,
-            'img_id'        => 'Imageid',
-            'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+        echo "<h1>Logout realizado com Sucesso!</a>";
+        // session_start();
+        // $word = array_merge(range('a', 'z'), range('A', 'Z'));
+        // shuffle($word);    	
+        // $word = substr(implode($word), 0, 5);
+        // $vals = array(
+        //     'word'          => trim($word),
+        //     'img_path'      => './captcha/',
+        //     'img_url'       => 'http://localhost:8081/captcha/',
+        //     'font_path'     => './path/to/fonts/texb.ttf',
+        //     'img_width'     => '150',
+        //     'img_height'    => 30,
+        //     'expiration'    => 7200,
+        //     'word_length'   => 5,
+        //     'font_size'     => 16,
+        //     'img_id'        => 'Imageid',
+        //     'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
     
-            // White background and border, black text and red grid
-            'colors'        => array(
-                    'background' => array(255, 255, 255),
-                    'border' => array(255, 255, 255),
-                    'text' => array(0, 0, 0),
-                    'grid' => array(255, 40, 40)
-            )
-        );	
-        $cap = @create_captcha($vals);
-        $this->session->captcha = trim($word);
-        $data['error'] = "";
-        $data['captcha'] = $cap['image'];	
-        $this->session->captcha_filename = $cap['filename'];	
-        echo trim($word);
-        $this->load->view('usuario/tela_login', $data);
+        //     // White background and border, black text and red grid
+        //     'colors'        => array(
+        //             'background' => array(255, 255, 255),
+        //             'border' => array(255, 255, 255),
+        //             'text' => array(0, 0, 0),
+        //             'grid' => array(255, 40, 40)
+        //     )
+        // );	
+        // $cap = @create_captcha($vals);
+        // $this->session->captcha = trim($word);
+        // $data['error'] = "";
+        // $data['captcha'] = $cap['image'];	
+        // $this->session->captcha_filename = $cap['filename'];	
+        // echo trim($word);
+        // $this->load->view('usuario/tela_login', $data);
     }
     public function tela_login(){          
             $this->load->database();
