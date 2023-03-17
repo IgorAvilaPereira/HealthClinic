@@ -33,8 +33,12 @@
             <td>Senha: </td>
             <td> <input type="password" name="senha" value="1234" required> </td>
         </tr>
+        <tr>
+            <td>Captcha: </td>
+            <td> <input type="text" name="captcha" value="" required> </td>
+        </tr>
     </table>
-    <!-- <?=$cap['image']?> -->
+    <?=$captcha?><br>
     <input class="btn btn-primary" value="Login" type="submit">
 </form>
 </body>

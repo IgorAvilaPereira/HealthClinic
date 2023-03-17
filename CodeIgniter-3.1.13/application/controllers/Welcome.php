@@ -19,17 +19,20 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 	public function index()
-	{	/*
+	{	
 		$this->load->helper('captcha');
+		$word = array_merge(range('a', 'z'), range('A', 'Z'));
+    	shuffle($word);    	
+		$word = substr(implode($word), 0, 5);
 		$vals = array(
-			'word'          => 'Random word',
+			'word'          => trim($word),
 			'img_path'      => './captcha/',
 			'img_url'       => 'http://localhost:8081/captcha/',
 			'font_path'     => './path/to/fonts/texb.ttf',
 			'img_width'     => '150',
 			'img_height'    => 30,
 			'expiration'    => 7200,
-			'word_length'   => 8,
+			'word_length'   => 5,
 			'font_size'     => 16,
 			'img_id'        => 'Imageid',
 			'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
@@ -41,20 +44,23 @@ class Welcome extends CI_Controller {
 					'text' => array(0, 0, 0),
 					'grid' => array(255, 40, 40)
 			)
-	);	*/
-        // $this->load->view('innerpages/header');
-		// $this->load->view('home');
-        // $this->load->view('innerpages/footer');
+		);	
+		$cap = @create_captcha($vals);
 
+        // // $this->load->view('innerpages/header');
+		// // $this->load->view('home');
+        // // $this->load->view('innerpages/footer');
 		$this->load->library('session');
+
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
-            // header("Location: /usuario/tela_login");
-			$data['error'] = "";
-			// $cap = create_captcha($vals);
-			// $data['cap'] = $cap;			
-			// echo $cap['image'];
-			$this->load->view('usuario/tela_login', $data);
+			session_start();
+			$data['error'] = "";	
+			$this->load->library('session');
+			$this->session->captcha = trim($word);	
+			echo trim($word);
+			$data['captcha'] = $cap['image'];						
+			$this->load->view('usuario/tela_login', $data);			
         }  else {
 			$this->load->view('innerpages/header');
 		    $this->load->view('home');

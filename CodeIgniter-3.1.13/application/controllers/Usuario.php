@@ -1,6 +1,8 @@
 <?php
 
-class Usuario extends CI_Controller {           
+class Usuario extends CI_Controller {     
+    // public $baseURL = 'https://mydomain.com/path/'; 
+      
 
     public function index($offset = 0)
     {
@@ -149,44 +151,277 @@ class Usuario extends CI_Controller {
         }*/
         header("Location: /usuario/index");    
     }
-    public function logout()    {        
-        $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
-            $this->session->sess_destroy();
-            header("Location: /usuario/tela_login");
-        }
+    public function logout()    {                
         $this->load->database();
-        $this->load->helper('url'); 
-        $this->load->library('session');
+        $this->load->helper('url');      
+        $this->load->library('session'); 
+        $this->load->helper('captcha');                   
         $this->session->sess_destroy();
+        session_start();
+        $word = array_merge(range('a', 'z'), range('A', 'Z'));
+        shuffle($word);    	
+        $word = substr(implode($word), 0, 5);
+        $vals = array(
+            'word'          => trim($word),
+            'img_path'      => './captcha/',
+            'img_url'       => 'http://localhost:8081/captcha/',
+            'font_path'     => './path/to/fonts/texb.ttf',
+            'img_width'     => '150',
+            'img_height'    => 30,
+            'expiration'    => 7200,
+            'word_length'   => 5,
+            'font_size'     => 16,
+            'img_id'        => 'Imageid',
+            'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+    
+            // White background and border, black text and red grid
+            'colors'        => array(
+                    'background' => array(255, 255, 255),
+                    'border' => array(255, 255, 255),
+                    'text' => array(0, 0, 0),
+                    'grid' => array(255, 40, 40)
+            )
+        );	
+        $cap = @create_captcha($vals);
+        $this->session->captcha = trim($word);
         $data['error'] = "";
+        $data['captcha'] = $cap['image'];	
+        echo trim($word);
         $this->load->view('usuario/tela_login', $data);
     }
+    public function tela_login(){          
+            $this->load->database();
+            $this->load->helper('url');      
+            $this->load->library('session'); 
+            $this->load->helper('captcha');                   
+            $this->session->sess_destroy();
+            session_start();
+            $word = array_merge(range('a', 'z'), range('A', 'Z'));
+            shuffle($word);    	
+            $word = substr(implode($word), 0, 5);
+            $vals = array(
+                'word'          => trim($word),
+                'img_path'      => './captcha/',
+                'img_url'       => 'http://localhost:8081/captcha/',
+                'font_path'     => './path/to/fonts/texb.ttf',
+                'img_width'     => '150',
+                'img_height'    => 30,
+                'expiration'    => 7200,
+                'word_length'   => 5,
+                'font_size'     => 16,
+                'img_id'        => 'Imageid',
+                'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+        
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+            );	
+            $cap = @create_captcha($vals);
+            $this->session->captcha = trim($word);
+            $data['error'] = "";
+            $data['captcha'] = $cap['image'];	
+            echo trim($word);
+            $this->load->view('usuario/tela_login', $data);
+        
+    }
+    //     $this->load->helper('captcha');
+	// 	$word = array_merge(range('a', 'z'), range('A', 'Z'));
+    // 	shuffle($word);    	
+
+	// 	$word = substr(implode($word), 0, 5);
+	// 	$vals = array(
+	// 		'word'          => $word,
+	// 		'img_path'      => './captcha/',
+	// 		'img_url'       => 'http://localhost:8081/captcha/',
+	// 		'font_path'     => './path/to/fonts/texb.ttf',
+	// 		'img_width'     => '150',
+	// 		'img_height'    => 30,
+	// 		'expiration'    => 7200,
+	// 		'word_length'   => 5,
+	// 		'font_size'     => 16,
+	// 		'img_id'        => 'Imageid',
+	// 		'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+	
+	// 		// White background and border, black text and red grid
+	// 		'colors'        => array(
+	// 				'background' => array(255, 255, 255),
+	// 				'border' => array(255, 255, 255),
+	// 				'text' => array(0, 0, 0),
+	// 				'grid' => array(255, 40, 40)
+	// 		)
+	// 	);	
+	// 	$cap = @create_captcha($vals);
+
+    //     // $this->load->view('innerpages/header');
+	// 	// $this->load->view('home');
+    //     // $this->load->view('innerpages/footer');
+
+	// 	$this->load->library('session');
+    //     if(!$this->session->userdata('usuario')){
+    //         $this->session->sess_destroy();
+    //         // header("Location: /usuario/tela_login");
+	// 		$data['error'] = "";	
+	// 		$this->session->captcha = $word;
+	// 		// echo $this->session->captcha;
+	// 		$data['captcha'] = $cap['image'];			
+	// 		$this->load->view('usuario/tela_login', $data);
+	// 		// echo var_dump($cap);
+    //     }  else {
+	// 		$this->load->view('innerpages/header');
+	// 	    $this->load->view('home');
+    //         $this->load->view('innerpages/footer');
+	// 	}
+    // }
+
     public function login()    {        
         $this->load->database();
         $this->load->helper('url'); 
+        $this->load->library('session');
+        $this->load->helper('captcha');
+
         $form_data = $this->input->post(); 
         $email = $this->input->post("email");        
         $senha = $this->input->post("senha");      
+        $captcha = $this->input->post("captcha");  
+        echo "preenchido".$captcha."<br>";
+        echo "sessao".	$this->session->captcha;
+        // die();
+
+        if ($this->session->userdata('captcha')){
+            if (strcmp($this->session->captcha, trim($captcha)) == 0){        
+                $query = $this->db->query("SELECT * FROM usuario WHERE email = ? and senha = md5(?);", array(trim($email), trim($senha)));       
+                if (count($query->result()) > 0){                    
+                    $this->session->usuario = $query->result()[0];
+                    // pendente => colocar os perfis na sessao e permitir ou de acordo.
+                    // $query = $this->db->query("SELECT perfil.id, perfil.nome, perfil.adicionar, perfil.visualizar, perfil.remover, perfil.editar FROM usuario inner join usuario_perfil on (usuario.id = usuario_perfil.usuario_id) inner join perfil on (perfil.id = usuario_perfil.perfil_id) WHERE usuario.id = ?;", array($this->session->usuario->id));       
+                    // $this->session->vetPerfil = $query->result();
+                    // echo "<pre>";
+                    //     print_r($this->session->vetPerfil);
+                    // echo "</pre>";
+                    // echo var_dump($query->result());            
+                    $this->load->view('innerpages/header');
+                    $this->load->view('home');
+                    $this->load->view('innerpages/footer');
+                } else {
+                    // return redirect()->to('/welcome/index'); 
+                    $this->session->sess_destroy();
+                    session_start();
+
+                    // echo "login icorreto";
+                    $data['error'] = "Login incorreto e/ou captcha incorreta";
+
+                    $word = array_merge(range('a', 'z'), range('A', 'Z'));
+                    shuffle($word);    	
+                    $word = substr(implode($word), 0, 5);
+                    $vals = array(
+                        'word'          => trim($word),
+                        'img_path'      => './captcha/',
+                        'img_url'       => 'http://localhost:8081/captcha/',
+                        'font_path'     => './path/to/fonts/texb.ttf',
+                        'img_width'     => '150',
+                        'img_height'    => 30,
+                        'expiration'    => 7200,
+                        'word_length'   => 5,
+                        'font_size'     => 16,
+                        'img_id'        => 'Imageid',
+                        'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+                
+                        // White background and border, black text and red grid
+                        'colors'        => array(
+                                'background' => array(255, 255, 255),
+                                'border' => array(255, 255, 255),
+                                'text' => array(0, 0, 0),
+                                'grid' => array(255, 40, 40)
+                        )
+                    );	
+                    $cap = @create_captcha($vals);
+                    $this->session->captcha = trim($word);
+                    echo trim($word);
+
+                    $data['captcha'] = $cap['image'];	
+                    $this->load->view('usuario/tela_login', $data);
+                } 
+            } else {
+                // return redirect()->to('/welcome/index'); 
+                // echo "captcha n bate";
+                // $this->session->sess_destroy();
+                $this->session->sess_destroy();
+                session_start();
+                $data['error'] = "Login incorreto e/ou captcha incorreta";
+                $word = array_merge(range('a', 'z'), range('A', 'Z'));
+                shuffle($word);    	
+                $word = substr(implode($word), 0, 5);
+                $vals = array(
+                    'word'          => trim($word),
+                    'img_path'      => './captcha/',
+                    'img_url'       => 'http://localhost:8081/captcha/',
+                    'font_path'     => './path/to/fonts/texb.ttf',
+                    'img_width'     => '150',
+                    'img_height'    => 30,
+                    'expiration'    => 7200,
+                    'word_length'   => 5,
+                    'font_size'     => 16,
+                    'img_id'        => 'Imageid',
+                    'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+            
+                    // White background and border, black text and red grid
+                    'colors'        => array(
+                            'background' => array(255, 255, 255),
+                            'border' => array(255, 255, 255),
+                            'text' => array(0, 0, 0),
+                            'grid' => array(255, 40, 40)
+                    )
+                );	
+                $cap = @create_captcha($vals);
+                $this->session->captcha = trim($word);
+                echo trim($word);
+
+                $data['captcha'] = $cap['image'];	
+                $this->load->view('usuario/tela_login', $data);
+            } 
+        }
+        else {
+            // return redirect()->to('/welcome/index'); 
+            // echo "captcha n esta na sessao";
+            // $this->session->sess_destroy();
+            $this->session->sess_destroy();
+			session_start();
+            $word = array_merge(range('a', 'z'), range('A', 'Z'));
+            shuffle($word);    	
+            $word = substr(implode($word), 0, 5);
+            $vals = array(
+                'word'          => trim($word),
+                'img_path'      => './captcha/',
+                'img_url'       => 'http://localhost:8081/captcha/',
+                'font_path'     => './path/to/fonts/texb.ttf',
+                'img_width'     => '150',
+                'img_height'    => 30,
+                'expiration'    => 7200,
+                'word_length'   => 5,
+                'font_size'     => 16,
+                'img_id'        => 'Imageid',
+                'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
         
-        $query = $this->db->query("SELECT * FROM usuario WHERE email = ? and senha = md5(?);", array(trim($email), trim($senha)));       
-        if (count($query->result()) > 0){
-            $this->load->library('session');
-            $this->session->usuario = $query->result()[0];
-            // pendente => colocar os perfis na sessao e permitir ou de acordo.
-            // $query = $this->db->query("SELECT perfil.id, perfil.nome, perfil.adicionar, perfil.visualizar, perfil.remover, perfil.editar FROM usuario inner join usuario_perfil on (usuario.id = usuario_perfil.usuario_id) inner join perfil on (perfil.id = usuario_perfil.perfil_id) WHERE usuario.id = ?;", array($this->session->usuario->id));       
-            // $this->session->vetPerfil = $query->result();
-            // echo "<pre>";
-            //     print_r($this->session->vetPerfil);
-            // echo "</pre>";
-            // echo var_dump($query->result());            
-            $this->load->view('innerpages/header');
-		    $this->load->view('home');
-            $this->load->view('innerpages/footer');
-        } else {
-            $data['error'] = "Login incorreto";
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+            );	
+            $cap = @create_captcha($vals);
+            $this->session->captcha = trim($word);
+            $data['captcha'] = $cap['image'];	
+            echo trim($word);
+
+            $data['error'] = "Login incorreto e/ou captcha incorreta";
             $this->load->view('usuario/tela_login', $data);
-        }        
+        } 
     }
     public function adicionar()    {   
         $this->load->library('session');
