@@ -26,7 +26,9 @@ class Welcome extends CI_Controller {
 
 
 		if($this->session->userdata('captcha_filename')) {
-            unlink("./captcha/".$this->session->captcha_filename);            
+			if (file_exists("./captcha/".$this->session->captcha_filename)) {
+            	unlink("./captcha/".$this->session->captcha_filename);            
+			}
         }
 
 		$word = array_merge(range('a', 'z'), range('A', 'Z'));

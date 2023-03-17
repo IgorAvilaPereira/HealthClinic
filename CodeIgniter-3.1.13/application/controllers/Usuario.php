@@ -157,7 +157,9 @@ class Usuario extends CI_Controller {
         $this->load->library('session'); 
         $this->load->helper('captcha');             
         if($this->session->userdata('captcha_filename')) {
-            unlink("./captcha/".$this->session->captcha_filename);            
+            if (file_exists("./captcha/".$this->session->captcha_filename)) {
+                unlink("./captcha/".$this->session->captcha_filename);            
+            }
         }
         $this->session->sess_destroy();
         echo "<h1>Logout realizado com Sucesso!</h1> <a href='/welcome/index'> Entrar novamente?</a>";
@@ -200,7 +202,9 @@ class Usuario extends CI_Controller {
             $this->load->library('session'); 
             $this->load->helper('captcha');
             if($this->session->userdata('captcha_filename')) {
-                unlink("./captcha/".$this->session->captcha_filename);            
+                if (file_exists("./captcha/".$this->session->captcha_filename)) {
+                    unlink("./captcha/".$this->session->captcha_filename);           
+                } 
             }                    
             $this->session->sess_destroy();
             session_start();
@@ -325,7 +329,9 @@ class Usuario extends CI_Controller {
                 } else {
                     // return redirect()->to('/welcome/index'); 
                     if($this->session->userdata('captcha_filename')) {
-                        unlink("./captcha/".$this->session->captcha_filename);            
+                        if (file_exists("./captcha/".$this->session->captcha_filename)) {
+                            unlink("./captcha/".$this->session->captcha_filename);           
+                        }
                     }
                     $this->session->sess_destroy();
                     session_start();
@@ -368,7 +374,9 @@ class Usuario extends CI_Controller {
                 } 
             } else {
                 if($this->session->userdata('captcha_filename')) {
-                    unlink("./captcha/".$this->session->captcha_filename);            
+                    if (file_exists("./captcha/".$this->session->captcha_filename)) {
+                        unlink("./captcha/".$this->session->captcha_filename);            
+                    }
                 }   
 
                 // return redirect()->to('/welcome/index'); 
@@ -412,7 +420,9 @@ class Usuario extends CI_Controller {
         }
         else {
             if($this->session->userdata('captcha_filename')) {
-                unlink("./captcha/".$this->session->captcha_filename);            
+                if (file_exists("./captcha/".$this->session->captcha_filename)) {
+                    unlink("./captcha/".$this->session->captcha_filename);            
+                }
             }      
 
             // return redirect()->to('/welcome/index'); 
