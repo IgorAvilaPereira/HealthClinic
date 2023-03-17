@@ -35,7 +35,7 @@ class Welcome extends CI_Controller {
 		$vals = array(
 			'word'          => trim($word),
 			'img_path'      => './captcha/',
-			'img_url'       => 'http://localhost:8081/captcha/',
+			'img_url'       => '/captcha/',
 			// 'img_url'       => base_url("/captcha/");,			
 			'font_path'     => './path/to/fonts/texb.ttf',
 			'img_width'     => '150',
