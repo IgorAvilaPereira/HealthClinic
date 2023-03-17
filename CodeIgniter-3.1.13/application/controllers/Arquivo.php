@@ -121,9 +121,11 @@ class Arquivo extends CI_Controller {
         $query = $this->db->query("SELECT * FROM arquivo WHERE id = ?;", array($id));       
         $arquivo = $query->result()[0];        
         // $query = $this->db->query("DELETE FROM arquivo WHERE id = ?;", array($id));       
-        if (unlink("./arquivos/".$arquivo->arquivo)) {
-            $query = $this->db->query("DELETE FROM arquivo WHERE id = ?;", array($id));       
-            // $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        
+        if (file_exists("./arquivos/".$arquivo->arquivo)) { 
+            if (unlink("./arquivos/".$arquivo->arquivo)) {
+                $query = $this->db->query("DELETE FROM arquivo WHERE id = ?;", array($id));       
+                // $query = $this->db->query("DELETE FROM arquivo WHERE id = ".$id.";");        
+            }
         }
         header("Location: /arquivo/index/".$atendimento_id);
     }

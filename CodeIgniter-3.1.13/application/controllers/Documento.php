@@ -94,8 +94,10 @@ class Documento extends CI_Controller {
         // $query = $this->db->query("SELECT * FROM documento WHERE id = ".$id.";");        
         $query = $this->db->query("SELECT * FROM documento WHERE id = ?", array($id));       
         $documento = $query->result()[0];        
-        if (unlink("./documentos/".$documento->arquivo)) {
-            $query = $this->db->query("DELETE FROM documento WHERE id = ".$id.";");        
+        if (file_exists("./documentos/".$documento->arquivo)) { 
+            if (unlink("./documentos/".$documento->arquivo)) {
+                $query = $this->db->query("DELETE FROM documento WHERE id = ".$id.";");        
+            }
         }
         header("Location: /documento/index/".$pessoa_id);
     }

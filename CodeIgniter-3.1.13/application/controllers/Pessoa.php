@@ -14,8 +14,10 @@ class Pessoa extends CI_Controller {
         $pessoa = $query->result()[0];    
         $foto = $pessoa->foto;
         if (!empty($foto)) {
-            unlink("./fotos/".$foto);            
-            $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
+            if (file_exists("./fotos/".$foto)) {                 
+                unlink("./fotos/".$foto);            
+                $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
+            }      
         }
         header("Location: /pessoa/index");   
 
@@ -127,7 +129,9 @@ class Pessoa extends CI_Controller {
                 $pessoa = $query->result()[0];    
                 $foto = $pessoa->foto;
                 if (!empty($foto)) {
-                    unlink("./fotos/".$foto);            
+                    if (file_exists("./fotos/".$foto)) { 
+                        unlink("./fotos/".$foto);            
+                    }
                 } 
                 $file_name = $this->upload->data()["file_name"];                          
                 $query = $this->db->query("UPDATE pessoa SET foto = ? where id = ?;", array($file_name, $id));       
@@ -226,7 +230,9 @@ class Pessoa extends CI_Controller {
         $pessoa = $query->result()[0];    
         $foto = $pessoa->foto;
         if (!empty($foto)) {
-            unlink("./fotos/".$foto);            
+            if (file_exists("./fotos/".$foto)) { 
+                unlink("./fotos/".$foto);            
+            }
         }
         // $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ".$id.";");        
         $query = $this->db->query("SELECT * FROM documento WHERE pessoa_id = ?;", array($id));       
@@ -235,8 +241,10 @@ class Pessoa extends CI_Controller {
         $query = ""; 
         if (count($vetDocumento) > 0) {
             foreach($vetDocumento as $documento){
-                if (unlink("./documentos/".$documento->arquivo)) {
-                    $query.="DELETE FROM documento WHERE id = ".$id.";";
+                if (file_exists("./documentos/".$documento->arquivo)) { 
+                    if (unlink("./documentos/".$documento->arquivo)) {
+                        $query.="DELETE FROM documento WHERE id = ".$id.";";
+                    }
                 }
             }
         }        

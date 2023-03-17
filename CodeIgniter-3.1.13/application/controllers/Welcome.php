@@ -24,13 +24,12 @@ class Welcome extends CI_Controller {
 		$this->load->library('session');
 		$this->load->helper('url');
 
-
 		if($this->session->userdata('captcha_filename')) {
 			if (file_exists("./captcha/".$this->session->captcha_filename)) {
             	unlink("./captcha/".$this->session->captcha_filename);            
 			}
         }
-
+		
 		$word = array_merge(range('a', 'z'), range('A', 'Z'));
     	shuffle($word);    	
 		$word = substr(implode($word), 0, 5);
