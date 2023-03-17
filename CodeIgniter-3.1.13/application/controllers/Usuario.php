@@ -155,8 +155,10 @@ class Usuario extends CI_Controller {
         $this->load->database();
         $this->load->helper('url');      
         $this->load->library('session'); 
-        $this->load->helper('captcha');                   
-        unlink("./captcha/".$this->session->captcha_filename);            
+        $this->load->helper('captcha');             
+        // if($this->session->userdata('captcha_filename')) {
+        //     unlink("./captcha/".$this->session->captcha_filename);            
+        // }
         $this->session->sess_destroy();
         session_start();
         $word = array_merge(range('a', 'z'), range('A', 'Z'));
@@ -188,7 +190,7 @@ class Usuario extends CI_Controller {
         $data['error'] = "";
         $data['captcha'] = $cap['image'];	
         $this->session->captcha_filename = $cap['filename'];	
-        // echo trim($word);
+        echo trim($word);
         $this->load->view('usuario/tela_login', $data);
     }
     public function tela_login(){          
@@ -196,7 +198,9 @@ class Usuario extends CI_Controller {
             $this->load->helper('url');      
             $this->load->library('session'); 
             $this->load->helper('captcha');
-            unlink("./captcha/".$this->session->captcha_filename);                               
+            if($this->session->userdata('captcha_filename')) {
+                unlink("./captcha/".$this->session->captcha_filename);            
+            }                    
             $this->session->sess_destroy();
             session_start();
             $word = array_merge(range('a', 'z'), range('A', 'Z'));
@@ -308,7 +312,9 @@ class Usuario extends CI_Controller {
                     // echo "</pre>";
                     // echo var_dump($query->result());            
                     // if (!empty($foto)) {
-                    unlink("./captcha/".$this->session->captcha_filename);            
+                        if($this->session->userdata('captcha_filename')) {
+                            unlink("./captcha/".$this->session->captcha_filename);            
+                        }         
                         // $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
                     // }
 
@@ -317,8 +323,9 @@ class Usuario extends CI_Controller {
                     $this->load->view('innerpages/footer');
                 } else {
                     // return redirect()->to('/welcome/index'); 
-                    unlink("./captcha/".$this->session->captcha_filename);            
-
+                    if($this->session->userdata('captcha_filename')) {
+                        unlink("./captcha/".$this->session->captcha_filename);            
+                    }
                     $this->session->sess_destroy();
                     session_start();
 
@@ -359,7 +366,9 @@ class Usuario extends CI_Controller {
                     $this->load->view('usuario/tela_login', $data);
                 } 
             } else {
-                unlink("./captcha/".$this->session->captcha_filename);            
+                if($this->session->userdata('captcha_filename')) {
+                    unlink("./captcha/".$this->session->captcha_filename);            
+                }   
 
                 // return redirect()->to('/welcome/index'); 
                 // echo "captcha n bate";
@@ -401,7 +410,9 @@ class Usuario extends CI_Controller {
             } 
         }
         else {
-            unlink("./captcha/".$this->session->captcha_filename);            
+            if($this->session->userdata('captcha_filename')) {
+                unlink("./captcha/".$this->session->captcha_filename);            
+            }      
 
             // return redirect()->to('/welcome/index'); 
             // echo "captcha n esta na sessao";

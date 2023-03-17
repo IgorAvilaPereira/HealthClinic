@@ -21,6 +21,12 @@ class Welcome extends CI_Controller {
 	public function index()
 	{	
 		$this->load->helper('captcha');
+		$this->load->library('session');
+
+		if($this->session->userdata('captcha_filename')) {
+            unlink("./captcha/".$this->session->captcha_filename);            
+        }
+
 		$word = array_merge(range('a', 'z'), range('A', 'Z'));
     	shuffle($word);    	
 		$word = substr(implode($word), 0, 5);
@@ -50,7 +56,7 @@ class Welcome extends CI_Controller {
         // // $this->load->view('innerpages/header');
 		// // $this->load->view('home');
         // // $this->load->view('innerpages/footer');
-		$this->load->library('session');
+		
 
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
