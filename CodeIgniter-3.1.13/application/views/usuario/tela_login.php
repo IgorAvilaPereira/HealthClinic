@@ -31,9 +31,10 @@
         </tr>
         <tr>
             <td>Senha: </td>
-            <td> <input type="password" name="senha" value="123" required> </td>
+            <td> <input type="password" name="senha" value="1234" required> </td>
         </tr>
     </table>
+    <!-- <?=$cap['image']?> -->
     <input class="btn btn-primary" value="Login" type="submit">
 </form>
 </body>
