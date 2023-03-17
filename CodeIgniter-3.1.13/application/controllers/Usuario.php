@@ -156,9 +156,9 @@ class Usuario extends CI_Controller {
         $this->load->helper('url');      
         $this->load->library('session'); 
         $this->load->helper('captcha');             
-        // if($this->session->userdata('captcha_filename')) {
-        //     unlink("./captcha/".$this->session->captcha_filename);            
-        // }
+        if($this->session->userdata('captcha_filename')) {
+            unlink("./captcha/".$this->session->captcha_filename);            
+        }
         $this->session->sess_destroy();
         session_start();
         $word = array_merge(range('a', 'z'), range('A', 'Z'));
@@ -312,9 +312,9 @@ class Usuario extends CI_Controller {
                     // echo "</pre>";
                     // echo var_dump($query->result());            
                     // if (!empty($foto)) {
-                        if($this->session->userdata('captcha_filename')) {
-                            unlink("./captcha/".$this->session->captcha_filename);            
-                        }         
+                        // if($this->session->userdata('captcha_filename')) {
+                        //     unlink("./captcha/".$this->session->captcha_filename);            
+                        // }         
                         // $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
                     // }
 
