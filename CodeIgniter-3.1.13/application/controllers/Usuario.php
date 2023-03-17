@@ -156,7 +156,7 @@ class Usuario extends CI_Controller {
         $this->load->helper('url');      
         $this->load->library('session'); 
         $this->load->helper('captcha');                   
-        unlink("./captcha/".$this->session->captcha_filename);            
+        // unlink("./captcha/".$this->session->captcha_filename);            
         $this->session->sess_destroy();
         session_start();
         $word = array_merge(range('a', 'z'), range('A', 'Z'));
