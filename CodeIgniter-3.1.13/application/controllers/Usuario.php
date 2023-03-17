@@ -160,7 +160,7 @@ class Usuario extends CI_Controller {
             unlink("./captcha/".$this->session->captcha_filename);            
         }
         $this->session->sess_destroy();
-        echo "<h1>Logout realizado com Sucesso!</a>";
+        echo "<h1>Logout realizado com Sucesso!</h1> <a href='/welcome/index'> Entrar novamente?</a>";
         // session_start();
         // $word = array_merge(range('a', 'z'), range('A', 'Z'));
         // shuffle($word);    	
