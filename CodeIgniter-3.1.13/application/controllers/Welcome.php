@@ -22,6 +22,8 @@ class Welcome extends CI_Controller {
 	{	
 		$this->load->helper('captcha');
 		$this->load->library('session');
+		$this->load->helper('url');
+
 
 		if($this->session->userdata('captcha_filename')) {
             unlink("./captcha/".$this->session->captcha_filename);            
@@ -34,6 +36,7 @@ class Welcome extends CI_Controller {
 			'word'          => trim($word),
 			'img_path'      => './captcha/',
 			'img_url'       => 'http://localhost:8081/captcha/',
+			// 'img_url'       => base_url("/captcha/");,			
 			'font_path'     => './path/to/fonts/texb.ttf',
 			'img_width'     => '150',
 			'img_height'    => 30,
