@@ -56,12 +56,9 @@ class Welcome extends CI_Controller {
 			)
 		);	
 		$cap = @create_captcha($vals);
-		    // with Zend OPcache v8.1.2-1ubuntu2.11, Copyright (c), by Zend Technologies
-
         // // $this->load->view('innerpages/header');
 		// // $this->load->view('home');
-        // // $this->load->view('innerpages/footer');
-		
+        // // $this->load->view('innerpages/footer');	
 
         if(!$this->session->userdata('usuario')){
             $this->session->sess_destroy();
