@@ -170,7 +170,7 @@ class Usuario extends CI_Controller {
         // $vals = array(
         //     'word'          => trim($word),
         //     'img_path'      => './captcha/',
-        //     'img_url'       => 'http://localhost:8081/captcha/',
+        //     'img_url'       => '/captcha/',
         //     'font_path'     => './path/to/fonts/texb.ttf',
         //     'img_width'     => '150',
         //     'img_height'    => 30,
@@ -214,7 +214,7 @@ class Usuario extends CI_Controller {
             $vals = array(
                 'word'          => trim($word),
                 'img_path'      => './captcha/',
-                'img_url'       => 'http://localhost:8081/captcha/',
+                'img_url'       => '/captcha/',
                 'font_path'     => './path/to/fonts/texb.ttf',
                 'img_width'     => '150',
                 'img_height'    => 30,
@@ -343,10 +343,11 @@ class Usuario extends CI_Controller {
                     $word = array_merge(range('a', 'z'), range('A', 'Z'));
                     shuffle($word);    	
                     $word = substr(implode($word), 0, 5);
+                  
                     $vals = array(
                         'word'          => trim($word),
                         'img_path'      => './captcha/',
-                        'img_url'       => 'http://localhost:8081/captcha/',
+                        'img_url'       => '/captcha/',
                         'font_path'     => './path/to/fonts/texb.ttf',
                         'img_width'     => '150',
                         'img_height'    => 30,
@@ -391,7 +392,7 @@ class Usuario extends CI_Controller {
                 $vals = array(
                     'word'          => trim($word),
                     'img_path'      => './captcha/',
-                    'img_url'       => 'http://localhost:8081/captcha/',
+                    'img_url'       => '/captcha/',
                     'font_path'     => './path/to/fonts/texb.ttf',
                     'img_width'     => '150',
                     'img_height'    => 30,
@@ -436,7 +437,7 @@ class Usuario extends CI_Controller {
             $vals = array(
                 'word'          => trim($word),
                 'img_path'      => './captcha/',
-                'img_url'       => 'http://localhost:8081/captcha/',
+                'img_url'       => '/captcha/',
                 'font_path'     => './path/to/fonts/texb.ttf',
                 'img_width'     => '150',
                 'img_height'    => 30,
