@@ -66,7 +66,7 @@ class Welcome extends CI_Controller {
 			$data['error'] = "";	
 			$this->load->library('session');
 			$this->session->captcha = trim($word);	
-			echo trim($word);
+			// echo trim($word);
 			$data['captcha'] = $cap['image'];					
 			$this->session->captcha_filename = $cap['filename'];		
 			$this->load->view('usuario/tela_login', $data);			
