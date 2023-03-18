@@ -45,7 +45,7 @@ class Welcome extends CI_Controller {
 			'word_length'   => 5,
 			'font_size'     => 16,
 			'img_id'        => 'Imageid',
-			'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzAB',
+			'pool'          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 	
 			// White background and border, black text and red grid
 			'colors'        => array(
