@@ -43,8 +43,8 @@ class Usuario extends CI_Controller {
         $this->load->helper('url'); 
         $query = $this->db->query('SELECT * FROM setor');
         $data['vetSetor'] = $query->result();  
-        $query = $this->db->query('SELECT * FROM perfil');
-        $data['vetPerfil'] = $query->result();  
+        // $query = $this->db->query('SELECT * FROM perfil');
+        // $data['vetPerfil'] = $query->result();  
         $this->load->view('innerpages/header');   
         $this->load->view('usuario/tela_adicionar', $data);
         $this->load->view('innerpages/footer');
@@ -63,15 +63,15 @@ class Usuario extends CI_Controller {
         // $query = $this->db->query('SELECT * FROM usuario WHERE usuario.id = '.$id);
         $query = $this->db->query("SELECT * FROM usuario WHERE usuario.id = ?", array($id));    
         $data['usuario'] = $query->result()[0];
-        $query = $this->db->query('SELECT * FROM perfil');
-        $data['vetPerfil'] = $query->result();  
-        // $query = $this->db->query('SELECT perfil_id as id FROM usuario_perfil where usuario_id='.$id);
-        $query = $this->db->query("SELECT perfil_id as id FROM usuario_perfil where usuario_id=?", array($id));    
-        $vetUsuarioPerfil = $query->result();  
-        $data['vetUsuarioPerfil'] = [];
-        foreach($vetUsuarioPerfil as $perfil){
-            $data['vetUsuarioPerfil'][] = (int) $perfil->id;
-        }        
+        // $query = $this->db->query('SELECT * FROM perfil');
+
+        // $data['vetPerfil'] = $query->result();  
+        // $query = $this->db->query("SELECT perfil_id as id FROM usuario_perfil where usuario_id=?", array($id));    
+        // $vetUsuarioPerfil = $query->result();  
+        // $data['vetUsuarioPerfil'] = [];
+        // foreach($vetUsuarioPerfil as $perfil){
+        //     $data['vetUsuarioPerfil'][] = (int) $perfil->id;
+        // }        
         $this->load->view('innerpages/header'); 
         $this->load->view('usuario/tela_editar', $data);
         $this->load->view('innerpages/footer');
@@ -90,28 +90,36 @@ class Usuario extends CI_Controller {
         $email = $this->input->post("email");
         $setor_id = $this->input->post("setor_id");
         // $senha_antiga = $this->input->post("senha_antiga");
-        $senha = $this->input->post("senha");        
+        $senha = $this->input->post("senha");       
+        // die($this->input->post("eh_admin"));
+        // $eh_admin = (((int)$this->input->post("eh_admin") == 1) ? TRUE : FALSE);
+        $eh_admin = ((strcmp($this->input->post("eh_admin"), "1") ==0) ? TRUE : FALSE);
+        // $eh_admin = ((strcmp($this->input->post("eh_admin"),"")==0) ? FALSE : TRUE);
+        // die($eh_admin == TRUE);
+
+        // $eh_admin = ((strcmp($this->input->post("eh_admin"), "TRUE")) ? TRUE : FALSE);
+ 
         // $senha_nova =  ((empty($this->input->post("senha_nova"))) ? $this->input->post("senha_antiga") : $this->input->post("senha_nova"));
         
         // $query = $this->db->query("SELECT * FROM usuario WHERE id = ? and senha = md5(?);", array($id, $senha_antiga));               
         // if (count($query->result()) > 0){
-            $query = $this->db->query("UPDATE usuario SET nome = ?,  email = ?, senha = md5(?), setor_id = ? WHERE id = ?;", array($nome, $email, $senha, $setor_id, $id));       
-            $vetPerfil = $this->input->post("perfil_id"); 
-            $usuario_id = $id;    
-            if (is_array($vetPerfil)){
-                if (count($vetPerfil)>0){                                   
-                    $sql = "";
-                    foreach($vetPerfil as $perfil_id){
-                        $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
-                    }
-                    $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";".$sql."COMMIT;");        
-                } else {
-                    $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
-                }
-            }
-            else {
-                $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
-            }
+            $query = $this->db->query("UPDATE usuario SET nome = ?,  email = ?, senha = md5(?), setor_id = ?, eh_admin = ? WHERE id = ?;", array($nome, $email, $senha, $setor_id,$eh_admin, $id));       
+            // $vetPerfil = $this->input->post("perfil_id"); 
+            // $usuario_id = $id;    
+            // if (is_array($vetPerfil)){
+            //     if (count($vetPerfil)>0){                                   
+            //         $sql = "";
+            //         foreach($vetPerfil as $perfil_id){
+            //             $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
+            //         }
+            //         $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";".$sql."COMMIT;");        
+            //     } else {
+            //         $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
+            //     }
+            // }
+            // else {
+            //     $query = $this->db->query("BEGIN; DELETE FROM usuario_perfil where usuario_id = ".$usuario_id.";COMMIT;");        
+            // }
             header("Location: /usuario/index");               
         /*} else {
             $data['error'] = "senha antiga incorreta";
@@ -483,17 +491,23 @@ class Usuario extends CI_Controller {
         $email = $this->input->post("email");
         $senha = $this->input->post("senha");
         $setor_id = $this->input->post("setor_id");
-        $vetPerfil = $this->input->post("perfil_id");        
+        // $eh_admin = (($this->input->post("eh_admin") != null) ? TRUE : FALSE);
+        // $eh_admin = ((strcmp($this->input->post("eh_admin"),"")==0) ? FALSE : TRUE);
+        $eh_admin = ((strcmp($this->input->post("eh_admin"), "1") ==0) ? TRUE : FALSE);
+
+        // $vetPerfil = $this->input->post("perfil_id");        
         // $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.") RETURNING id;");        
-        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES (?, ?, md5(?), ?) RETURNING id;", array($nome, $email, $senha, $setor_id));       
-        if (count($vetPerfil)>0){
-            $usuario_id = (int) $query->result()[0]->id;            
-            $sql = "";
-            foreach($vetPerfil as $perfil_id){
-                $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
-            }
-            $query = $this->db->query("BEGIN;".$sql."COMMIT;");        
-        }
+        // $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES (?, ?, md5(?), ?) RETURNING id;", array($nome, $email, $senha, $setor_id));       
+        $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id, eh_admin) VALUES (?, ?, md5(?), ?, ?) RETURNING id;", array($nome, $email, $senha, $setor_id, $eh_admin));       
+        
+        // if (count($vetPerfil)>0){
+        //     $usuario_id = (int) $query->result()[0]->id;            
+        //     $sql = "";
+        //     foreach($vetPerfil as $perfil_id){
+        //         $sql.="INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (".$usuario_id.",".$perfil_id.");";
+        //     }
+        //     $query = $this->db->query("BEGIN;".$sql."COMMIT;");        
+        // }
         header("Location: /usuario/index");    
     }
 }

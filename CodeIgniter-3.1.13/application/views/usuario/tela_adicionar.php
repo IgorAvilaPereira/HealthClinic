@@ -5,16 +5,18 @@
     <tr> <td> Nome: </td> <td> <input type="text" name="nome" required> </td></tr>
     <tr> <td>Email: </td> <td> <input type="text" name="email" required> </td></tr>
     <tr> <td>Senha: </td> <td> <input type="password" name="senha" required> </td></tr>
-    <tr> <td>Setor: </td> <td> <select required name="setor_id">
-        <?php foreach($vetSetor as $setor) { ?>
+    <!-- <tr> <td>Setor: </td> <td> <select required name="setor_id"> -->
+    <tr> <td>Admin: </td> <td> <input type="checkbox" name="eh_admin" value="1"></td></tr>
+    <tr> <td>Setor: </td> <td>  <select required name="setor_id">
+    <?php foreach($vetSetor as $setor) { ?>
         <option value=<?php echo $setor->id; ?>><?php echo $setor->nome; ?> </option>
         <?php } ?>
     </select> </td></tr>
-    <tr> <td>Perfil: </td> <td> <select required name="perfil_id[]" multiple>
+    <!-- <tr> <td>Perfil: </td> <td> <select required name="perfil_id[]" multiple>
         <?php foreach($vetPerfil as $perfil) { ?>
         <option value=<?php echo $perfil->id; ?>><?php echo $perfil->nome; ?> </option>
         <?php } ?>
-    </select> </td></tr>
+    </select> </td></tr> -->
         </table>
     <input class="btn btn-primary" value="Adicionar" type="submit">
 </form>

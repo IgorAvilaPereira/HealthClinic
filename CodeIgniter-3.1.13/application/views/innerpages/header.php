@@ -31,9 +31,9 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/usuario/index">Usuários</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/perfil/index">Perfis</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/relatorio/index">Relatórios</a>
                     </li>

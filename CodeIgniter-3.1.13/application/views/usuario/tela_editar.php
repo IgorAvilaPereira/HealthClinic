@@ -8,6 +8,7 @@
     <!-- Senha Nova: <input type="password" name="senha_nova">*obs: preencher caso deseja mudar <br> -->
     <!-- Senha Nova: <input type="password" name="senha_nova1" required> <br> -->
     <!-- Senha Nova (Confirmação): <input type="password" name="senha_nova2" required> <br> -->
+    Admin: </td> <td> <input type="checkbox" name="eh_admin" value="1" <?=(($usuario->eh_admin == TRUE) ? "checked" : "")?>> <br>
     Setor: <select required name="setor_id">
         <?php foreach($vetSetor as $setor) { ?>
         <?php if ($usuario->setor_id == $setor->id) { ?>
@@ -17,17 +18,17 @@
         <?php } ?>
         <?php } ?>
     </select> <br>
-    Perfil: </td>
-    <td> <select required name="perfil_id[]" multiple>
+    <!-- Perfil: </td>
+     <td> <select required name="perfil_id[]" multiple>
             <?php foreach($vetPerfil as $perfil) { ?>
             <?php if (in_array($perfil->id, $vetUsuarioPerfil)) { ?>
             <option value=<?php echo $perfil->id; ?> selected><?php echo $perfil->nome; ?> </option>
             <?php }  else { ?>
             <option value=<?php echo $perfil->id; ?>><?php echo $perfil->nome; ?> </option>
             <?php } ?>
-            <?php } ?>
+            <?php } ?> 
 
-        </select> <br>
+        </select> <br>-->
         <input type="hidden" name="id" value="<?=$usuario->id?>">
         <input class="btn btn-primary" value="Editar" type="submit">
 </form>
