@@ -305,7 +305,7 @@ class Usuario extends CI_Controller {
         // die();
 
         if ($this->session->userdata('captcha')){
-            if (strcmp($this->session->captcha, trim($captcha)) == 0){        
+            if (strcmp($this->session->captcha, $captcha) == 0){        
                 $query = $this->db->query("SELECT * FROM usuario WHERE email = ? and senha = md5(?);", array(trim($email), trim($senha)));       
                 if (count($query->result()) > 0){                    
                     $this->session->usuario = $query->result()[0];
