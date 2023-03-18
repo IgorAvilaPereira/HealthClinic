@@ -487,7 +487,7 @@ class Usuario extends CI_Controller {
     }
     public function adicionar()    {   
         $this->load->library('session');
-        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 1){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 0){
 
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
