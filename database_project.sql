@@ -21,11 +21,15 @@ CREATE TABLE usuario (
     nome text not null,
     email text not null,
     senha text not null,
+    eh_admin boolean DEFAULT FALSE,
     setor_id integer references setor (id),
     unique (email)
 );
-INSERT INTO usuario (nome, email, senha, setor_id) VALUES 
-('JOÃO', 'joao@joao.com', md5('123'), 1);
+INSERT INTO usuario (nome, email, senha, setor_id, eh_admin) VALUES 
+('JOÃO', 'joao@joao.com', md5('123'), 1, TRUE);
+
+INSERT INTO usuario (nome, email, senha, setor_id, eh_admin) VALUES 
+('JOSÉ', 'jose@jose.com', md5('123'), 1, FALSE);
 
 CREATE TABLE perfil (
     id serial primary key,
@@ -47,8 +51,8 @@ CREATE TABLE usuario_perfil (
     primary key (usuario_id, perfil_id)
 );
 
-INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES 
-(1,1);
+-- INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES 
+-- (1,1);
 
 CREATE TABLE pessoa (
     id serial primary key,
