@@ -21,15 +21,38 @@ CREATE TABLE usuario (
     nome text not null,
     email text not null,
     senha text not null,
-    eh_admin integer DEFAULT 0,
+--    eh_admin integer DEFAULT 0,
     setor_id integer references setor (id),
     unique (email)
 );
-INSERT INTO usuario (nome, email, senha, setor_id, eh_admin) VALUES 
-('JOÃO', 'joao@joao.com', md5('123'), 1, 1);
+INSERT INTO usuario (nome, email, senha, setor_id) VALUES 
+('JOÃO', 'joao@joao.com', md5('123'), 1);
 
 INSERT INTO usuario (nome, email, senha, setor_id, eh_admin) VALUES 
-('JOSÉ', 'jose@jose.com', md5('123'), 1, 0);
+('JOSÉ', 'jose@jose.com', md5('123'), 1);
+
+CREATE TABLE perfil (
+    id serial primary key,
+    nome text not null,
+    adicionar boolean DEFAULT FALSE,
+    visualizar boolean DEFAULT FALSE,
+    editar boolean DEFAULT FALSE,
+    remover boolean DEFAULT FALSE
+);
+
+
+INSERT INTO perfil (nome, adicionar, visualizar, editar, remover) VALUES 
+('Administrador', TRUE, TRUE, TRUE, TRUE),
+('Servidor', TRUE, TRUE, TRUE, TRUE);
+
+CREATE TABLE usuario_perfil (
+    usuario_id integer references usuario (id) ON DELETE CASCADE,
+    perfil_id integer references perfil (id),
+    primary key (usuario_id, perfil_id)
+);
+
+ INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES 
+ (1,1);
 
 CREATE TABLE pessoa (
     id serial primary key,
