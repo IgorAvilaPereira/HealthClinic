@@ -31,7 +31,7 @@
         </tr>
         <tr>
             <td>Senha: </td>
-            <td> <input type="password" name="senha" value="1234" required> </td>
+            <td> <input type="password" name="senha" value="123" required> </td>
         </tr>
         <tr>
             <td>Captcha: </td>
