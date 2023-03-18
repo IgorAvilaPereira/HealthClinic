@@ -21,6 +21,9 @@ class Relatorio extends CI_Controller {
         $query = $this->db->query("SELECT sexo, count(*) as qtde FROM pessoa group by sexo order by sexo;");        
         $data['dados'] = $query->result();
 
+        $query = $this->db->query("SELECT count(*) as qtde FROM atendimento;");        
+        $data['qtde_atendimento'] = $query->result()[0];
+
         $this->load->view('innerpages/header');
         $this->load->view('relatorio/index', $data);        
         $this->load->view('innerpages/footer');
