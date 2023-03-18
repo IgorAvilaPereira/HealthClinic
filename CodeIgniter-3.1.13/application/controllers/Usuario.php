@@ -7,7 +7,7 @@ class Usuario extends CI_Controller {
     public function index($offset = 0)
     {
         $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 0){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
         }
@@ -27,6 +27,7 @@ class Usuario extends CI_Controller {
         $data['pagination'] = $this->pagination->create_links();
                 
         $data['usuario_id'] = $this->session->userdata('usuario')->id;
+        // $data['usuario'] = $this->session->usuario;
         $data['vetUsuario'] = $query->result();
 
         $this->load->view('innerpages/header');
@@ -35,7 +36,7 @@ class Usuario extends CI_Controller {
     }
     public function tela_adicionar()    {
         $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 0){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
         }
@@ -51,7 +52,7 @@ class Usuario extends CI_Controller {
     }
     public function tela_editar($id)    {
         $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 0){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
         }
@@ -78,7 +79,7 @@ class Usuario extends CI_Controller {
     }
     public function editar()    {
         $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 0){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
         }
@@ -150,7 +151,7 @@ class Usuario extends CI_Controller {
     }
     public function remover($id)    {
         $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 0){
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
         }
@@ -338,8 +339,9 @@ class Usuario extends CI_Controller {
                         // $query = $this->db->query("UPDATE pessoa SET foto = NULL WHERE id = ?;", array($id));       
                     // }
 
+                    $data['usuario'] = $query->result()[0];
                     $this->load->view('innerpages/header');
-                    $this->load->view('home');
+                    $this->load->view('home', $data);
                     $this->load->view('innerpages/footer');
                 } else {
                     // return redirect()->to('/welcome/index'); 
@@ -485,7 +487,8 @@ class Usuario extends CI_Controller {
     }
     public function adicionar()    {   
         $this->load->library('session');
-        if(!$this->session->userdata('usuario')){
+        if(!$this->session->userdata('usuario') || $this->session->usuario->eh_admin == 1){
+
             $this->session->sess_destroy();
             header("Location: /usuario/tela_login");
         }     

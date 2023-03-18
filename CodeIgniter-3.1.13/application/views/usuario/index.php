@@ -2,9 +2,7 @@
 <ul>
     <?php foreach($vetUsuario as $usuario) { ?>
     <li>
-        <?php if ($usuario_id != $usuario->id) { ?>
         <a class="btn btn-secondary" href="/usuario/remover/<?=$usuario->id?>">Remover</a>
-        <?php } ?>
         <a class="btn btn-secondary" href="/usuario/tela_editar/<?=$usuario->id?>">Editar</a>
         <?php echo $usuario->id; ?> <?php echo $usuario->nome; ?>
     </li>

@@ -28,9 +28,12 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/setor/index">Setores</a>
                     </li>
+
+                    <?php if ($this->session->usuario->eh_admin == 1) { ?>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/usuario/index">Usuários</a>
                     </li>
+                    <?php }?>
                     <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/perfil/index">Perfis</a>
                     </li> -->

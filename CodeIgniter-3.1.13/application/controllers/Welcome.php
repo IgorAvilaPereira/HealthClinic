@@ -71,8 +71,10 @@ class Welcome extends CI_Controller {
 			$this->session->captcha_filename = $cap['filename'];		
 			$this->load->view('usuario/tela_login', $data);			
         }  else {
+			// $data['usuario'] = $this->session->usuario;
 			$this->load->view('innerpages/header');
-		    $this->load->view('home');
+		    // $this->load->view('home', $data);
+			$this->load->view('home');
             $this->load->view('innerpages/footer');
 		}
 		
