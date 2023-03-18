@@ -253,7 +253,7 @@ class Usuario extends CI_Controller {
             $data['error'] = "";
             $data['captcha'] = $cap['image'];	            
             $this->session->captcha_filename = $cap['filename'];	
-            echo trim($word);
+            // echo trim($word);
             $this->load->view('usuario/tela_login', $data);
         
     }
@@ -316,8 +316,8 @@ class Usuario extends CI_Controller {
         $email = $this->input->post("email");        
         $senha = $this->input->post("senha");      
         $captcha = $this->input->post("captcha");  
-        echo "preenchido".$captcha."<br>";
-        echo "sessao".	$this->session->captcha;
+        // echo "preenchido".$captcha."<br>";
+        // echo "sessao".	$this->session->captcha;
         // die();
 
         if ($this->session->userdata('captcha')){
@@ -385,7 +385,7 @@ class Usuario extends CI_Controller {
                     );	
                     $cap = @create_captcha($vals);
                     $this->session->captcha = trim($word);
-                    echo trim($word);
+                    // echo trim($word);
 
                     $data['captcha'] = $cap['image'];	
                     $this->session->captcha_filename = $cap['filename'];	
@@ -431,7 +431,7 @@ class Usuario extends CI_Controller {
                 );	
                 $cap = @create_captcha($vals);
                 $this->session->captcha = trim($word);
-                echo trim($word);
+                // echo trim($word);
 
                 $data['captcha'] = $cap['image'];	
                 $this->session->captcha_filename = $cap['filename'];	
@@ -479,7 +479,7 @@ class Usuario extends CI_Controller {
             $this->session->captcha = trim($word);
             $data['captcha'] = $cap['image'];	
             $this->session->captcha_filename = $cap['filename'];	
-            echo trim($word);
+            // echo trim($word);
 
             $data['error'] = "Login incorreto e/ou captcha incorreta";
             $this->load->view('usuario/tela_login', $data);
