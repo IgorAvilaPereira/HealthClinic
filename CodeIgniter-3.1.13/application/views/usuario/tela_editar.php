@@ -8,7 +8,7 @@
     <!-- Senha Nova: <input type="password" name="senha_nova">*obs: preencher caso deseja mudar <br> -->
     <!-- Senha Nova: <input type="password" name="senha_nova1" required> <br> -->
     <!-- Senha Nova (Confirmação): <input type="password" name="senha_nova2" required> <br> -->
-    Admin: </td> <td> <input type="checkbox" name="eh_admin" value="1" <?=(($usuario->eh_admin == TRUE) ? "checked" : "")?>> <br>
+    Admin: </td> <td> <input type="checkbox" name="eh_admin" value="1" <?=(($usuario->eh_admin == 1) ? "checked" : "")?>> <br>
     Setor: <select required name="setor_id">
         <?php foreach($vetSetor as $setor) { ?>
         <?php if ($usuario->setor_id == $setor->id) { ?>

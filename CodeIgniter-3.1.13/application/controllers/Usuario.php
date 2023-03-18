@@ -93,7 +93,12 @@ class Usuario extends CI_Controller {
         $senha = $this->input->post("senha");       
         // die($this->input->post("eh_admin"));
         // $eh_admin = (((int)$this->input->post("eh_admin") == 1) ? TRUE : FALSE);
-        $eh_admin = ((strcmp($this->input->post("eh_admin"), "1") ==0) ? TRUE : FALSE);
+        $eh_admin = $this->input->post("eh_admin");       
+        // die($eh_admin);
+        if ($eh_admin != 1){
+            $eh_admin = 0;
+        }
+        // die(($eh_admin==TRUE) ? "TRUE" : "FALSE");
         // $eh_admin = ((strcmp($this->input->post("eh_admin"),"")==0) ? FALSE : TRUE);
         // die($eh_admin == TRUE);
 
@@ -103,7 +108,7 @@ class Usuario extends CI_Controller {
         
         // $query = $this->db->query("SELECT * FROM usuario WHERE id = ? and senha = md5(?);", array($id, $senha_antiga));               
         // if (count($query->result()) > 0){
-            $query = $this->db->query("UPDATE usuario SET nome = ?,  email = ?, senha = md5(?), setor_id = ?, eh_admin = ? WHERE id = ?;", array($nome, $email, $senha, $setor_id,$eh_admin, $id));       
+            $query = $this->db->query("UPDATE usuario SET nome = ?,  email = ?, senha = md5(?), setor_id = ?, eh_admin = ? WHERE id = ?;", array($nome, $email, $senha, $setor_id, $eh_admin, $id));       
             // $vetPerfil = $this->input->post("perfil_id"); 
             // $usuario_id = $id;    
             // if (is_array($vetPerfil)){
@@ -493,7 +498,12 @@ class Usuario extends CI_Controller {
         $setor_id = $this->input->post("setor_id");
         // $eh_admin = (($this->input->post("eh_admin") != null) ? TRUE : FALSE);
         // $eh_admin = ((strcmp($this->input->post("eh_admin"),"")==0) ? FALSE : TRUE);
-        $eh_admin = ((strcmp($this->input->post("eh_admin"), "1") ==0) ? TRUE : FALSE);
+        // $eh_admin = ((strcmp($this->input->post("eh_admin"), "1") ==0) ? TRUE : FALSE);
+        $eh_admin = $this->input->post("eh_admin");       
+        // die($eh_admin);
+        if ($eh_admin != 1){
+            $eh_admin = 0;
+        }
 
         // $vetPerfil = $this->input->post("perfil_id");        
         // $query = $this->db->query("INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('".$nome."', '".$email."', md5('".$senha."'), ".$setor_id.") RETURNING id;");        
