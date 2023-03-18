@@ -93,7 +93,7 @@ class Usuario extends CI_Controller {
         $senha = $this->input->post("senha");       
         // die($this->input->post("eh_admin"));
         // $eh_admin = (((int)$this->input->post("eh_admin") == 1) ? TRUE : FALSE);
-        $eh_admin = $this->input->post("eh_admin");       
+        $eh_admin =  intval($this->input->post("eh_admin"));       
         // die($eh_admin);
         if ($eh_admin != 1){
             $eh_admin = 0;
@@ -499,7 +499,7 @@ class Usuario extends CI_Controller {
         // $eh_admin = (($this->input->post("eh_admin") != null) ? TRUE : FALSE);
         // $eh_admin = ((strcmp($this->input->post("eh_admin"),"")==0) ? FALSE : TRUE);
         // $eh_admin = ((strcmp($this->input->post("eh_admin"), "1") ==0) ? TRUE : FALSE);
-        $eh_admin = $this->input->post("eh_admin");       
+        $eh_admin = intval($this->input->post("eh_admin"));       
         // die($eh_admin);
         if ($eh_admin != 1){
             $eh_admin = 0;
