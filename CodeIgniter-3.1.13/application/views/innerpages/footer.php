@@ -1,5 +1,5 @@
 
 <hr>
-Rodapé
+Developed by Igor Avila Pereira
 </body>
 </html>
