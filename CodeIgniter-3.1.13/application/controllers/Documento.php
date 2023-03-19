@@ -115,8 +115,8 @@ class Documento extends CI_Controller {
         $pessoa_id = $this->input->post("pessoa_id");
 
         $config['upload_path']          = './documentos/';
-        $config['allowed_types']        = 'gif|jpg|png|pdf';
-        $config['max_size']             = 200;
+        $config['allowed_types']        = 'gif|jpg|png|chm|doc|dcom|docx|dot|dotx|hwp|odt|pdf|pub|rtf|xps|key|odp|pps|ppsx|ppt|pptm|pptx|PDF|DOC|XML|DOCX';
+        $config['max_size']             = 10000;
         $config['max_width']            = 3000;
         $config['max_height']           = 3000;    
         $config['encrypt_name'] = TRUE;
