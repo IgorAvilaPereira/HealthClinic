@@ -1,9 +1,5 @@
 <?php
 
-// require_once ('./libraries/jpgraph-4.3.5/src/jpgraph.php');
-
-// require_once ('./libraries/jpgraph-4.3.5/src/jpgraph_line.php');
-
 class Relatorio extends CI_Controller {
 
     public function index()
@@ -23,6 +19,16 @@ class Relatorio extends CI_Controller {
 
         $query = $this->db->query("SELECT count(*) as qtde FROM atendimento;");        
         $data['qtde_atendimento'] = $query->result()[0];
+
+        $query = $this->db->query("SELECT count(*) as qtde FROM atendimento where extract(month from data_hora) = extract(month from current_timestamp) and extract(year from data_hora) = extract(year from current_timestamp);");        
+        $data['qtde_atendimento_mes_ano_corrente'] = $query->result()[0];
+
+        $query = $this->db->query("SELECT sexo, count(*) as qtde FROM atendimento inner join pessoa on (pessoa.id = atendimento.pessoa_id) where extract(month from data_hora) = extract(month from current_timestamp) and extract(year from data_hora) = extract(year from current_timestamp) group by sexo order by sexo;");        
+        $data['qtde_atendimento_mes_ano_corrente_por_sexo'] = $query->result();
+        
+        
+        $query = $this->db->query("SELECT count(*) as qtde FROM pessoa;");        
+        $data['qtde_pessoa'] = $query->result()[0];
 
         $this->load->view('innerpages/header');
         $this->load->view('relatorio/index', $data);        
