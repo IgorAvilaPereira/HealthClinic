@@ -13,3 +13,9 @@
 Project was developed on CodeIgniter-3.1.1, PHP 8.1.2 and PostgreSQL 14.7.
 
 
+# User and Password
+
+username: joao@joao.com
+password: 123
+
+
