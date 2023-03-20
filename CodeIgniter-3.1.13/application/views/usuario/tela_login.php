@@ -24,11 +24,11 @@
     <table>
         <tr>
             <td>Email: </td>
-            <td> <input type="text" name="email" required value="joao@joao.com" required> </td>
+            <td> <input type="text" name="email" required> </td>
         </tr>
         <tr>
             <td>Senha: </td>
-            <td> <input type="password" name="senha" value="123" required> </td>
+            <td> <input type="password" name="senha" required> </td>
         </tr>
         <tr>
             <td>Captcha: </td>
